@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { footerNav, site } from "@/lib/site";
-import { InstagramIcon, LinkedInIcon } from "@/components/icons";
-import { Logo } from "@/components/Logo";
-import { NapBlock } from "@/components/NapBlock";
+import {footerNav, site} from "@/lib/site";
+import {InstagramIcon, LinkedInIcon} from "@/components/icons";
+import {Logo} from "@/components/Logo";
+import {NapBlock} from "@/components/NapBlock";
 
 export function Footer() {
   return (
@@ -66,10 +66,7 @@ export function Footer() {
       </div>
       <div className="border-t border-line/50">
         <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-graphite sm:px-6">
-          © {new Date().getFullYear()} {site.name}. All rights reserved. San
-          Diego, California. Microsoft, SharePoint, Teams, OneDrive, Outlook,
-          Microsoft 365, and Copilot are trademarks of the Microsoft group of
-          companies.
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>
       </div>
     </footer>
