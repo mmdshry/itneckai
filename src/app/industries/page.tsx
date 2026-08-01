@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { CtaBanner, Eyebrow, Section } from "@/components/ui";
@@ -8,10 +8,10 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Industries We Serve",
   description:
-    "ITneck AI builds Microsoft Copilot agents and AI solutions for professional services, healthcare admin, finance ops, manufacturing, legal, and more.",
+    "ai.neck builds Microsoft Copilot agents and AI solutions for professional services, healthcare admin, finance ops, manufacturing, legal, and more.",
   alternates: { canonical: absoluteUrl("/industries") },
   openGraph: {
-    title: "Industries We Serve | ITneck AI",
+    title: "Industries We Serve | ai.neck",
     description:
       "AI solutions and Microsoft Copilot agents for professional services, healthcare administration, finance operations, manufacturing, and more.",
     url: absoluteUrl("/industries"),
@@ -68,13 +68,10 @@ export default function IndustriesPage() {
       </Section>
 
       <Section className="pt-0">
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-10 md:grid-cols-2">
           {industries.map((industry) => (
-            <article
-              key={industry.name}
-              className="rounded-lg border border-line bg-surface/50 p-6 md:p-8"
-            >
-              <h2 className="font-display text-xl font-semibold text-cloud">
+            <article key={industry.name}>
+              <h2 className="font-display text-xl font-semibold text-navy">
                 {industry.name}
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-graphite">

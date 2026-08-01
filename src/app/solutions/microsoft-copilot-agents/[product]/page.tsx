@@ -71,7 +71,7 @@ export default async function CopilotProductPage({ params }: Props) {
         <p className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-cyan">
           <Icon width={16} height={16} /> {product.short} · Connected
         </p>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-cloud md:text-5xl">
+        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-navy md:text-5xl">
           {product.headline}
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-graphite">
@@ -80,16 +80,13 @@ export default async function CopilotProductPage({ params }: Props) {
       </Section>
 
       <Section className="pt-0" aria-label={`What we build for ${product.name}`}>
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-cloud md:text-3xl">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-navy md:text-3xl">
           What we build for {product.name}
         </h2>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-10 md:grid-cols-3">
           {product.useCases.map((uc) => (
-            <article
-              key={uc.name}
-              className="rounded-lg border border-line bg-surface/50 p-6"
-            >
-              <h3 className="font-display text-lg font-semibold text-cloud">
+            <article key={uc.name}>
+              <h3 className="font-display text-lg font-semibold text-navy">
                 {uc.name}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-graphite">
@@ -99,15 +96,15 @@ export default async function CopilotProductPage({ params }: Props) {
           ))}
         </div>
 
-        <div className="mt-12 rounded-lg border border-cyan/40 bg-surface p-6 md:p-8">
-          <h2 className="font-display text-xl font-semibold text-cloud">
+        <div className="mt-14 border-t border-line pt-10">
+          <h2 className="font-display text-xl font-semibold text-navy">
             What changes for your team
           </h2>
           <ul className="mt-4 grid gap-3 md:grid-cols-3">
             {product.outcomes.map((outcome) => (
               <li key={outcome} className="flex items-start gap-3">
                 <CheckIcon className="mt-1 shrink-0 text-cyan" />
-                <span className="text-sm text-cloud/90">{outcome}</span>
+                <span className="text-sm text-navy/90">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -117,12 +114,12 @@ export default async function CopilotProductPage({ params }: Props) {
           <h2 className="font-mono text-xs uppercase tracking-widest text-graphite">
             Copilot agents for other Microsoft apps
           </h2>
-          <ul className="mt-4 flex flex-wrap gap-3">
+          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
             {others.map((p) => (
               <li key={p.slug}>
                 <Link
                   href={`/solutions/microsoft-copilot-agents/${p.slug}`}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-md border border-line px-4 text-sm text-cloud/90 transition-colors hover:border-cyan/50 hover:text-cyan"
+                  className="inline-flex min-h-11 items-center gap-2 text-sm text-navy transition-colors hover:text-cyan"
                 >
                   {p.name}
                   <ArrowRightIcon />

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { NapBlock } from "@/components/NapBlock";
 import { Eyebrow, Section } from "@/components/ui";
@@ -9,10 +9,10 @@ import { ContactForm } from "./ContactForm";
 export const metadata: Metadata = {
   title: "Contact Us — Book a Consultation",
   description:
-    "Book a consultation with ITneck AI. Tell us about your Microsoft 365 stack and AI goals — we typically reply within one business day. San Diego, CA.",
+    "Book a consultation with ai.neck. Tell us about your Microsoft 365 stack and AI goals — we typically reply within one business day. San Diego, CA.",
   alternates: { canonical: absoluteUrl("/contact") },
   openGraph: {
-    title: "Contact Us — Book a Consultation | ITneck AI",
+    title: "Contact Us — Book a Consultation | ai.neck",
     description:
       "Tell us about your Microsoft 365 stack and AI goals. We typically reply within one business day.",
     url: absoluteUrl("/contact"),
@@ -32,21 +32,21 @@ export default function ContactPage() {
           workflows, and where an agent would earn its keep. No slide deck.
         </p>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
-          <div className="rounded-lg border border-line bg-surface/50 p-6 md:p-8">
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+          <div>
             <h2 className="sr-only">Consultation request form</h2>
             <ContactForm />
           </div>
 
           <aside
             aria-label="Direct contact information"
-            className="h-fit rounded-lg border border-line bg-surface/50 p-6 md:p-8"
+            className="h-fit border-t border-line pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"
           >
             <h2 className="font-mono text-xs uppercase tracking-widest text-cyan">
               Prefer to reach out directly?
             </h2>
             <NapBlock className="mt-5" />
-            <p className="mt-6 border-t border-line/50 pt-5 text-sm text-graphite">
+            <p className="mt-6 border-t border-line pt-5 text-sm text-graphite">
               Phone and email reach a person, not a queue. If you email us,
               include your Microsoft 365 setup and what you&apos;re trying to
               automate — it makes the first call twice as useful.

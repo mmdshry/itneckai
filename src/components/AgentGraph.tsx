@@ -8,27 +8,30 @@ type Satellite = {
 };
 
 const CX = 240;
-const CY = 205;
+const CY = 210;
 
 const satellites: Satellite[] = [
   { icon: "sharepoint", label: "SHAREPOINT", x: 240, y: 52 },
   { icon: "teams", label: "TEAMS", x: 386, y: 158 },
-  { icon: "outlook", label: "OUTLOOK", x: 330, y: 330 },
-  { icon: "m365", label: "M365", x: 150, y: 330 },
+  { icon: "outlook", label: "OUTLOOK", x: 330, y: 340 },
+  { icon: "m365", label: "M365", x: 150, y: 340 },
   { icon: "onedrive", label: "ONEDRIVE", x: 94, y: 158 },
 ];
 
+/** Brand navy — stays fixed so the core node stays readable in dark mode. */
+const BRAND_NAVY = "#02376b";
+
 /**
- * The hero "Agent Graph": a central ITneck Agent node connected to five
+ * The hero "Agent Graph": a central ai.neck Agent node connected to five
  * Microsoft product nodes. Rendered as static SVG animated purely with CSS
  * (see globals.css) — zero JavaScript, respects prefers-reduced-motion.
  */
 export function AgentGraph() {
   return (
     <svg
-      viewBox="0 0 480 420"
+      viewBox="0 0 480 400"
       role="img"
-      aria-label="Diagram of an ITneck AI agent at the center, connected to SharePoint, Teams, Outlook, Microsoft 365, and OneDrive."
+      aria-label="Diagram of an ai.neck agent at the center, connected to SharePoint, Teams, Outlook, Microsoft 365, and OneDrive."
       className="h-auto w-full max-w-lg"
     >
       <g aria-hidden="true">
@@ -40,8 +43,8 @@ export function AgentGraph() {
             y1={CY}
             x2={s.x}
             y2={s.y}
-            stroke="var(--signal-cyan)"
-            strokeOpacity="0.45"
+            stroke="var(--void-navy)"
+            strokeOpacity="0.2"
             strokeWidth="1.5"
             className="graph-link"
             style={{ animationDelay: `${0.05 + i * 0.06}s` }}
@@ -61,9 +64,9 @@ export function AgentGraph() {
                 cx={s.x}
                 cy={s.y}
                 r="27"
-                fill="var(--slate-surface)"
-                stroke="var(--signal-cyan)"
-                strokeOpacity="0.4"
+                fill="var(--page)"
+                stroke="var(--void-navy)"
+                strokeOpacity="0.2"
                 strokeWidth="1.5"
               />
               <Icon
@@ -71,7 +74,7 @@ export function AgentGraph() {
                 y={s.y - 12}
                 width={24}
                 height={24}
-                stroke="var(--signal-cyan)"
+                stroke="var(--void-navy)"
               />
               <text
                 x={s.x}
@@ -96,7 +99,7 @@ export function AgentGraph() {
             r="52"
             fill="none"
             stroke="var(--signal-cyan)"
-            strokeOpacity="0.35"
+            strokeOpacity="0.45"
             strokeWidth="1"
             strokeDasharray="4 4"
             className="graph-ring"
@@ -106,20 +109,20 @@ export function AgentGraph() {
               cx={CX}
               cy={CY}
               r="40"
-              fill="var(--slate-surface)"
-              stroke="var(--signal-cyan)"
+              fill={BRAND_NAVY}
+              stroke={BRAND_NAVY}
               strokeWidth="1.5"
             />
             <text
               x={CX}
               y={CY - 2}
               textAnchor="middle"
-              fill="var(--cloud-white)"
-              fontSize="12"
+              fill="#ffffff"
+              fontSize="11"
               fontWeight="600"
               fontFamily="var(--font-inter), sans-serif"
             >
-              ITneck
+              ai.neck
             </text>
             <text
               x={CX}
@@ -131,30 +134,6 @@ export function AgentGraph() {
               fontFamily="var(--font-inter), sans-serif"
             >
               Agent
-            </text>
-          </g>
-          <g>
-            <rect
-              x={CX - 62}
-              y={CY + 62}
-              width="124"
-              height="22"
-              rx="11"
-              fill="var(--void-navy)"
-              stroke="var(--signal-cyan)"
-              strokeOpacity="0.4"
-            />
-            <circle cx={CX - 48} cy={CY + 73} r="3" fill="var(--signal-cyan)" />
-            <text
-              x={CX + 4}
-              y={CY + 76.5}
-              textAnchor="middle"
-              fill="var(--signal-cyan)"
-              fontSize="9"
-              letterSpacing="0.1em"
-              fontFamily="var(--font-jetbrains), monospace"
-            >
-              STATUS: LIVE
             </text>
           </g>
         </g>

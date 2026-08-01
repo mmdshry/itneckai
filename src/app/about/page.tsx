@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { NapBlock } from "@/components/NapBlock";
@@ -9,10 +9,10 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "ITneck AI is a San Diego, California-based AI solutions company specializing in Microsoft Copilot agents for SharePoint, Teams, OneDrive, and Outlook.",
+    "ai.neck is a San Diego, California-based AI solutions company specializing in Microsoft Copilot agents for SharePoint, Teams, OneDrive, and Outlook.",
   alternates: { canonical: absoluteUrl("/about") },
   openGraph: {
-    title: "About Us | ITneck AI",
+    title: "About Us | ai.neck",
     description:
       "San Diego-based AI solutions company specializing in Microsoft Copilot agents across the Microsoft 365 ecosystem.",
     url: absoluteUrl("/about"),
@@ -25,12 +25,12 @@ export default function AboutPage() {
       <Section className="pt-32 md:pt-40">
         <Eyebrow>About</Eyebrow>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-cloud md:text-5xl">
-          About ITneck AI
+          About ai.neck
         </h1>
         <div className="mt-8 grid gap-12 md:grid-cols-[1.5fr_1fr]">
           <div className="space-y-5 text-lg leading-relaxed text-graphite">
             <p>
-              ITneck AI is a San Diego, California-based AI solutions company
+              ai.neck is a San Diego, California-based AI solutions company
               built for one purpose: making artificial intelligence actually
               useful inside the software companies already run on. We work
               across the full spectrum of AI-related challenges, and we go
@@ -64,7 +64,7 @@ export default function AboutPage() {
 
           <aside
             aria-label="Contact information"
-            className="h-fit rounded-lg border border-line bg-surface/50 p-6"
+            className="h-fit border-t border-line pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0"
           >
             <h2 className="font-mono text-xs uppercase tracking-widest text-cyan">
               Reach us

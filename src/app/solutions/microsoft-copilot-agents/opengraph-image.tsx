@@ -1,8 +1,8 @@
-import { ogImage, ogSize } from "@/lib/og";
+﻿import { ogImage, ogSize } from "@/lib/og";
 
 export const size = ogSize;
 export const contentType = "image/png";
-export const alt = "ITneck AI — Microsoft Copilot Agent Development";
+export const alt = "ai.neck — Microsoft Copilot Agent Development";
 
 export default function Image() {
   return ogImage(

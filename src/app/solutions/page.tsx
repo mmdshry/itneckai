@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckIcon } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
@@ -9,10 +9,10 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "AI Solutions for Business",
   description:
-    "Custom AI agents, process automation, AI integration, and Microsoft Copilot agents — ITneck AI solves AI problems for companies of any size.",
+    "Custom AI agents, process automation, AI integration, and Microsoft Copilot agents — ai.neck solves AI problems for companies of any size.",
   alternates: { canonical: absoluteUrl("/solutions") },
   openGraph: {
-    title: "AI Solutions for Business | ITneck AI",
+    title: "AI Solutions for Business | ai.neck",
     description:
       "Custom AI agents, process automation, AI integration, and Microsoft Copilot agents for companies of any size.",
     url: absoluteUrl("/solutions"),
@@ -61,7 +61,7 @@ export default function SolutionsPage() {
           AI solutions for the problems you actually have.
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-graphite">
-          ITneck AI works across the full spectrum of AI-related challenges —
+          ai.neck works across the full spectrum of AI-related challenges —
           for companies of any size. Below is the general practice; our
           deepest specialty,{" "}
           <Link
@@ -75,14 +75,14 @@ export default function SolutionsPage() {
       </Section>
 
       <Section className="pt-0">
-        <div className="space-y-6">
+        <div className="divide-y divide-line">
           {solutions.map((s) => (
             <article
               key={s.name}
-              className="grid gap-6 rounded-lg border border-line bg-surface/50 p-6 md:grid-cols-[1.2fr_1fr] md:p-8"
+              className="grid gap-6 py-10 first:pt-0 md:grid-cols-[1.2fr_1fr]"
             >
               <div>
-                <h2 className="font-display text-2xl font-semibold text-cloud">
+                <h2 className="font-display text-2xl font-semibold text-navy">
                   {s.name}
                 </h2>
                 <p className="mt-3 leading-relaxed text-graphite">
@@ -93,7 +93,7 @@ export default function SolutionsPage() {
                 {s.points.map((point) => (
                   <li key={point} className="flex items-start gap-3">
                     <CheckIcon className="mt-1 shrink-0 text-cyan" />
-                    <span className="text-sm text-cloud/90">{point}</span>
+                    <span className="text-sm text-navy/90">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -101,11 +101,11 @@ export default function SolutionsPage() {
           ))}
 
           {/* Featured: Copilot agents */}
-          <article className="rounded-lg border border-cyan/50 bg-surface p-6 md:p-8">
+          <article className="py-10">
             <p className="font-mono text-[10px] uppercase tracking-widest text-cyan">
               Core specialty
             </p>
-            <h2 className="mt-3 font-display text-2xl font-semibold text-cloud">
+            <h2 className="mt-3 font-display text-2xl font-semibold text-navy">
               Microsoft Copilot Agents
             </h2>
             <p className="mt-3 max-w-3xl leading-relaxed text-graphite">

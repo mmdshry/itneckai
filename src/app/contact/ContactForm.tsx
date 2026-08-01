@@ -15,9 +15,9 @@ import { submitContact } from "./actions";
 type Status = { state: "idle" | "sending" | "success" | "error"; message?: string };
 
 const inputClasses =
-  "mt-1.5 w-full rounded-md border border-line bg-navy px-3.5 py-3 text-sm text-cloud placeholder:text-ink-muted aria-[invalid=true]:border-red-400";
-const labelClasses = "block text-sm font-medium text-cloud";
-const errorClasses = "mt-1.5 text-sm text-red-300";
+  "mt-1.5 w-full rounded-md border border-line bg-page px-3.5 py-3 text-sm text-navy placeholder:text-ink-muted aria-[invalid=true]:border-red-500";
+const labelClasses = "block text-sm font-medium text-navy";
+const errorClasses = "mt-1.5 text-sm text-red-600";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
@@ -201,7 +201,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status.state === "sending"}
-        className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-amber px-6 text-base font-semibold text-navy transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status.state === "sending" ? "Sending…" : "Send Message"}
       </button>
@@ -209,13 +209,13 @@ export function ContactForm() {
       {/* Screen readers are told about success/error via this polite live region */}
       <div aria-live="polite" role="status">
         {status.state === "success" && (
-          <p className="mt-5 flex items-start gap-2 rounded-md border border-cyan/50 bg-cyan/10 px-4 py-3 text-sm text-cyan">
-            <CheckIcon className="mt-0.5 shrink-0" />
+          <p className="mt-5 flex items-start gap-2 rounded-md border border-cyan/40 bg-cyan/5 px-4 py-3 text-sm text-navy">
+            <CheckIcon className="mt-0.5 shrink-0 text-cyan" />
             {status.message}
           </p>
         )}
         {status.state === "error" && (
-          <p className="mt-5 rounded-md border border-red-400/50 bg-red-400/10 px-4 py-3 text-sm text-red-300">
+          <p className="mt-5 rounded-md border border-red-500/40 bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300">
             {status.message}{" "}
             <a
               href={`mailto:${site.email}`}

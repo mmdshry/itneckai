@@ -82,7 +82,7 @@ export async function submitContact(input: unknown): Promise<ContactResult> {
   }
 
   const html = `
-    <h2>New consultation request — itneck.com</h2>
+    <h2>New consultation request — ai.neck</h2>
     <table cellpadding="6" style="border-collapse:collapse">
       <tr><td><strong>Name</strong></td><td>${escapeHtml(data.fullName)}</td></tr>
       <tr><td><strong>Work email</strong></td><td>${escapeHtml(data.workEmail)}</td></tr>
@@ -97,10 +97,10 @@ export async function submitContact(input: unknown): Promise<ContactResult> {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
       from:
-        process.env.CONTACT_FROM_EMAIL ?? "ITneck AI Website <onboarding@resend.dev>",
+        process.env.CONTACT_FROM_EMAIL ?? "ai.neck Website <onboarding@resend.dev>",
       to: [site.email],
       replyTo: data.workEmail,
-      subject: `[itneck.com] ${data.topic} — ${data.fullName} (${data.company})`,
+      subject: `[ai.neck] ${data.topic} — ${data.fullName} (${data.company})`,
       html,
       text: `Name: ${data.fullName}\nEmail: ${data.workEmail}\nCompany: ${data.company}\nPhone: ${data.phone || "—"}\nTopic: ${data.topic}\n\n${data.message}`,
     });

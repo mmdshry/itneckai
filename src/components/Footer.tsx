@@ -6,10 +6,10 @@ import {NapBlock} from "@/components/NapBlock";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-surface">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+    <footer className="border-t border-line bg-page">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:px-8 md:grid-cols-3">
         <div>
-          <Link href="/" aria-label="ITneck AI — home" className="inline-flex">
+          <Link href="/" aria-label="ai.neck — home" className="inline-flex">
             <Logo />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-graphite">{site.tagline}</p>
@@ -19,8 +19,8 @@ export function Footer() {
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ITneck AI on Instagram (opens in a new tab)"
-                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                aria-label="ai.neck on Instagram (opens in a new tab)"
+                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-navy/30 hover:text-navy"
               >
                 <InstagramIcon />
               </a>
@@ -30,8 +30,8 @@ export function Footer() {
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ITneck AI on LinkedIn (opens in a new tab)"
-                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                aria-label="ai.neck on LinkedIn (opens in a new tab)"
+                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-navy/30 hover:text-navy"
               >
                 <LinkedInIcon />
               </a>
@@ -48,7 +48,7 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-cyan"
+                  className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
                 >
                   {item.label}
                 </Link>
@@ -64,8 +64,8 @@ export function Footer() {
           <NapBlock className="mt-4" />
         </div>
       </div>
-      <div className="border-t border-line/50">
-        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-graphite sm:px-6">
+      <div className="border-t border-line">
+        <p className="mx-auto max-w-6xl px-6 py-5 text-xs text-graphite sm:px-8">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>
       </div>

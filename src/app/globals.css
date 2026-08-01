@@ -1,23 +1,40 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
-  ITneck AI design tokens — contrast-checked pairings:
-  - cloud (#F4F6F9) on navy (#0B1120)      → 17.5:1  AAA
-  - graphite (#8A94A6) on navy (#0B1120)   →  6.1:1  AA body
-  - graphite (#8A94A6) on surface (#151E32)→  5.5:1  AA body
-  - cyan (#34D6C4) on navy (#0B1120)       →  9.6:1  AA (any size)
-  - navy (#0B1120) on amber (#F2A65A)      →  8.3:1  AA (CTA button)
-  - ink-muted (#49536B) on cloud (#F4F6F9) →  6.7:1  AA body on light
+  ai.neck — light minimal palette (logo navy / orange on white):
+  - navy (#02376B) on white (#FFFFFF)         →  AAA body / display
+  - muted (#5C6678) on white                  →  AA body
+  - white on navy (#02376B)                   →  AA (inverse CTA)
+  - white / navy on orange (#F9690E)          →  AA (primary CTA)
+  - orange (#F9690E) accents on white         →  large / UI chrome
 */
 :root {
-  --void-navy: #0b1120;
-  --slate-surface: #151e32;
-  --cloud-white: #f4f6f9;
-  --signal-cyan: #34d6c4;
-  --ember-amber: #f2a65a;
-  --graphite: #8a94a6;
-  --ink-muted: #49536b;
-  --line: rgba(52, 214, 196, 0.16);
+  --void-navy: #02376b;
+  --slate-surface: #f5f7fa;
+  --cloud-white: #02376b;
+  --signal-cyan: #f9690e;
+  --ember-amber: #f9690e;
+  --graphite: #5c6678;
+  --ink-muted: #8a94a6;
+  --line: rgba(2, 55, 107, 0.12);
+  --page: #ffffff;
+  --header-scrolled-bg: #ffffff;
+}
+
+.dark,
+html[data-theme="dark"] {
+  --void-navy: #e8eef6;
+  --slate-surface: #121a2a;
+  --cloud-white: #e8eef6;
+  --signal-cyan: #f9690e;
+  --ember-amber: #f9690e;
+  --graphite: #9aa6b8;
+  --ink-muted: #7a8799;
+  --line: rgba(232, 238, 246, 0.14);
+  --page: #0b1220;
+  --header-scrolled-bg: #0b1220;
 }
 
 @theme inline {
@@ -29,6 +46,7 @@
   --color-graphite: var(--graphite);
   --color-ink-muted: var(--ink-muted);
   --color-line: var(--line);
+  --color-page: var(--page);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-clash), var(--font-inter), ui-sans-serif, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
@@ -36,10 +54,15 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--void-navy);
+  background: var(--page);
   color: var(--cloud-white);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,7 +70,7 @@ body {
 
 ::selection {
   background: var(--signal-cyan);
-  color: var(--void-navy);
+  color: #ffffff;
 }
 
 /* Visible, consistent focus ring on every interactive element */
@@ -57,13 +80,21 @@ body {
   border-radius: 2px;
 }
 
-/* ---------- Signal Spine (scroll-driven, zero JS) ---------- */
+/* Opaque scrolled header — solid page color so content never shows through */
+.site-header--scrolled {
+  background-color: var(--header-scrolled-bg) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line);
+}
+
+/* ---------- Soft scroll progress (subtle, DataNet-quiet) ---------- */
 .spine {
   position: fixed;
   top: 0;
   bottom: 0;
   left: max(calc((100vw - 72rem) / 2 - 2.5rem), 0.75rem);
-  width: 2px;
+  width: 1px;
   background: var(--line);
   z-index: 40;
   pointer-events: none;
@@ -72,7 +103,7 @@ body {
 .spine-fill {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, var(--signal-cyan), rgba(52, 214, 196, 0.35));
+  background: linear-gradient(to bottom, var(--signal-cyan), rgba(249, 105, 14, 0.25));
   transform-origin: top;
   transform: scaleY(0);
 }

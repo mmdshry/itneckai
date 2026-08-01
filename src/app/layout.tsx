@@ -41,8 +41,8 @@ const clash = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "ITneck AI | Microsoft Copilot Agents & AI Solutions",
-    template: "%s | ITneck AI",
+    default: "ai.neck | Microsoft Copilot Agents & AI Solutions",
+    template: "%s | ai.neck",
   },
   description: site.description,
   openGraph: {
@@ -63,8 +63,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0b1120",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1220" },
+  ],
 };
+
+const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -72,13 +77,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         className={`${inter.variable} ${jetbrains.variable} ${clash.variable} antialiased`}
       >
         <a
           href="#main"
-          className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-md bg-cyan px-4 py-2 text-sm font-semibold text-navy transition-transform focus:translate-y-0"
+          className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-md bg-amber px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0"
         >
           Skip to main content
         </a>

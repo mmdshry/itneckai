@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Eyebrow, Section } from "@/components/ui";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How ITneck AI handles the information you share with us: what we collect through the contact form, how we use it, and how to reach us about it.",
+    "How ai.neck handles the information you share with us: what we collect through the contact form, how we use it, and how to reach us about it.",
   alternates: { canonical: absoluteUrl("/privacy") },
   robots: { index: true, follow: true },
 };

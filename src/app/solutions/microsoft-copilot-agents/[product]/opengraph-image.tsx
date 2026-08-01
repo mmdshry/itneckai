@@ -3,7 +3,7 @@ import { copilotProducts, getProduct } from "@/lib/copilot-agents";
 
 export const size = ogSize;
 export const contentType = "image/png";
-export const alt = "ITneck AI — Microsoft Copilot agents";
+export const alt = "ai.neck — Microsoft Copilot agents";
 
 export function generateStaticParams() {
   return copilotProducts.map((p) => ({ product: p.slug }));

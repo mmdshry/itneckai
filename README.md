@@ -1,6 +1,6 @@
-# ITneck AI — Marketing Website
+# ai.neck — Marketing Website
 
-Marketing site for ITneck AI, a San Diego-based AI solutions company specializing in Microsoft Copilot agents across SharePoint, Teams, OneDrive, Outlook, and Microsoft 365.
+Marketing site for ai.neck, a San Diego-based AI solutions company specializing in Microsoft Copilot agents across SharePoint, Teams, OneDrive, Outlook, and Microsoft 365.
 
 Built with **Next.js 15 (App Router) + React 19 + TypeScript + Tailwind CSS v4**. Every route is statically generated (SSG) for full SEO/performance, with SPA-style client-side transitions between pages.
 

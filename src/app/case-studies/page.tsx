@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { CtaBanner, Eyebrow, Section } from "@/components/ui";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -7,12 +7,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Results from ITneck AI's Microsoft Copilot agent and AI solution deployments. Client case studies published as they are approved for release.",
+    "Results from ai.neck's Microsoft Copilot agent and AI solution deployments. Client case studies published as they are approved for release.",
   alternates: { canonical: absoluteUrl("/case-studies") },
   openGraph: {
-    title: "Case Studies | ITneck AI",
+    title: "Case Studies | ai.neck",
     description:
-      "Results from ITneck AI's Microsoft Copilot agent and AI deployments.",
+      "Results from ai.neck's Microsoft Copilot agent and AI deployments.",
     url: absoluteUrl("/case-studies"),
   },
 };
@@ -57,16 +57,13 @@ export default function CaseStudiesPage() {
       </Section>
 
       <Section className="pt-0">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="divide-y divide-line">
           {placeholders.map((item, i) => (
-            <article
-              key={i}
-              className="rounded-lg border border-dashed border-line bg-surface/30 p-6"
-            >
+            <article key={i} className="py-8 first:pt-0">
               <p className="font-mono text-[10px] uppercase tracking-widest text-graphite">
                 {item.label}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-graphite">
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-graphite">
                 {item.summary}
               </p>
             </article>

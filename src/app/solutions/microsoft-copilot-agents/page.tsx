@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRightIcon, CheckIcon, productIcons } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
@@ -10,10 +10,10 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Microsoft Copilot Agent Development",
   description:
-    "ITneck AI builds custom Copilot agents in Copilot Studio for SharePoint, Teams, OneDrive, Outlook, and Microsoft 365 — deployed where your team works.",
+    "ai.neck builds custom Copilot agents in Copilot Studio for SharePoint, Teams, OneDrive, Outlook, and Microsoft 365 — deployed where your team works.",
   alternates: { canonical: absoluteUrl("/solutions/microsoft-copilot-agents") },
   openGraph: {
-    title: "Microsoft Copilot Agent Development | ITneck AI",
+    title: "Microsoft Copilot Agent Development | ai.neck",
     description:
       "Custom Copilot agents for SharePoint, Teams, OneDrive, Outlook, and Microsoft 365 — built in Copilot Studio, deployed where your team works.",
     url: absoluteUrl("/solutions/microsoft-copilot-agents"),
@@ -44,7 +44,7 @@ export default function CopilotAgentsHubPage() {
           ].map((point) => (
             <li
               key={point}
-              className="flex items-center gap-2 text-sm text-cloud/90"
+              className="flex items-center gap-2 text-sm text-navy/90"
             >
               <CheckIcon className="shrink-0 text-cyan" /> {point}
             </li>
@@ -53,39 +53,41 @@ export default function CopilotAgentsHubPage() {
       </Section>
 
       <Section className="pt-0" aria-label="Copilot agents by product">
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="divide-y divide-line">
           {copilotProducts.map((product) => {
             const Icon = productIcons[product.icon];
             return (
               <Link
                 key={product.slug}
                 href={`/solutions/microsoft-copilot-agents/${product.slug}`}
-                className="group flex h-full flex-col rounded-lg border border-line bg-surface/50 p-6 transition-all hover:-translate-y-1 hover:border-cyan/50 md:p-8"
+                className="group grid gap-4 py-10 first:pt-0 last:pb-0 md:grid-cols-[1fr_1.2fr]"
               >
-                <p className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-cyan">
-                  <Icon width={16} height={16} /> {product.short} · Connected
-                </p>
-                <h2 className="mt-3 font-display text-2xl font-semibold text-cloud">
-                  {product.name}
-                </h2>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-graphite">
-                  {product.whatWeBuild}
-                </p>
-                <ul className="mt-4 space-y-2">
+                <div>
+                  <p className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-cyan">
+                    <Icon width={16} height={16} /> {product.short} · Connected
+                  </p>
+                  <h2 className="mt-3 font-display text-2xl font-semibold text-navy">
+                    {product.name}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-graphite">
+                    {product.whatWeBuild}
+                  </p>
+                  <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-navy group-hover:text-cyan">
+                    {product.name} agents in depth
+                    <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
+                  </p>
+                </div>
+                <ul className="space-y-2 self-center">
                   {product.useCases.map((uc) => (
                     <li
                       key={uc.name}
-                      className="flex items-start gap-2 text-sm text-cloud/90"
+                      className="flex items-start gap-2 text-sm text-navy/90"
                     >
                       <CheckIcon className="mt-0.5 shrink-0 text-cyan" />
                       {uc.name}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-cyan">
-                  {product.name} agents in depth
-                  <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
-                </p>
               </Link>
             );
           })}

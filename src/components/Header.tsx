@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { headerNav } from "@/lib/site";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,10 +16,21 @@ export function Header() {
   const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      const y =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setScrolled(y > 8);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    document.addEventListener("scroll", onScroll, true);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, true);
+    };
   }, []);
 
   const close = useCallback(() => {
@@ -71,17 +83,26 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 ${
         scrolled || open
-          ? "border-b border-line bg-navy/95 backdrop-blur"
-          : "border-b border-transparent bg-transparent"
+          ? "site-header--scrolled border-line"
+          : "border-transparent bg-transparent"
       }`}
+      style={
+        scrolled || open
+          ? {
+              backgroundColor: "var(--header-scrolled-bg)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+            }
+          : undefined
+      }
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6 sm:px-8">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2"
-          aria-label="ITneck AI — home"
+          aria-label="ai.neck — home"
         >
           <Logo />
         </Link>
@@ -94,7 +115,7 @@ export function Header() {
                   href={item.href}
                   aria-current={pathname === item.href ? "page" : undefined}
                   className={`text-sm transition-colors hover:text-cyan ${
-                    pathname === item.href ? "text-cyan" : "text-cloud/85"
+                    pathname === item.href ? "text-cyan" : "text-navy/80"
                   }`}
                 >
                   {item.label}
@@ -105,16 +126,17 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/contact"
-            className="hidden min-h-11 items-center rounded-md bg-amber px-4 text-sm font-semibold text-navy transition-transform hover:-translate-y-0.5 sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-md bg-amber px-4 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:inline-flex"
           >
             Book a Consultation
           </Link>
           <button
             ref={toggleRef}
             type="button"
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-cloud lg:hidden"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-navy lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -129,9 +151,9 @@ export function Header() {
         <div
           ref={drawerRef}
           id="mobile-nav"
-          className="border-t border-line bg-navy lg:hidden"
+          className="border-t border-line site-header--scrolled lg:hidden"
         >
-          <nav aria-label="Mobile" className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+          <nav aria-label="Mobile" className="mx-auto max-w-6xl px-6 py-4 sm:px-8">
             <ul className="flex flex-col">
               {headerNav.map((item) => (
                 <li key={item.href}>
@@ -139,7 +161,7 @@ export function Header() {
                     href={item.href}
                     aria-current={pathname === item.href ? "page" : undefined}
                     className={`flex min-h-11 items-center border-b border-line/50 text-base ${
-                      pathname === item.href ? "text-cyan" : "text-cloud"
+                      pathname === item.href ? "text-cyan" : "text-navy"
                     }`}
                   >
                     {item.label}
@@ -149,7 +171,7 @@ export function Header() {
               <li className="pt-4">
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber px-4 text-sm font-semibold text-navy"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber px-4 text-sm font-semibold text-white"
                 >
                   Book a Consultation
                 </Link>

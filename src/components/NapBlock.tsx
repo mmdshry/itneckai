@@ -13,14 +13,14 @@ export function NapBlock({ className = "" }: { className?: string }) {
         <li className="flex items-start gap-3">
           <PinIcon className="mt-0.5 shrink-0 text-cyan" />
           <span>
-            <span className="block font-medium text-cloud">Postal Address</span>
+            <span className="block font-medium text-navy">Postal Address</span>
             {site.address}
           </span>
         </li>
         <li className="flex items-start gap-3">
           <ClockIcon className="mt-0.5 shrink-0 text-cyan" />
           <span>
-            <span className="block font-medium text-cloud">Work Hours</span>
+            <span className="block font-medium text-navy">Work Hours</span>
             {site.hours[0]}
             <br />
             {site.hours[1]}
@@ -29,7 +29,7 @@ export function NapBlock({ className = "" }: { className?: string }) {
         <li className="flex items-start gap-3">
           <PhoneIcon className="mt-0.5 shrink-0 text-cyan" />
           <span>
-            <span className="block font-medium text-cloud">Phone</span>
+            <span className="block font-medium text-navy">Phone</span>
             <a
               href={`tel:${site.phoneIntl}`}
               className="underline decoration-line underline-offset-4 hover:text-cyan"
@@ -41,7 +41,7 @@ export function NapBlock({ className = "" }: { className?: string }) {
         <li className="flex items-start gap-3">
           <MailIcon className="mt-0.5 shrink-0 text-cyan" />
           <span>
-            <span className="block font-medium text-cloud">Email</span>
+            <span className="block font-medium text-navy">Email</span>
             <a
               href={`mailto:${site.email}`}
               className="underline decoration-line underline-offset-4 hover:text-cyan"
