@@ -7,6 +7,8 @@
   title: string;
   metaDescription: string;
   headline: string;
+    /** Before → after pain hook for marketing surfaces */
+    painHook: string;
   whatWeBuild: string;
   useCases: { name: string; detail: string }[];
   outcomes: string[];
@@ -18,12 +20,14 @@ export const copilotProducts: CopilotProduct[] = [
     name: "SharePoint",
     short: "SHAREPOINT",
     icon: "sharepoint",
-    title: "SharePoint Copilot Agents | ai.neck",
+      title: "Copilot Studio Agents for SharePoint | ai.neck",
     metaDescription:
-      "Custom Copilot agents for SharePoint: document Q&A, intranet knowledge assistants, and permission-aware search. Built by ai.neck in Copilot Studio.",
-    headline: "Copilot agents that turn SharePoint into answers, not archives.",
+        "Custom Copilot Studio agents for SharePoint: document Q&A, intranet knowledge assistants, and permission-aware search. Built by ai.neck in Copilot Studio.",
+      headline: "Copilot Studio agents that turn SharePoint into answers, not archives.",
+      painHook:
+          "Before: the same policy question hits IT and HR every week. After: staff ask in plain language and get a cited answer from the current library — permissions intact.",
     whatWeBuild:
-      "Most companies store years of policies, procedures, and project documents in SharePoint — and nobody can find any of it. We build Copilot agents in Copilot Studio that ground their answers in your SharePoint content, respect your existing permission model, and respond inside the tools your team already has open.",
+        "Most companies store years of policies, procedures, and project documents in SharePoint — and nobody can find any of it. We build Copilot Studio agents that ground their answers in your SharePoint content, respect your existing permission model, and respond inside the tools your team already has open.",
     useCases: [
       {
         name: "Document Q&A agents",
@@ -52,12 +56,14 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Teams",
     short: "TEAMS",
     icon: "teams",
-    title: "Microsoft Teams Copilot Agents | ai.neck",
+      title: "Copilot Studio Agents for Microsoft Teams | ai.neck",
     metaDescription:
-      "Custom Copilot agents for Microsoft Teams: meeting-embedded assistants, approval workflow bots, and Adaptive Card request forms. Built by ai.neck.",
-    headline: "Agents that work where your team already talks.",
+        "Custom Copilot Studio agents for Microsoft Teams: meeting-embedded assistants, approval workflow bots, and Adaptive Card request forms. Built by ai.neck in Copilot Studio.",
+      headline: "Copilot Studio agents that work where your team already talks.",
+      painHook:
+          "Before: approvals die in chat and inboxes. After: requests land as Adaptive Cards in the channel, routed with Power Automate and a full audit trail.",
     whatWeBuild:
-      "Teams is where decisions happen, so it is where agents earn their keep. We build agents that join channels and meetings as first-class participants: answering questions, routing approvals, and turning chat messages into structured, tracked requests via Adaptive Cards.",
+        "Teams is where decisions happen, so it is where agents earn their keep. We build Copilot Studio agents that join channels and meetings as first-class participants: answering questions, routing approvals, and turning chat messages into structured, tracked requests via Adaptive Cards.",
     useCases: [
       {
         name: "Meeting-embedded agents",
@@ -86,12 +92,14 @@ export const copilotProducts: CopilotProduct[] = [
     name: "OneDrive",
     short: "ONEDRIVE",
     icon: "onedrive",
-    title: "OneDrive Copilot Agents | ai.neck",
+      title: "Copilot Studio Agents for OneDrive | ai.neck",
     metaDescription:
-      "Custom Copilot agents for OneDrive: file summarization, smart organization and retention, and content classification. Built by ai.neck in Copilot Studio.",
-    headline: "Agents that keep personal file storage from becoming a liability.",
+        "Custom Copilot Studio agents for OneDrive: file summarization, smart organization and retention, and content classification. Built by ai.neck in Copilot Studio.",
+      headline: "Copilot Studio agents that keep personal file storage from becoming a liability.",
+      painHook:
+          "Before: work-in-progress files vanish into personal drives. After: summaries, labels, and moves to the right SharePoint library happen with an agent — not a cleanup weekend.",
     whatWeBuild:
-      "OneDrive is where work-in-progress lives — and where documents quietly go to disappear. We build agents that summarize, classify, and organize files as they accumulate, so knowledge stays findable and retention policy is applied by software instead of by hope.",
+        "OneDrive is where work-in-progress lives — and where documents quietly go to disappear. We build Copilot Studio agents that summarize, classify, and organize files as they accumulate, so knowledge stays findable and retention policy is applied by software instead of by hope. Highest leverage for lean teams and document-heavy practices where personal drives hold critical drafts.",
     useCases: [
       {
         name: "File-summary agents",
@@ -120,12 +128,14 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Microsoft 365",
     short: "M365",
     icon: "m365",
-    title: "Microsoft 365 Copilot Agents | ai.neck",
+      title: "Copilot Studio Agents for Microsoft 365 | ai.neck",
     metaDescription:
-      "Cross-app Copilot agents for Microsoft 365 that read and write across the Graph: orchestration across Teams, SharePoint, Outlook, and OneDrive. By ai.neck.",
-    headline: "One agent, every app: orchestration across the Microsoft Graph.",
+        "Cross-app Copilot Studio agents for Microsoft 365 that read and write across the Graph: orchestration across Teams, SharePoint, Outlook, and OneDrive. Built by ai.neck in Copilot Studio.",
+      headline: "One Copilot Studio agent, every app: orchestration across the Microsoft Graph.",
+      painHook:
+          "Before: onboarding or status checks bounce between apps by hand. After: one agent coordinates SharePoint, Teams, Outlook, and OneDrive end to end — still inside your Graph permissions.",
     whatWeBuild:
-      "The highest-value agents don't live in one app — they coordinate several. Using Microsoft Graph connectors and Power Platform, we build agents that read and write across Teams, SharePoint, Outlook, and OneDrive to execute complete business processes, not just answer questions.",
+        "The highest-value agents don't live in one app — they coordinate several. Using Microsoft Graph connectors, Power Platform, and Copilot Studio, we build agents that read and write across Teams, SharePoint, Outlook, and OneDrive to execute complete business processes, not just answer questions.",
     useCases: [
       {
         name: "Cross-app orchestration agents",
@@ -154,12 +164,14 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Outlook",
     short: "OUTLOOK",
     icon: "outlook",
-    title: "Outlook Copilot Agents | ai.neck",
+      title: "Copilot Studio Agents for Outlook | ai.neck",
     metaDescription:
-      "Custom Copilot agents for Outlook: inbox triage, meeting-prep briefings, and auto-drafted replies grounded in company data. Built by ai.neck.",
-    headline: "Agents that give your team their inbox back.",
+        "Custom Copilot Studio agents for Outlook: inbox triage, meeting-prep briefings, and auto-drafted replies grounded in company data. Built by ai.neck in Copilot Studio.",
+      headline: "Copilot Studio agents that give your team their inbox back.",
+      painHook:
+          "Before: meeting prep is a late-night scramble across mail and files. After: a Graph-grounded brief lands before you walk in — drafted by a Copilot Studio agent, reviewed by you.",
     whatWeBuild:
-      "Email is still where external business happens, and it is still where hours disappear. We build Outlook agents that triage, brief, and draft — grounded in your company's actual data — so people spend their attention on judgment calls, not sorting.",
+        "Email is still where external business happens, and it is still where hours disappear. We build Copilot Studio agents for Outlook that triage, brief, and draft — grounded in your company's actual data — so people spend their attention on judgment calls, not sorting. These are custom Studio agents, not a substitute for Microsoft’s licensed Microsoft 365 Copilot SKU.",
     useCases: [
       {
         name: "Inbox triage agents",

@@ -28,7 +28,7 @@ npm start
 - **Contact form**: React Hook Form + Zod client-side, re-validated server-side in `src/app/contact/actions.ts` (server action) with honeypot + in-memory rate limiting, delivered via [Resend](https://resend.com) to Support@ITneck.com.
 - **SEO**: unique metadata + canonical per route, Organization/Service/BreadcrumbList JSON-LD (`src/lib/schema.ts`), `sitemap.xml`/`robots.txt`/`manifest` via App Router metadata routes, and per-page 1200×630 OG images generated at build (`src/lib/og.tsx`).
 - **Security headers** (HSTS, CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy) are set in `next.config.ts`.
-- **Icons**: regenerate favicon/app icons from `public/icon.svg` with `node scripts/generate-icons.mjs`.
+- **Icons**: regenerate favicon/app icons from `public/brand/favicon.png` with `node scripts/generate-icons.mjs`.
 
 ## Environment variables
 

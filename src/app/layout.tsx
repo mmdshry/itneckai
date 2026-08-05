@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import type {Metadata} from "next";
+import {Inter, JetBrains_Mono} from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { JsonLd } from "@/components/JsonLd";
-import { organizationSchema } from "@/lib/schema";
-import { site } from "@/lib/site";
+import {Header} from "@/components/Header";
+import {Footer} from "@/components/Footer";
+import {JsonLd} from "@/components/JsonLd";
+import {organizationSchema} from "@/lib/schema";
+import {site} from "@/lib/site";
 
 // display: "optional" + no preload — text paints immediately with matched
 // fallback metrics and never reflows for a late font, keeping LCP/CLS at
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+        {url: "/icon-192.png", sizes: "192x192", type: "image/png"},
     ],
     apple: "/apple-touch-icon.png",
   },

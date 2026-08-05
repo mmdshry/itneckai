@@ -1,16 +1,12 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { CheckIcon } from "@/components/icons";
-import {
-  contactSchema,
-  helpTopics,
-  type ContactInput,
-} from "@/lib/contact-schema";
-import { site } from "@/lib/site";
-import { submitContact } from "./actions";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useState} from "react";
+import {useForm} from "react-hook-form";
+import {CheckIcon} from "@/components/icons";
+import {type ContactInput, contactSchema, helpTopics,} from "@/lib/contact-schema";
+import {site} from "@/lib/site";
+import {submitContact} from "./actions";
 
 type Status = { state: "idle" | "sending" | "success" | "error"; message?: string };
 
@@ -203,7 +199,7 @@ export function ContactForm() {
         disabled={status.state === "sending"}
         className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        {status.state === "sending" ? "Sending…" : "Send Message"}
+          {status.state === "sending" ? "Sending…" : "Request a working session"}
       </button>
 
       {/* Screen readers are told about success/error via this polite live region */}

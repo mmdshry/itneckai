@@ -3,7 +3,7 @@
   url: "https://www.itneck.com",
   tagline: "AI That Works Inside the Tools You Already Use.",
   description:
-    "ai.neck designs, builds, and deploys custom AI solutions for companies of any size — with specialized depth in Microsoft Copilot Studio and Power Platform. We build agents that live inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365, so your team gets AI without learning a new tool.",
+      "ai.neck builds custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365. AI without a new tool to learn.",
   email: "Support@ITneck.com",
   phone: "858-740-8878",
   phoneIntl: "+1-858-740-8878",

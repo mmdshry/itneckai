@@ -7,7 +7,7 @@ import {NapBlock} from "@/components/NapBlock";
 export function Footer() {
   return (
     <footer className="border-t border-line bg-page">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:px-8 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
           <Link href="/" aria-label="ai.neck — home" className="inline-flex">
             <Logo />
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-line">
-        <p className="mx-auto max-w-6xl px-6 py-5 text-xs text-graphite sm:px-8">
+          <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-graphite sm:px-6">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>
       </div>

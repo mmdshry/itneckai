@@ -1,55 +1,24 @@
-﻿import type { Metadata } from "next";
+﻿import type {Metadata} from "next";
 import Link from "next/link";
-import { JsonLd } from "@/components/JsonLd";
-import { CtaBanner, Eyebrow, Section } from "@/components/ui";
-import { breadcrumbSchema } from "@/lib/schema";
-import { absoluteUrl } from "@/lib/site";
+import {ArrowRightIcon, CheckIcon} from "@/components/icons";
+import {JsonLd} from "@/components/JsonLd";
+import {CtaBanner, Eyebrow, Section} from "@/components/ui";
+import {industries} from "@/lib/industries";
+import {breadcrumbSchema, serviceSchema} from "@/lib/schema";
+import {absoluteUrl} from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Industries We Serve",
   description:
-    "ai.neck builds Microsoft Copilot agents and AI solutions for professional services, healthcare admin, finance ops, manufacturing, legal, and more.",
+      "ai.neck builds Microsoft Copilot agents for healthcare, professional services, manufacturing, construction, government contractors, nonprofits, and SMBs.",
   alternates: { canonical: absoluteUrl("/industries") },
   openGraph: {
     title: "Industries We Serve | ai.neck",
     description:
-      "AI solutions and Microsoft Copilot agents for professional services, healthcare administration, finance operations, manufacturing, and more.",
+        "Microsoft Copilot Studio agents for healthcare, professional services, manufacturing, construction (AEC), government contractors, nonprofits, and SMBs.",
     url: absoluteUrl("/industries"),
   },
 };
-
-const industries = [
-  {
-    name: "Professional Services",
-    description:
-      "Consulting, accounting, and agency work runs on documents, email, and deadlines. Agents that prep client briefings from Outlook and SharePoint, answer from engagement archives, and automate intake give billable staff their hours back.",
-  },
-  {
-    name: "Healthcare Administration",
-    description:
-      "For the administrative side of healthcare — scheduling, credentialing, policy compliance — agents that answer from current policy documents and route requests correctly reduce errors where errors are expensive.",
-  },
-  {
-    name: "Finance Operations",
-    description:
-      "Close processes, reconciliations, and audit prep involve chasing the same documents and status updates every cycle. Agents that assemble reporting from across the Graph and triage exception queues shorten every close.",
-  },
-  {
-    name: "Manufacturing",
-    description:
-      "SOPs, quality documentation, and maintenance records live in SharePoint but rarely reach the floor. Agents that answer procedural questions in Teams — grounded in the current controlled document — close that gap.",
-  },
-  {
-    name: "Legal",
-    description:
-      "Matter files, precedent documents, and correspondence are exactly the kind of permission-sensitive content Copilot agents handle well: answers grounded in what the asking user is allowed to see, with sources cited.",
-  },
-  {
-    name: "Construction & Real Estate",
-    description:
-      "Project documentation, RFIs, and vendor correspondence scattered across mail and file shares become answerable when an agent can read across the project's Microsoft 365 footprint.",
-  },
-];
 
 export default function IndustriesPage() {
   return (
@@ -61,28 +30,54 @@ export default function IndustriesPage() {
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-graphite">
           The common thread across our clients isn&apos;t a vertical — it&apos;s
-          a stack. Teams that already live in SharePoint, Teams, and Outlook
-          get value from agents fastest, because there&apos;s nothing new to
-          roll out.
+            a stack. Teams that already live in SharePoint, Teams, Outlook,
+            OneDrive, and Microsoft 365 get value from Copilot Studio agents
+            fastest, because there&apos;s nothing new to roll out. Here&apos;s how
+            priority patterns map to your industry — not a hard limit on what we
+            can build.
         </p>
       </Section>
 
-      <Section className="pt-0">
-        <div className="grid gap-10 md:grid-cols-2">
+        <Section className="pt-0" aria-label="Industries we serve">
+            <div className="divide-y divide-line">
           {industries.map((industry) => (
-            <article key={industry.name}>
-              <h2 className="font-display text-xl font-semibold text-navy">
-                {industry.name}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-graphite">
-                {industry.description}
-              </p>
-            </article>
+              <Link
+                  key={industry.slug}
+                  href={`/industries/${industry.slug}`}
+                  className="group grid gap-4 py-10 first:pt-0 last:pb-0 md:grid-cols-[1fr_1.2fr]"
+              >
+                  <div>
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-cyan">
+                          {industry.short} · {industry.buyer}
+                      </p>
+                      <h2 className="mt-3 font-display text-2xl font-semibold text-navy">
+                          {industry.name}
+                      </h2>
+                      <p className="mt-3 text-sm leading-relaxed text-graphite">
+                          {industry.hook}
+                      </p>
+                      <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-navy group-hover:text-cyan">
+                          {industry.name} in depth
+                          <ArrowRightIcon className="transition-transform group-hover:translate-x-1"/>
+                      </p>
+                  </div>
+                  <ul className="flex flex-wrap content-center gap-2 self-center">
+                      {industry.focusAreas.map((area) => (
+                          <li
+                              key={area.name}
+                              className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-navy/80"
+                          >
+                              <CheckIcon className="shrink-0 text-cyan"/>
+                              {area.name}
+                          </li>
+                      ))}
+                  </ul>
+              </Link>
           ))}
         </div>
         <p className="mt-10 text-sm text-graphite">
-          Don&apos;t see your industry? The pattern matters more than the
-          label — see{" "}
+            Don&apos;t see your industry? The pattern matters more than the label
+            — see{" "}
           <Link
             href="/solutions"
             className="text-cyan underline decoration-line underline-offset-4 hover:decoration-cyan"
@@ -101,6 +96,14 @@ export default function IndustriesPage() {
       </Section>
 
       <CtaBanner heading="Want to know what an agent would do in your industry?" />
+        <JsonLd
+            data={serviceSchema({
+                name: "Industry Microsoft Copilot Agent Development",
+                description:
+                    "Design and deployment of Microsoft Copilot Studio agents for healthcare, professional services, manufacturing, construction, government contractors, nonprofits, and SMBs.",
+                path: "/industries",
+            })}
+        />
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },

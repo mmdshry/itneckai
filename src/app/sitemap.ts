@@ -1,6 +1,7 @@
-import type { MetadataRoute } from "next";
-import { copilotProducts } from "@/lib/copilot-agents";
-import { absoluteUrl } from "@/lib/site";
+import type {MetadataRoute} from "next";
+import {copilotProducts} from "@/lib/copilot-agents";
+import {industries} from "@/lib/industries";
+import {absoluteUrl} from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -21,7 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...productRoutes].map((route) => ({
+    const industryRoutes = industries.map((i) => ({
+        path: `/industries/${i.slug}`,
+        priority: 0.7,
+    }));
+
+    return [...staticRoutes, ...productRoutes, ...industryRoutes].map((route) => ({
     url: absoluteUrl(route.path),
     lastModified,
     changeFrequency: "monthly" as const,

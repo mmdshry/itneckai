@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowRightIcon, CheckIcon, productIcons } from "@/components/icons";
-import { JsonLd } from "@/components/JsonLd";
-import { CtaBanner, Section } from "@/components/ui";
-import { copilotProducts, getProduct } from "@/lib/copilot-agents";
-import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import { absoluteUrl } from "@/lib/site";
+import {notFound} from "next/navigation";
+import {ArrowRightIcon, CheckIcon, productIcons} from "@/components/icons";
+import {JsonLd} from "@/components/JsonLd";
+import {CtaBanner, Section} from "@/components/ui";
+import {copilotProducts, getProduct} from "@/lib/copilot-agents";
+import {getIndustriesForProduct} from "@/lib/industries";
+import {breadcrumbSchema, serviceSchema} from "@/lib/schema";
+import {absoluteUrl} from "@/lib/site";
 
 type Props = { params: Promise<{ product: string }> };
 
@@ -41,6 +42,7 @@ export default async function CopilotProductPage({ params }: Props) {
   const Icon = productIcons[product.icon];
   const path = `/solutions/microsoft-copilot-agents/${product.slug}`;
   const others = copilotProducts.filter((p) => p.slug !== product.slug);
+    const relatedIndustries = getIndustriesForProduct(product.slug);
 
   return (
     <>
@@ -69,13 +71,16 @@ export default async function CopilotProductPage({ params }: Props) {
         </nav>
 
         <p className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-cyan">
-          <Icon width={16} height={16} /> {product.short} · Connected
+            <Icon width={16} height={16}/> {product.short} · Copilot Studio
         </p>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-navy md:text-5xl">
           {product.headline}
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-graphite">
           {product.whatWeBuild}
+        </p>
+          <p className="mt-4 max-w-3xl border-l-2 border-cyan/40 pl-4 text-sm leading-relaxed text-navy/90">
+              {product.painHook}
         </p>
       </Section>
 
@@ -110,9 +115,41 @@ export default async function CopilotProductPage({ params }: Props) {
           </ul>
         </div>
 
-        <nav aria-label="Other Copilot agent solutions" className="mt-12">
+          {relatedIndustries.length > 0 && (
+              <nav
+                  aria-label="Industries that prioritize this surface"
+                  className="mt-12"
+              >
+                  <h2 className="font-mono text-xs uppercase tracking-widest text-graphite">
+                      Industries that prioritize {product.name}
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm text-graphite">
+                      These verticals list {product.name} among their priority Copilot
+                      Studio surfaces. Other industries can still use it when the
+                      workflow needs it.
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+                      {relatedIndustries.map((industry) => (
+                          <li key={industry.slug}>
+                              <Link
+                                  href={`/industries/${industry.slug}`}
+                                  className="inline-flex min-h-11 items-center gap-2 text-sm text-navy transition-colors hover:text-cyan"
+                              >
+                                  {industry.name}
+                                  <ArrowRightIcon/>
+                              </Link>
+                          </li>
+                      ))}
+                  </ul>
+              </nav>
+          )}
+
+          <nav
+              aria-label="Other Copilot Studio agent solutions"
+              className="mt-12"
+          >
           <h2 className="font-mono text-xs uppercase tracking-widest text-graphite">
-            Copilot agents for other Microsoft apps
+              Copilot Studio agents for other Microsoft apps
           </h2>
           <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
             {others.map((p) => (
@@ -131,11 +168,11 @@ export default async function CopilotProductPage({ params }: Props) {
       </Section>
 
       <CtaBanner
-        heading={`Ready to put an agent inside ${product.name}?`}
+          heading={`Ready to put a Copilot Studio agent inside ${product.name}?`}
       />
       <JsonLd
         data={serviceSchema({
-          name: `${product.name} Copilot Agent Development`,
+            name: `Copilot Studio Agents for ${product.name}`,
           description: product.metaDescription,
           path,
         })}

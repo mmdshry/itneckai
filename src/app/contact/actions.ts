@@ -1,9 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
-import { Resend } from "resend";
-import { contactSchema } from "@/lib/contact-schema";
-import { site } from "@/lib/site";
+import {headers} from "next/headers";
+import {Resend} from "resend";
+import {contactSchema} from "@/lib/contact-schema";
+import {site} from "@/lib/site";
 
 export type ContactResult =
   | { ok: true }
@@ -82,7 +82,7 @@ export async function submitContact(input: unknown): Promise<ContactResult> {
   }
 
   const html = `
-    <h2>New consultation request — ai.neck</h2>
+    <h2>New working session request — ai.neck</h2>
     <table cellpadding="6" style="border-collapse:collapse">
       <tr><td><strong>Name</strong></td><td>${escapeHtml(data.fullName)}</td></tr>
       <tr><td><strong>Work email</strong></td><td>${escapeHtml(data.workEmail)}</td></tr>

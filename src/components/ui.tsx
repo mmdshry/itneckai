@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { ArrowRightIcon } from "@/components/icons";
+import type {ReactNode} from "react";
+import {ArrowRightIcon} from "@/components/icons";
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
@@ -20,7 +20,7 @@ export function Section({
 } & React.HTMLAttributes<HTMLElement>) {
   return (
     <section
-      className={`mx-auto max-w-6xl px-6 py-16 sm:px-8 md:py-24 ${className}`}
+        className={`mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24 ${className}`}
       {...rest}
     >
       {children}
@@ -69,12 +69,13 @@ export function CtaBanner({
   heading?: string;
 }) {
   return (
-    <section aria-label="Book a consultation" className="border-y border-line bg-surface">
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 py-14 sm:px-8 md:flex-row md:items-center md:justify-between">
+      <section aria-label="Book a working session" className="border-y border-line bg-surface">
+          <div
+              className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-14 sm:px-6 md:flex-row md:items-center md:justify-between">
         <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-cloud md:text-3xl">
           {heading}
         </h2>
-        <PrimaryCta href="/contact">Book a Consultation</PrimaryCta>
+              <PrimaryCta href="/contact">Book a working session</PrimaryCta>
       </div>
     </section>
   );

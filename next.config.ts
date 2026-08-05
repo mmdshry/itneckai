@@ -1,4 +1,5 @@
-import type { NextConfig } from "next";
+import type {NextConfig} from "next";
+import path from "path";
 
 const securityHeaders = [
   {
@@ -32,7 +33,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: __dirname,
+    // Pin tracing to this app; a lockfile in the user home confuses Next's root detection.
+    outputFileTracingRoot: path.join(__dirname),
   experimental: {
     // Site-wide CSS is ~7KB; inlining it removes a render-blocking request.
     inlineCss: true,

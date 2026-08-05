@@ -1,20 +1,20 @@
-﻿import type { Metadata } from "next";
-import { JsonLd } from "@/components/JsonLd";
-import { NapBlock } from "@/components/NapBlock";
-import { Eyebrow, Section } from "@/components/ui";
-import { breadcrumbSchema } from "@/lib/schema";
-import { absoluteUrl } from "@/lib/site";
-import { ContactForm } from "./ContactForm";
+﻿import type {Metadata} from "next";
+import {JsonLd} from "@/components/JsonLd";
+import {NapBlock} from "@/components/NapBlock";
+import {Eyebrow, Section} from "@/components/ui";
+import {breadcrumbSchema} from "@/lib/schema";
+import {absoluteUrl} from "@/lib/site";
+import {ContactForm} from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Book a Consultation",
+    title: "Contact Us — Book a working session",
   description:
-    "Book a consultation with ai.neck. Tell us about your Microsoft 365 stack and AI goals — we typically reply within one business day. San Diego, CA.",
+      "Book a working session with ai.neck. Tell us about your Microsoft 365 stack and where a Copilot Studio agent would earn its keep — we typically reply within one business day. San Diego, CA.",
   alternates: { canonical: absoluteUrl("/contact") },
   openGraph: {
-    title: "Contact Us — Book a Consultation | ai.neck",
+      title: "Contact Us — Book a working session | ai.neck",
     description:
-      "Tell us about your Microsoft 365 stack and AI goals. We typically reply within one business day.",
+        "Tell us about your Microsoft 365 stack and where a Copilot Studio agent would earn its keep. We typically reply within one business day.",
     url: absoluteUrl("/contact"),
   },
 };
@@ -34,7 +34,7 @@ export default function ContactPage() {
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
           <div>
-            <h2 className="sr-only">Consultation request form</h2>
+              <h2 className="sr-only">Working session request form</h2>
             <ContactForm />
           </div>
 

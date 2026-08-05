@@ -1,11 +1,11 @@
-﻿import type { Metadata } from "next";
+﻿import type {Metadata} from "next";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, productIcons } from "@/components/icons";
-import { JsonLd } from "@/components/JsonLd";
-import { CtaBanner, Eyebrow, Section } from "@/components/ui";
-import { copilotProducts } from "@/lib/copilot-agents";
-import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import { absoluteUrl } from "@/lib/site";
+import {ArrowRightIcon, CheckIcon, productIcons} from "@/components/icons";
+import {JsonLd} from "@/components/JsonLd";
+import {CtaBanner, Eyebrow, Section} from "@/components/ui";
+import {copilotProducts} from "@/lib/copilot-agents";
+import {breadcrumbSchema, serviceSchema} from "@/lib/schema";
+import {absoluteUrl} from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Microsoft Copilot Agent Development",
@@ -26,14 +26,15 @@ export default function CopilotAgentsHubPage() {
       <Section className="pt-32 md:pt-40">
         <Eyebrow>Microsoft Copilot Agents</Eyebrow>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-cloud md:text-5xl">
-          Copilot agents that live inside your Microsoft 365 stack.
+            Copilot Studio agents that live inside your Microsoft 365 stack.
         </h1>
         <p className="mt-6 max-w-3xl text-lg text-graphite">
           We design agents in Microsoft Copilot Studio, integrate them through
           Power Automate and the Power Platform, and deploy them inside the
           apps your employees already work in. The agent inherits your
           existing permissions and licensing — your team gets AI without
-          learning a new tool.
+            learning a new tool. These are custom Studio agents, distinct from
+            Microsoft&apos;s licensed Microsoft 365 Copilot SKU.
         </p>
         <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
           {[
@@ -73,7 +74,7 @@ export default function CopilotAgentsHubPage() {
                     {product.whatWeBuild}
                   </p>
                   <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-navy group-hover:text-cyan">
-                    {product.name} agents in depth
+                      Copilot Studio agents for {product.name}
                     <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
                   </p>
                 </div>
