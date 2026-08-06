@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {Header} from "@/components/Header";
 import {Footer} from "@/components/Footer";
+import {CopilotChatWidget} from "@/components/CopilotChatWidget";
 import {JsonLd} from "@/components/JsonLd";
 import {organizationSchema} from "@/lib/schema";
 import {site} from "@/lib/site";
@@ -80,6 +81,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+          <link rel="preconnect" href="https://copilotstudio.microsoft.com"/>
+          <link
+              rel="preconnect"
+              href="https://content.powerapps.com"
+              crossOrigin="anonymous"
+          />
+          <link rel="dns-prefetch" href="https://directline.botframework.com"/>
       </head>
       <body
         className={`${inter.variable} ${jetbrains.variable} ${clash.variable} antialiased`}
@@ -96,6 +104,7 @@ export default function RootLayout({
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <CopilotChatWidget/>
         <JsonLd data={organizationSchema} />
       </body>
     </html>

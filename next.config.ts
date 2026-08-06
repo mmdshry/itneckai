@@ -9,8 +9,11 @@ const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
+      // unload=* lets the Copilot Studio iframe register unload handlers
+      // without Permissions-Policy console noise (Chrome restricts unload by default).
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+      value:
+          "camera=(), microphone=(), geolocation=(), interest-cohort=(), unload=*",
   },
   {
     // 'unsafe-inline' for script-src is required by Next.js SSG bootstrap data;
@@ -26,6 +29,7 @@ const securityHeaders = [
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+        "frame-src 'self' https://copilotstudio.microsoft.com https://*.powerplatform.com",
       "frame-ancestors 'self'",
       "upgrade-insecure-requests",
     ].join("; "),
