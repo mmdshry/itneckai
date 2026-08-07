@@ -65,17 +65,21 @@ export function GhostCta({
 
 export function CtaBanner({
   heading = "Ready to see what an agent could do for your team?",
+  href = "/contact",
+  ctaLabel = "Book a working session",
 }: {
   heading?: string;
+  href?: string;
+  ctaLabel?: string;
 }) {
   return (
-      <section aria-label="Book a working session" className="border-y border-line bg-surface">
+      <section aria-label={ctaLabel} className="border-y border-line bg-surface">
           <div
               className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-14 sm:px-6 md:flex-row md:items-center md:justify-between">
         <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-cloud md:text-3xl">
           {heading}
         </h2>
-              <PrimaryCta href="/contact">Book a working session</PrimaryCta>
+              <PrimaryCta href={href}>{ctaLabel}</PrimaryCta>
       </div>
     </section>
   );
