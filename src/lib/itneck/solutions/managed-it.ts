@@ -1,0 +1,381 @@
+import type { SolutionPage } from "@/lib/itneck/solutions/types";
+
+export const managedItPage: SolutionPage = {
+  slug: "managed-it",
+  title: "Managed IT Services",
+  navLabel: "Managed IT Services",
+  description:
+    "ITneck provides proactive managed IT services designed to reduce disruption, improve productivity, protect your operations, and give leadership peace of mind.",
+  hero: {
+    title: "Technology That Keeps Your Business Moving",
+    paragraphs: [
+      "Your business should not have to slow down because of technology problems.",
+      "When systems are unreliable, employees lose time. When IT is reactive, leadership gets pulled into issues that should never reach their desk. And as the business grows, technology can quickly become more complex, expensive, and difficult to manage.",
+      "ITneck provides proactive managed IT services designed to reduce disruption, improve productivity, protect your operations, and give leadership peace of mind that technology is being handled properly.",
+      "We don't just manage computers.",
+      "We protect the technology foundation your business depends on to operate and grow.",
+    ],
+    primaryCta: { label: "Talk With an Advisor", query: "advisor" },
+    secondaryCta: { label: "Request an IT Assessment", query: "it-assessment" },
+  },
+  sections: [
+    {
+      id: "it-should-support-growth",
+      title: "IT Should Support Growth — Not Create More Work",
+      paragraphs: [
+        "Most businesses don't need more technology.",
+        "They need the technology they already have to work better.",
+        "As companies grow, common IT challenges begin to create operational friction:",
+      ],
+      items: [
+        "Recurring computer and software issues",
+        "Employees losing productive time waiting for support",
+        "Inconsistent technology across the organization",
+        "Poor visibility into devices, users, licenses, and systems",
+        "Security risks caused by unmanaged technology",
+        "Difficult employee onboarding and offboarding",
+        "Aging hardware and unexpected equipment failures",
+        "Multiple vendors with no clear accountability",
+        "Leadership spending time dealing with technology problems",
+        "IT environments that cannot scale with the business",
+      ],
+    },
+    {
+      id: "it-problems-become-business-problems",
+      paragraphs: [
+        "These issues may look like IT problems, but ultimately they become business problems.",
+        "They affect productivity, customer service, employee experience, security, revenue, and growth.",
+      ],
+    },
+    {
+      id: "managed-it-built-around-your-business",
+      title: "Managed IT Built Around Your Business",
+      paragraphs: [
+        "ITneck takes responsibility for the day-to-day technology environment so your team can stay focused on the work that drives the business forward.",
+        "Our approach combines proactive monitoring, responsive support, security, standardization, documentation, and strategic oversight into one technology partnership.",
+        "The goal is simple:",
+      ],
+      result:
+        "Fewer problems. Less downtime. More productive people. Better visibility. Lower risk.",
+    },
+    {
+      id: "proactive-it-management",
+      title: "Proactive IT Management",
+      paragraphs: [
+        "We continuously manage and monitor your technology environment to identify potential problems before they become business interruptions.",
+        "This includes:",
+      ],
+      items: [
+        "Workstation and server monitoring",
+        "Operating system updates",
+        "Third-party application patching",
+        "Device health monitoring",
+        "Performance management",
+        "Software maintenance",
+        "Hardware monitoring",
+        "Automated maintenance",
+        "Technology standards and policies",
+      ],
+      afterItems: [
+        "Instead of waiting for something to break, we work to prevent problems from happening in the first place.",
+      ],
+      result:
+        "More reliable technology and fewer unexpected disruptions.",
+    },
+    {
+      id: "help-desk",
+      title: "Help Desk & Employee IT Support",
+      paragraphs: [
+        "Technology problems are frustrating enough. Getting help shouldn't be.",
+        "Your employees receive access to responsive technical support for everyday technology issues, including:",
+      ],
+      items: [
+        "Computer problems",
+        "Microsoft 365 support",
+        "Email issues",
+        "Printer problems",
+        "Software troubleshooting",
+        "Login and password assistance",
+        "Connectivity issues",
+        "Remote work support",
+        "Application support",
+        "General technology questions",
+      ],
+      afterItems: [
+        "We focus not only on resolving the ticket, but on getting the employee productive again as quickly as possible.",
+      ],
+      result:
+        "Less employee downtime and fewer IT distractions for management.",
+    },
+    {
+      id: "microsoft-365",
+      title: "Microsoft 365 & Cloud Management",
+      paragraphs: [
+        "Microsoft 365 has become the operational backbone of many businesses.",
+        "ITneck helps manage and secure your Microsoft environment so employees can collaborate effectively without creating unnecessary risk.",
+      ],
+      listIntro: "Services can include:",
+      items: [
+        "Microsoft 365 administration",
+        "Exchange Online",
+        "Microsoft Teams",
+        "SharePoint",
+        "OneDrive",
+        "User and license management",
+        "Email configuration",
+        "Security configuration",
+        "Multi-factor authentication",
+        "Identity and access management",
+        "Microsoft 365 optimization",
+        "Cloud migration and modernization",
+      ],
+      result: "A more secure, organized, and productive workplace.",
+    },
+    {
+      id: "onboarding-offboarding",
+      title: "Employee Onboarding & Offboarding",
+      paragraphs: [
+        "Adding or removing an employee should be an organized business process — not a last-minute IT scramble.",
+        "ITneck helps standardize onboarding and offboarding so users receive the correct technology, access, applications, and security from day one.",
+      ],
+      listIntro: "Services can include:",
+      items: [
+        "New-user account creation",
+        "Microsoft 365 licensing",
+        "Computer preparation",
+        "Software deployment",
+        "Security configuration",
+        "Email and application access",
+        "Group and permission assignment",
+        "Equipment tracking",
+        "Terminated-user access removal",
+        "Data preservation and mailbox transition",
+        "Device recovery and reassignment",
+      ],
+      result:
+        "Faster onboarding, safer offboarding, and less administrative work for HR and management.",
+    },
+    {
+      id: "device-endpoint",
+      title: "Device & Endpoint Management",
+      paragraphs: [
+        "Every unmanaged device can become an operational and security risk.",
+        "ITneck provides centralized management of company computers and endpoints to maintain visibility, consistency, security, and performance.",
+        "We help manage:",
+      ],
+      items: [
+        "Desktops",
+        "Laptops",
+        "Servers",
+        "Mobile devices",
+        "Remote computers",
+        "Company-owned endpoints",
+        "Approved BYOD environments",
+      ],
+      result:
+        "Better control of your technology environment and fewer unmanaged risks.",
+    },
+    {
+      id: "network-connectivity",
+      title: "Network & Connectivity Management",
+      paragraphs: [
+        "Your employees cannot work effectively when the network is unreliable.",
+        "ITneck helps manage the technology infrastructure connecting your people, applications, offices, and cloud services.",
+      ],
+      listIntro: "Services can include:",
+      items: [
+        "Firewall management",
+        "Business Wi-Fi",
+        "Network monitoring",
+        "Switching",
+        "VPN and secure remote access",
+        "Internet connectivity",
+        "Network segmentation",
+        "Performance troubleshooting",
+        "ISP coordination",
+        "Redundant internet planning",
+      ],
+      result:
+        "Reliable connectivity that keeps employees and business systems available.",
+    },
+    {
+      id: "asset-lifecycle",
+      title: "IT Asset & Lifecycle Management",
+      paragraphs: [
+        "Technology should be planned — not replaced only after it fails.",
+        "ITneck helps businesses understand what technology they own, how old it is, who is using it, and when it should be upgraded or replaced.",
+        "We help manage:",
+      ],
+      items: [
+        "Hardware inventory",
+        "Device ownership",
+        "Asset tagging",
+        "Warranty information",
+        "Hardware age",
+        "Replacement planning",
+        "Software licensing",
+        "Technology standards",
+        "Procurement",
+        "Equipment lifecycle planning",
+      ],
+      result:
+        "Fewer surprises, better budgeting, and smarter technology investments.",
+    },
+    {
+      id: "vendor-management",
+      title: "Vendor & Technology Management",
+      paragraphs: [
+        "Most companies depend on multiple technology vendors.",
+        "Internet providers. Phone systems. Software companies. Cloud services. Security providers. Hardware manufacturers.",
+        "When something goes wrong, businesses often lose hours trying to determine which vendor is responsible.",
+        "ITneck helps coordinate your technology ecosystem and acts as a central point of accountability.",
+      ],
+      result:
+        "Leadership spends less time managing vendors and resolving technology disputes.",
+    },
+    {
+      id: "one-technology-partner",
+      title: "One Technology Partner. Clear Accountability.",
+      paragraphs: [
+        "One of the biggest problems growing businesses face is fragmented responsibility.",
+        "The internet provider manages one thing.",
+        "The software company manages another.",
+        "Employees call different vendors.",
+        "Nobody has complete visibility.",
+        "And when something breaks, everyone points somewhere else.",
+        "ITneck helps bring your technology environment together under a coordinated strategy.",
+        "We become the partner responsible for understanding how the pieces work together and helping make sure technology supports the business as a whole.",
+      ],
+    },
+    {
+      id: "security-built-in",
+      title: "Managed IT With Security Built In",
+      paragraphs: [
+        "IT management and cybersecurity can no longer operate separately.",
+        "Every employee, device, application, login, and cloud service can create risk.",
+        "That's why security is built into how ITneck manages technology.",
+        "Depending on your environment, this can include:",
+      ],
+      items: [
+        "Endpoint protection",
+        "Patch management",
+        "Multi-factor authentication",
+        "Device security",
+        "Email security",
+        "Identity protection",
+        "Access management",
+        "Security monitoring",
+        "Backup",
+        "Security awareness",
+        "Vulnerability management",
+      ],
+    },
+    {
+      id: "explore-cybersecurity",
+      paragraphs: [
+        "For businesses with additional security or regulatory requirements, our Cybersecurity & Compliance services provide a deeper layer of protection and governance.",
+      ],
+      crosslink: {
+        label: "Explore Cybersecurity & Compliance",
+        href: "/itneck/solutions/cybersecurity",
+      },
+    },
+    {
+      id: "scale-with-you",
+      title: "Technology That Can Scale With You",
+      paragraphs: [
+        "The technology environment that works for a 20-person company may not work for a 50-person company.",
+        "And what works at 50 employees may become a problem at 100.",
+        "ITneck helps create technology standards and systems that can grow with your organization.",
+        "That means thinking beyond today's support tickets and preparing for:",
+      ],
+      items: [
+        "New employees",
+        "Additional offices",
+        "Remote teams",
+        "Acquisitions",
+        "New applications",
+        "Increased security requirements",
+        "Compliance requirements",
+        "Automation",
+        "AI adoption",
+        "Cloud modernization",
+      ],
+      result: "Technology becomes an enabler of growth instead of a barrier to it.",
+    },
+    {
+      id: "managed-it-for-leadership",
+      title: "Managed IT for Leadership",
+      paragraphs: [
+        "Leadership shouldn't need to understand every technical detail.",
+        "You need to know:",
+      ],
+      items: [
+        "Are we protected?",
+        "Are our systems reliable?",
+        "Are employees productive?",
+        "Are we spending appropriately?",
+        "What risks should we address?",
+        "What technology decisions are coming?",
+        "Can our systems support where the company is going?",
+      ],
+    },
+    {
+      id: "leadership-visibility",
+      paragraphs: [
+        "ITneck provides the visibility and guidance needed to answer those questions.",
+        "Because good IT management isn't about technology for technology's sake.",
+        "It's about protecting time, productivity, revenue, operations, and growth.",
+      ],
+    },
+    {
+      id: "the-itneck-approach",
+      title: "The ITneck Approach",
+      steps: [
+        {
+          title: "Protect What You've Built",
+          body: "Reduce unnecessary technology, cybersecurity, and operational risks.",
+        },
+        {
+          title: "Keep Your People Productive",
+          body: "Resolve problems quickly and eliminate recurring technology friction.",
+        },
+        {
+          title: "Reduce Business Disruption",
+          body: "Proactively maintain the systems your organization depends on.",
+        },
+        {
+          title: "Create Clear Accountability",
+          body: "Give your business one technology partner responsible for understanding the entire environment.",
+        },
+        {
+          title: "Prepare for Growth",
+          body: "Build technology standards, systems, and processes that can scale with the organization.",
+        },
+      ],
+    },
+    {
+      id: "reactive-to-proactive",
+      title: "From Reactive IT to Proactive Technology Management",
+      paragraphs: [
+        "If your technology strategy is primarily based on fixing problems after they happen, your business is already paying the price.",
+        "Lost productivity.",
+        "Leadership distractions.",
+        "Unexpected costs.",
+        "Security exposure.",
+        "Operational disruption.",
+        "ITneck helps move your business from reactive IT support to proactive technology management.",
+        "So instead of constantly responding to technology problems, your organization can focus on customers, employees, opportunities, and growth.",
+      ],
+    },
+  ],
+  closing: {
+    title: "Protect Your Operations. Protect Your Time. Protect Your Growth.",
+    paragraphs: [
+      "Your technology should quietly do its job in the background while your business moves forward.",
+      "ITneck helps make that possible.",
+    ],
+    primaryCta: { label: "Talk With an Advisor", query: "advisor" },
+    secondaryCta: { label: "Request an IT Assessment", query: "it-assessment" },
+  },
+};

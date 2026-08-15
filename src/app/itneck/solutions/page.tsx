@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CtaBanner, Eyebrow, Section } from "@/components/ui";
-import { solutionHubs } from "@/lib/itneck/solutions";
+import { DualCtas } from "@/components/itneck/DualCtas";
+import { Eyebrow, Section } from "@/components/ui";
 import { itneckAbsoluteUrl } from "@/lib/itneck/site";
+import { solutionHubs } from "@/lib/itneck/solutions";
 
 export const metadata: Metadata = {
   title: "Solutions",
   description:
-    "Fully managed IT, cybersecurity, cloud, network, AI, and hardware & software solutions from ITneck.",
+    "Managed IT Services, Cybersecurity & Compliance, AI & Automation, Backup & Business Continuity, and Technology Strategy & Transformation.",
   alternates: { canonical: itneckAbsoluteUrl("/solutions") },
 };
 
@@ -16,49 +17,40 @@ export default function SolutionsHubPage() {
     <>
       <Section className="pt-32 md:pt-40">
         <Eyebrow>Solutions</Eyebrow>
-        <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-cloud md:text-5xl">
+        <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-cloud md:text-6xl">
           Solutions
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-graphite">
-          From fully managed IT to cybersecurity, cloud, network, AI, and
-          hardware — services tailored to keep your business simple and safe.
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-graphite">
+          We simplify and secure your technology, so your team can stay focused,
+          productive, and moving forward.
         </p>
-        <ul className="mt-14 space-y-12">
+        <ul className="mt-16 divide-y divide-line border-y border-line">
           {solutionHubs.map((hub) => (
-            <li key={hub.slug} className="border-t border-line pt-10">
+            <li key={hub.slug}>
               <Link
                 href={`/itneck/solutions/${hub.slug}`}
-                className="font-display text-2xl font-semibold text-cloud hover:text-cyan"
+                className="group flex flex-col gap-3 py-10 md:flex-row md:items-baseline md:justify-between md:gap-12"
               >
-                {hub.title}
+                <h2 className="font-display text-2xl font-semibold tracking-tight text-cloud transition-colors group-hover:text-cyan md:text-4xl">
+                  {hub.navLabel}
+                </h2>
+                <p className="max-w-md text-sm leading-relaxed text-graphite md:text-right">
+                  {hub.description}
+                </p>
               </Link>
-              <p className="mt-3 max-w-3xl text-graphite">{hub.description}</p>
-              <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {hub.leaves.map((leaf) => (
-                  <li key={leaf.slug}>
-                    <Link
-                      href={`/itneck/solutions/${hub.slug}/${leaf.slug}`}
-                      className="block border border-line bg-page px-4 py-3 text-sm text-navy transition-colors hover:border-navy/30 hover:bg-surface hover:text-cyan"
-                    >
-                      {leaf.title}
-                      {leaf.badge ? (
-                        <span className="ml-2 font-mono text-[10px] uppercase text-amber">
-                          {leaf.badge}
-                        </span>
-                      ) : null}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             </li>
           ))}
         </ul>
+        <div className="mt-14">
+          <DualCtas
+            primary={{ label: "Talk With an Advisor", query: "advisor" }}
+            secondary={{
+              label: "Request an IT Assessment",
+              query: "it-assessment",
+            }}
+          />
+        </div>
       </Section>
-      <CtaBanner
-        heading="Let's find the right solution for your business"
-        href="/itneck/contact"
-        ctaLabel="Contact us"
-      />
     </>
   );
 }

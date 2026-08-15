@@ -18,7 +18,7 @@ function applyTheme(theme: Theme) {
   root.dataset.theme = theme;
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>("light");
   const [ready, setReady] = useState(false);
 
@@ -61,7 +61,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-navy transition-colors hover:border-navy/30"
+      className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-navy transition-colors hover:border-navy/30 ${className}`}
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={theme === "dark"}
     >

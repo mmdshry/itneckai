@@ -3,13 +3,15 @@ import { z } from "zod";
 z.config({ jitless: true });
 
 export const itneckHelpTopics = [
-  "Managed IT Services (MSP)",
-  "Cybersecurity / MSSP",
-  "Cloud / Microsoft 365",
-  "Mobile Device Management",
-  "Network / Firewall",
-  "AI Services",
-  "Hardware & Software",
+  "Talk With an Advisor",
+  "Request an IT Assessment",
+  "Talk With a Security Advisor",
+  "Request a Security Assessment",
+  "Talk With an AI Advisor",
+  "Request an AI Readiness Assessment",
+  "Request a Business Continuity Assessment",
+  "Talk With a Technology Advisor",
+  "Request a Technology Assessment",
   "Support / Existing Client",
   "Other",
   "Not sure yet",

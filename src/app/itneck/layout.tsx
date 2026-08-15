@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ItneckHeader } from "@/components/itneck/Header";
 import { ItneckFooter } from "@/components/itneck/Footer";
-import { TechTalk } from "@/components/itneck/TechTalk";
 import { itneckSite } from "@/lib/itneck/site";
 
 export const metadata: Metadata = {
@@ -21,7 +20,6 @@ export default function ItneckLayout({
     <>
       <ItneckHeader />
       <main id="main">{children}</main>
-      <TechTalk />
       <ItneckFooter />
     </>
   );

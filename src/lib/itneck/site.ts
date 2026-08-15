@@ -1,16 +1,14 @@
 export const itneckSite = {
   name: "ITneck",
-  tagline: "Keep Technology Simple and Safe",
+  tagline:
+    "We simplify and secure your technology, so your team can stay focused, productive, and moving forward.",
   description:
-    "We make tech easy to use and safe, so your team can work better without stress. Fully managed IT, cybersecurity, cloud, and network services in San Diego.",
+    "We simplify and secure your technology, so your team can stay focused, productive, and moving forward. Managed IT, cybersecurity, AI, backup, and technology strategy.",
   email: "Support@ITneck.com",
   phone: "858-740-8878",
   phoneIntl: "+1-858-740-8878",
   address: "San Diego, CA",
-  hours: [
-    "Monday–Friday 7:00–19:00",
-    "Saturday 8:00–15:00",
-  ],
+  hours: ["Monday–Friday 7:00–19:00", "Saturday 8:00–15:00"],
   instagram: "https://www.instagram.com/itneck/",
   linkedin: "https://www.linkedin.com/company/itneck/",
   x: "https://x.com/ITnecks",
@@ -21,17 +19,21 @@ export const itneckSite = {
 export const itneckHeaderNav = [
   { label: "Home", href: "/itneck" },
   { label: "Solutions", href: "/itneck/solutions", mega: true },
-  { label: "Blog", href: "/itneck/blog" },
-  { label: "About YOU", href: "/itneck/about" },
-  { label: "Contact us", href: "/itneck/contact" },
+  { label: "AI", href: "/itneck/solutions/ai-automation" },
+  { label: "About you", href: "/itneck/about" },
+  { label: "About ITneck", href: "/itneck/about-itneck" },
+  { label: "Resources", href: "/itneck/blog" },
+  { label: "Contact", href: "/itneck/contact" },
 ] as const;
 
 export const itneckFooterNav = [
   { label: "Home", href: "/itneck" },
   { label: "Solutions", href: "/itneck/solutions" },
-  { label: "Blog", href: "/itneck/blog" },
-  { label: "About YOU", href: "/itneck/about" },
-  { label: "Contact us", href: "/itneck/contact" },
+  { label: "AI", href: "/itneck/solutions/ai-automation" },
+  { label: "About you", href: "/itneck/about" },
+  { label: "About ITneck", href: "/itneck/about-itneck" },
+  { label: "Resources", href: "/itneck/blog" },
+  { label: "Contact", href: "/itneck/contact" },
   { label: "Support", href: "/itneck/support" },
   { label: "Privacy Policy", href: "/itneck/privacy" },
 ] as const;

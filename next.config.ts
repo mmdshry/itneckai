@@ -1,6 +1,8 @@
 import type {NextConfig} from "next";
 import path from "path";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const securityHeaders = [
   {
     key: "Strict-Transport-Security",
@@ -18,10 +20,14 @@ const securityHeaders = [
   {
     // 'unsafe-inline' for script-src is required by Next.js SSG bootstrap data;
     // switch to nonce-based CSP only if the site moves to dynamic rendering.
+    // 'unsafe-eval' is only for next dev (webpack + React Refresh). Production
+    // stays without it so Zod's jitless config remains effective.
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline'",
+      isDev
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+        : "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self'",
@@ -48,6 +54,75 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/itneck/ai",
+        destination: "/itneck/solutions/ai-automation",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/ai",
+        destination: "/itneck/solutions/ai-automation",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/ai/:path*",
+        destination: "/itneck/solutions/ai-automation",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/cloud",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/cloud/cloud-backup",
+        destination: "/itneck/solutions/backup-continuity",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/cloud/disaster-recovery",
+        destination: "/itneck/solutions/backup-continuity",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/cloud/:path*",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/network",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/network/:path*",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/hardware-software",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/hardware-software/:path*",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/managed-it/:path+",
+        destination: "/itneck/solutions/managed-it",
+        permanent: true,
+      },
+      {
+        source: "/itneck/solutions/cybersecurity/:path+",
+        destination: "/itneck/solutions/cybersecurity",
+        permanent: true,
       },
     ];
   },

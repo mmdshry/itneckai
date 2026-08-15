@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ItneckLogo } from "@/components/itneck/Logo";
+import { itneckContactHref } from "@/lib/itneck/cta";
 import { itneckHeaderNav } from "@/lib/itneck/site";
 import { solutionHubs } from "@/lib/itneck/solutions";
 
@@ -20,6 +21,9 @@ export function ItneckHeader() {
   const solutionsRef = useRef<HTMLLIElement>(null);
   const solutionsPanelId = useId();
   const mobileSolutionsId = useId();
+
+  const isHome = pathname === "/itneck";
+  const inverted = isHome && !scrolled && !open;
 
   const solutionsActive =
     pathname === "/itneck/solutions" ||
@@ -66,7 +70,7 @@ export function ItneckHeader() {
     const onPointerDown = (e: MouseEvent) => {
       if (
         solutionsRef.current &&
-        !solutionsRef.current.contains(e.target as Node)
+        !solutionsRef.current.contains(e.target as Node | null)
       ) {
         setSolutionsOpen(false);
       }
@@ -113,6 +117,9 @@ export function ItneckHeader() {
     };
   }, [open, close]);
 
+  const navIdle = inverted ? "text-white/80 hover:text-white" : "text-navy/80 hover:text-cyan";
+  const navActive = inverted ? "text-white" : "text-cyan";
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 ${
@@ -130,17 +137,17 @@ export function ItneckHeader() {
           : undefined
       }
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
           href="/itneck"
           className="flex shrink-0 items-center gap-2"
           aria-label="ITneck — home"
         >
-          <ItneckLogo />
+          <ItneckLogo inverted={inverted} />
         </Link>
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-6">
+        <nav aria-label="Main" className="hidden xl:block">
+          <ul className="flex items-center gap-4">
             {itneckHeaderNav.map((item) => {
               if ("mega" in item && item.mega) {
                 return (
@@ -165,8 +172,8 @@ export function ItneckHeader() {
                       aria-expanded={solutionsOpen}
                       aria-controls={solutionsPanelId}
                       aria-current={solutionsActive ? "page" : undefined}
-                      className={`text-sm transition-colors hover:text-cyan ${
-                        solutionsActive ? "text-cyan" : "text-navy/80"
+                      className={`text-sm transition-colors ${
+                        solutionsActive ? navActive : navIdle
                       }`}
                       onClick={() => setSolutionsOpen((v) => !v)}
                       onFocus={() => setSolutionsOpen(true)}
@@ -178,41 +185,23 @@ export function ItneckHeader() {
                         id={solutionsPanelId}
                         role="region"
                         aria-label="Solutions"
-                        className="absolute left-1/2 top-full z-50 w-[min(90vw,52rem)] -translate-x-1/2 pt-2"
+                        className="absolute left-1/2 top-full z-50 w-[min(90vw,36rem)] -translate-x-1/2 pt-2"
                       >
                         <div className="rounded-md border border-line bg-page p-4 shadow-sm">
-                          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                          <ul className="space-y-1">
                             {solutionHubs.map((hub) => (
-                              <div key={hub.slug}>
+                              <li key={hub.slug}>
                                 <Link
                                   href={`/itneck/solutions/${hub.slug}`}
-                                  className="text-sm font-semibold text-navy hover:text-cyan"
+                                  className="block px-2 py-2 text-sm font-semibold text-navy hover:text-cyan"
                                   onClick={() => setSolutionsOpen(false)}
                                 >
                                   {hub.navLabel}
                                 </Link>
-                                <ul className="mt-2 space-y-1">
-                                  {hub.leaves.slice(0, 4).map((leaf) => (
-                                    <li key={leaf.slug}>
-                                      <Link
-                                        href={`/itneck/solutions/${hub.slug}/${leaf.slug}`}
-                                        className="block text-xs text-graphite hover:text-cyan"
-                                        onClick={() => setSolutionsOpen(false)}
-                                      >
-                                        {leaf.title}
-                                        {leaf.badge ? (
-                                          <span className="ml-1 font-mono uppercase text-[10px] text-amber">
-                                            {leaf.badge}
-                                          </span>
-                                        ) : null}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
+                              </li>
                             ))}
-                          </div>
-                          <div className="mt-4 border-t border-line pt-3">
+                          </ul>
+                          <div className="mt-3 border-t border-line pt-3">
                             <Link
                               href="/itneck/solutions"
                               className="text-sm font-medium text-navy hover:text-cyan"
@@ -239,8 +228,8 @@ export function ItneckHeader() {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`text-sm transition-colors hover:text-cyan ${
-                      active ? "text-cyan" : "text-navy/80"
+                    className={`whitespace-nowrap text-sm transition-colors ${
+                      active ? navActive : navIdle
                     }`}
                   >
                     {item.label}
@@ -252,17 +241,27 @@ export function ItneckHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <ThemeToggle />
+          <ThemeToggle
+            className={
+              inverted
+                ? "border-white/30 text-white hover:border-white/50"
+                : ""
+            }
+          />
           <Link
-            href="/itneck/contact"
+            href={itneckContactHref("advisor")}
             className="hidden min-h-11 items-center rounded-md bg-amber px-4 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:inline-flex"
           >
-            Contact us
+            Talk with an Advisor
           </Link>
           <button
             ref={toggleRef}
             type="button"
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-navy lg:hidden"
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border xl:hidden ${
+              inverted
+                ? "border-white/30 text-white"
+                : "border-line text-navy"
+            }`}
             aria-expanded={open}
             aria-controls="itneck-mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -277,7 +276,7 @@ export function ItneckHeader() {
         <div
           ref={drawerRef}
           id="itneck-mobile-nav"
-          className="border-t border-line site-header--scrolled lg:hidden"
+          className="border-t border-line site-header--scrolled xl:hidden"
         >
           <nav
             aria-label="Mobile"
@@ -325,18 +324,6 @@ export function ItneckHeader() {
                               >
                                 {hub.navLabel}
                               </Link>
-                              <ul className="pl-3">
-                                {hub.leaves.map((leaf) => (
-                                  <li key={leaf.slug}>
-                                    <Link
-                                      href={`/itneck/solutions/${hub.slug}/${leaf.slug}`}
-                                      className="flex min-h-10 items-center text-sm text-navy/80"
-                                    >
-                                      {leaf.title}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
                             </li>
                           ))}
                         </ul>
@@ -367,10 +354,10 @@ export function ItneckHeader() {
               })}
               <li className="pt-4">
                 <Link
-                  href="/itneck/contact"
+                  href={itneckContactHref("advisor")}
                   className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber px-4 text-sm font-semibold text-white"
                 >
-                  Contact us
+                  Talk with an Advisor
                 </Link>
               </li>
             </ul>

@@ -52,3 +52,12 @@ export const aboutContent = {
     body: "Our team brings deep technical expertise across cloud, security, networking, and modern workplace solutions. We follow a clear, collaborative process—from assessment to implementation—to deliver efficient, scalable IT that fits each client's unique needs.",
   },
 } as const;
+
+export const aboutItneck = {
+  eyebrow: "About ITneck",
+  heading: "A technology partner for growing businesses",
+  intro: [
+    "ITneck helps leadership simplify and secure technology so teams can stay focused, productive, and moving forward.",
+    "Founded in 2021 in San Diego, we take responsibility for the technology environment — managed IT, cybersecurity, AI and automation, backup and continuity, and technology strategy — as one coordinated partnership.",
+  ],
+} as const;

@@ -1,21 +1,21 @@
-﻿import type {Metadata} from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
-import {AgentGraph} from "@/components/AgentGraph";
-import {ArrowRightIcon, CheckIcon, productIcons} from "@/components/icons";
-import {CtaBanner, Eyebrow, GhostCta, PrimaryCta, Section} from "@/components/ui";
-import {copilotProducts} from "@/lib/copilot-agents";
-import {industries} from "@/lib/industries";
-import {absoluteUrl} from "@/lib/site";
+import { AgentGraph } from "@/components/AgentGraph";
+import { ArrowRightIcon, CheckIcon, productIcons } from "@/components/icons";
+import { CtaBanner, Eyebrow, GhostCta, PrimaryCta, Section } from "@/components/ui";
+import { copilotProducts } from "@/lib/copilot-agents";
+import { industries } from "@/lib/industries";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-    title: "ai.neck | Microsoft Copilot Studio Agents",
+  title: "ai.neck | Microsoft Copilot Studio Agents",
   description:
-      "ai.neck builds custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365. San Diego, CA.",
+    "ai.neck builds custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365. San Diego, CA.",
   alternates: { canonical: absoluteUrl("/") },
   openGraph: {
-      title: "ai.neck | Microsoft Copilot Studio Agents",
+    title: "ai.neck | Microsoft Copilot Studio Agents",
     description:
-        "Custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside the apps your team already uses.",
+      "Custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside the apps your team already uses.",
     url: absoluteUrl("/"),
   },
 };
@@ -43,7 +43,7 @@ const generalSolutions = [
     name: "Microsoft Copilot Agents",
     href: "/solutions/microsoft-copilot-agents",
     description:
-        "Our deepest specialty: Copilot Studio agents that live inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365.",
+      "Our deepest specialty: Copilot Studio agents that live inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365.",
     featured: true,
   },
 ];
@@ -89,14 +89,14 @@ export default function HomePage() {
               AI that works inside the tools you already use.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-graphite">
-                Custom agents in Microsoft Copilot Studio — grounded in your
-                Microsoft 365, delivered inside SharePoint, Teams, OneDrive,
+              Custom agents in Microsoft Copilot Studio — grounded in your
+              Microsoft 365, delivered inside SharePoint, Teams, OneDrive,
               Outlook, and Microsoft 365.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-                <PrimaryCta href="/contact">Book a working session</PrimaryCta>
+              <PrimaryCta href="/contact">Book a working session</PrimaryCta>
               <GhostCta href="/solutions/microsoft-copilot-agents">
-                  See Copilot Studio agents
+                See Copilot Studio agents
               </GhostCta>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function HomePage() {
 
         {/* Trust bar */}
         <div className="border-y border-line">
-            <p className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-2 px-4 py-4 font-mono text-xs uppercase tracking-widest text-graphite sm:px-6">
+          <p className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-2 px-4 py-4 font-mono text-xs uppercase tracking-widest text-graphite sm:px-6">
             <span className="text-cyan">Built on</span>
             <span>Microsoft 365</span>
             <span>Copilot Studio</span>
@@ -124,13 +124,13 @@ export default function HomePage() {
           id="solutions-heading"
           className="mt-3 max-w-2xl font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
         >
-            Microsoft 365 AI that ships — not another demo.
+          Microsoft 365 AI that ships — not another demo.
         </h2>
         <p className="mt-4 max-w-2xl text-graphite">
-            Our core work is Copilot Studio agents inside the Microsoft 365
-            apps your team already opens. Adjacent projects — custom agents,
-            automation, and data integration — support that same goal when the
-            workflow needs them.
+          Our core work is Copilot Studio agents inside the Microsoft 365
+          apps your team already opens. Adjacent projects — custom agents,
+          automation, and data integration — support that same goal when the
+          workflow needs them.
         </p>
         <ul className="mt-12 grid gap-10 sm:grid-cols-2">
           {generalSolutions.map((s) => (
@@ -157,7 +157,7 @@ export default function HomePage() {
       {/* Copilot agent solutions — the differentiator */}
       <div className="border-y border-line bg-surface">
         <Section aria-labelledby="copilot-heading">
-            <Eyebrow>Microsoft Copilot Studio Agents</Eyebrow>
+          <Eyebrow>Microsoft Copilot Studio Agents</Eyebrow>
           <h2
             id="copilot-heading"
             className="mt-3 max-w-3xl font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
@@ -195,7 +195,7 @@ export default function HomePage() {
                       href={`/solutions/microsoft-copilot-agents/${product.slug}`}
                       className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-navy hover:text-cyan"
                     >
-                        Copilot Studio agents for {product.name}
+                      Copilot Studio agents for {product.name}
                       <ArrowRightIcon />
                     </Link>
                   </div>
@@ -255,13 +255,13 @@ export default function HomePage() {
           </h2>
           <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
             {industries.map((industry) => (
-                <li key={industry.slug}>
-                    <Link
-                        href={`/industries/${industry.slug}`}
-                        className="text-sm text-navy transition-colors hover:text-cyan"
-                    >
-                        {industry.name}
-                    </Link>
+              <li key={industry.slug}>
+                <Link
+                  href={`/industries/${industry.slug}`}
+                  className="text-sm text-navy transition-colors hover:text-cyan"
+                >
+                  {industry.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -275,23 +275,23 @@ export default function HomePage() {
         </Section>
       </div>
 
-        {/* Documented patterns — honest proof until named case studies ship */}
+      {/* Documented patterns — honest proof until named case studies ship */}
       <Section aria-labelledby="proof-heading">
-          <Eyebrow>How we start</Eyebrow>
+        <Eyebrow>How we start</Eyebrow>
         <h2
           id="proof-heading"
           className="mt-3 font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
         >
-            Three patterns we map in the first working session.
+          Three patterns we map in the first working session.
         </h2>
         <p className="mt-4 max-w-2xl text-graphite">
-            Named client case studies publish only with approval. Until then,
-            these are the documented Microsoft Copilot Studio patterns we
-            walk through against your tenant — with sources cited, permissions
-            inherited, no invented metrics.
+          Named client case studies publish only with approval. Until then,
+          these are the documented Microsoft Copilot Studio patterns we
+          walk through against your tenant — with sources cited, permissions
+          inherited, no invented metrics.
         </p>
         <div className="mt-8">
-            <GhostCta href="/case-studies">See documented patterns</GhostCta>
+          <GhostCta href="/case-studies">See documented patterns</GhostCta>
         </div>
       </Section>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import {useCallback, useEffect, useId, useRef, useState} from "react";
-import {AgentIcon, CloseIcon} from "@/components/icons";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { AgentIcon, CloseIcon } from "@/components/icons";
 
 const COPILOT_SRC =
     "https://copilotstudio.microsoft.com/environments/Default-c4e3e0c2-a607-4731-853e-f406ad3fc598/bots/cr2cd_ITNeckAssistant/webchat?__version__=2";
@@ -29,7 +29,7 @@ export function CopilotChatWidget() {
 
         const ric = window.requestIdleCallback;
         if (typeof ric === "function") {
-            idleId = ric(boot, {timeout: IDLE_WARMUP_MS});
+            idleId = ric(boot, { timeout: IDLE_WARMUP_MS });
         } else {
             timeoutId = setTimeout(boot, IDLE_WARMUP_MS);
         }
@@ -77,11 +77,10 @@ export function CopilotChatWidget() {
                     aria-modal="false"
                     aria-label="Chat"
                     aria-hidden={!panelVisible}
-                    className={`flex h-[min(560px,calc(100dvh-6.5rem))] w-[min(100vw-2rem,380px)] flex-col overflow-hidden rounded-md border border-line bg-page shadow-lg transition-opacity ${
-                        panelVisible
+                    className={`flex h-[min(560px,calc(100dvh-6.5rem))] w-[min(100vw-2rem,380px)] flex-col overflow-hidden rounded-md border border-line bg-page shadow-lg transition-opacity ${panelVisible
                             ? "opacity-100"
                             : "pointer-events-none invisible absolute opacity-0"
-                    }`}
+                        }`}
                 >
                     <div
                         className="flex items-center justify-between gap-3 border-b border-line bg-surface px-3 py-2.5">
@@ -96,7 +95,7 @@ export function CopilotChatWidget() {
                             className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md border border-line text-navy transition-colors hover:border-navy/30"
                             aria-label="Close chat"
                         >
-                            <CloseIcon width={18} height={18}/>
+                            <CloseIcon width={18} height={18} />
                         </button>
                     </div>
                     <div className="relative min-h-0 flex-1 bg-page">
@@ -105,10 +104,10 @@ export function CopilotChatWidget() {
                                 className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-page px-6"
                                 aria-live="polite"
                             >
-                <span
-                    className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-amber"
-                    aria-hidden="true"
-                />
+                                <span
+                                    className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-amber"
+                                    aria-hidden="true"
+                                />
                                 <p className="text-center text-sm font-medium text-navy">
                                     Starting assistant…
                                 </p>
@@ -139,12 +138,12 @@ export function CopilotChatWidget() {
             >
                 {open ? (
                     <>
-                        <CloseIcon width={18} height={18}/>
+                        <CloseIcon width={18} height={18} />
                         <span>Close</span>
                     </>
                 ) : (
                     <>
-                        <AgentIcon width={18} height={18}/>
+                        <AgentIcon width={18} height={18} />
                         <span>Chat with us</span>
                     </>
                 )}

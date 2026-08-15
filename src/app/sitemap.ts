@@ -42,6 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const itneckStatic = [
     { path: "", priority: 1 },
     { path: "/about", priority: 0.8 },
+    { path: "/about-itneck", priority: 0.8 },
     { path: "/contact", priority: 0.8 },
     { path: "/support", priority: 0.6 },
     { path: "/privacy", priority: 0.3 },
@@ -54,13 +55,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  const itneckSolutions = allSolutionPaths().map(({ hub, leaf }) => ({
-    url: itneckAbsoluteUrl(
-      leaf ? `/solutions/${hub}/${leaf}` : `/solutions/${hub}`,
-    ),
+  const itneckSolutions = allSolutionPaths().map(({ hub }) => ({
+    url: itneckAbsoluteUrl(`/solutions/${hub}`),
     lastModified,
     changeFrequency: "monthly" as const,
-    priority: leaf ? 0.7 : 0.8,
+    priority: 0.8,
   }));
 
   const itneckBlog = blogPosts.map((p) => ({

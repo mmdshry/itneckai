@@ -19,7 +19,11 @@ const inputClasses =
 const labelClasses = "block text-sm font-medium text-navy";
 const errorClasses = "mt-1.5 text-sm text-red-600";
 
-export function ItneckContactForm() {
+export function ItneckContactForm({
+  defaultTopic,
+}: {
+  defaultTopic?: (typeof itneckHelpTopics)[number];
+}) {
   const [status, setStatus] = useState<Status>({ state: "idle" });
   const {
     register,
@@ -29,7 +33,10 @@ export function ItneckContactForm() {
     formState: { errors },
   } = useForm<ItneckContactInput>({
     resolver: zodResolver(itneckContactSchema),
-    defaultValues: { website: "" },
+    defaultValues: {
+      website: "",
+      topic: defaultTopic,
+    },
   });
 
   async function onSubmit(values: ItneckContactInput) {
@@ -130,7 +137,6 @@ export function ItneckContactForm() {
             id="topic"
             aria-invalid={!!errors.topic}
             className={inputClasses}
-            defaultValue=""
             {...register("topic")}
           >
             <option value="" disabled>

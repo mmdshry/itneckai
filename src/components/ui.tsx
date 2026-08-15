@@ -31,14 +31,16 @@ export function Section({
 export function PrimaryCta({
   href,
   children,
+  className = "",
 }: {
   href: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5"
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 ${className}`}
     >
       {children}
     </Link>
@@ -48,14 +50,22 @@ export function PrimaryCta({
 export function GhostCta({
   href,
   children,
+  className = "",
+  variant = "default",
 }: {
   href: string;
   children: ReactNode;
+  className?: string;
+  variant?: "default" | "onDark";
 }) {
+  const styles =
+    variant === "onDark"
+      ? "border-white/30 text-white hover:border-white/60 hover:bg-white/10"
+      : "border-navy/20 text-navy hover:border-navy/40 hover:bg-surface";
   return (
     <Link
       href={href}
-      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-navy/20 px-6 text-base font-medium text-navy transition-colors hover:border-navy/40 hover:bg-surface"
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-6 text-base font-medium transition-colors ${styles} ${className}`}
     >
       {children}
       <ArrowRightIcon />
