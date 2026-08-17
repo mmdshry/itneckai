@@ -4,7 +4,7 @@ export const itneckSite = {
     "We simplify and secure your technology, so your team can stay focused, productive, and moving forward.",
   description:
     "We simplify and secure your technology, so your team can stay focused, productive, and moving forward. Managed IT, cybersecurity, AI, backup, and technology strategy.",
-  email: "Support@ITneck.com",
+  email: "support@itneck.com",
   phone: "858-740-8878",
   phoneIntl: "+1-858-740-8878",
   address: "San Diego, CA",

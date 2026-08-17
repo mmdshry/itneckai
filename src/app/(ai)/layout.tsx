@@ -1,6 +1,4 @@
-import {Header} from "@/components/Header";
-import {Footer} from "@/components/Footer";
-import {CopilotChatWidget} from "@/components/CopilotChatWidget";
+import {AiChrome} from "@/components/AiChrome";
 import {JsonLd} from "@/components/JsonLd";
 import {organizationSchema} from "@/lib/schema";
 
@@ -11,10 +9,7 @@ export default function AiLayout({
 }>) {
   return (
     <>
-      <Header />
-      <main id="main">{children}</main>
-      <Footer />
-      <CopilotChatWidget />
+      <AiChrome>{children}</AiChrome>
       <JsonLd data={organizationSchema} />
     </>
   );

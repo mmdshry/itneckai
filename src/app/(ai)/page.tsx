@@ -95,6 +95,9 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <PrimaryCta href="/contact">Book a working session</PrimaryCta>
+              <GhostCta href="/EndYourBusywork?from=home">
+                End Your Busywork
+              </GhostCta>
               <GhostCta href="/solutions/microsoft-copilot-agents">
                 See Copilot Studio agents
               </GhostCta>
@@ -116,6 +119,32 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+
+      <section
+        aria-labelledby="busywork-cta-heading"
+        className="border-b border-line bg-surface"
+      >
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-cyan">
+              End Your Busywork
+            </p>
+            <h2
+              id="busywork-cta-heading"
+              className="mt-3 font-display text-2xl font-semibold tracking-tight text-navy md:text-3xl"
+            >
+              See where AI can actually create value.
+            </h2>
+            <p className="mt-3 text-sm text-graphite md:text-base">
+              See where AI can remove repetitive work, strengthen your best
+              work, and help design the agents your business actually needs.
+            </p>
+          </div>
+          <PrimaryCta href="/EndYourBusywork?from=home-band">
+            End Your Busywork
+          </PrimaryCta>
+        </div>
+      </section>
 
       {/* Solutions overview */}
       <Section aria-labelledby="solutions-heading">

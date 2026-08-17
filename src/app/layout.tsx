@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {Inter, JetBrains_Mono} from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import {site} from "@/lib/site";
+import {publicOrigin, site} from "@/lib/site";
 
 // display: "optional" + no preload — text paints immediately with matched
 // fallback metrics and never reflows for a late font, keeping LCP/CLS at
@@ -35,7 +35,7 @@ const clash = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(publicOrigin()),
   title: {
     default: "ai.neck | Microsoft Copilot Agents & AI Solutions",
     template: "%s | ai.neck",

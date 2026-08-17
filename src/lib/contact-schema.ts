@@ -6,6 +6,7 @@ z.config({ jitless: true });
 
 export const helpTopics = [
   "Microsoft Copilot Agents",
+  "End Your Busywork",
   "SharePoint",
   "Teams",
   "OneDrive",

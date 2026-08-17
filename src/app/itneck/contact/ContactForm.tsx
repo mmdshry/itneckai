@@ -10,7 +10,7 @@ import {
   type ItneckContactInput,
 } from "@/lib/itneck/contact-schema";
 import { itneckSite } from "@/lib/itneck/site";
-import { submitItneckContact } from "@/app/itneck/actions";
+import { submitItneckContact } from "@/lib/api-client";
 
 type Status = { state: "idle" | "sending" | "success" | "error"; message?: string };
 
@@ -41,24 +41,31 @@ export function ItneckContactForm({
 
   async function onSubmit(values: ItneckContactInput) {
     setStatus({ state: "sending" });
-    const result = await submitItneckContact(values);
-    if (result.ok) {
-      reset();
-      setStatus({
-        state: "success",
-        message:
-          "Thanks — your message has been sent. We typically reply within one business day.",
-      });
-    } else {
-      if (result.fieldErrors) {
-        for (const [field, messages] of Object.entries(result.fieldErrors)) {
-          setError(field as keyof ItneckContactInput, {
-            type: "server",
-            message: messages[0],
-          });
+    try {
+      const result = await submitItneckContact(values);
+      if (result.ok) {
+        reset();
+        setStatus({
+          state: "success",
+          message:
+            "Thanks — your message has been sent. We typically reply within one business day.",
+        });
+      } else {
+        if (result.fieldErrors) {
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            setError(field as keyof ItneckContactInput, {
+              type: "server",
+              message: messages[0],
+            });
+          }
         }
+        setStatus({ state: "error", message: result.error });
       }
-      setStatus({ state: "error", message: result.error });
+    } catch {
+      setStatus({
+        state: "error",
+        message: `We couldn't send your message right now. Please email us directly at ${itneckSite.email}.`,
+      });
     }
   }
 

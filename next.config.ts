@@ -60,6 +60,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/end-your-busywork",
+        destination: "/EndYourBusywork",
+        permanent: true,
+      },
+      {
         source: "/itneck/ai",
         destination: "/itneck/solutions/ai-automation",
         permanent: true,

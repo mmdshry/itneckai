@@ -193,6 +193,59 @@ export function SunIcon(props: IconProps) {
   );
 }
 
+export function ValueIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 3.5 14.2 9l5.8.5-4.4 3.8 1.4 5.7L12 15.8 6.99 19l1.4-5.7L4 9.5 9.8 9 12 3.5Z" />
+    </svg>
+  );
+}
+
+export function BoundaryIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 3.5 19 7v5.2c0 4.2-2.8 7.4-7 8.8-4.2-1.4-7-4.6-7-8.8V7l7-3.5Z" />
+      <path d="M9.5 12.2 11.2 14l3.5-4" />
+    </svg>
+  );
+}
+
+export function AutomateIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 12a8 8 0 0 1 13.5-5.8M20 12a8 8 0 0 1-13.5 5.8" />
+      <path d="M17.5 3.5V6.8H14M6.5 20.5V17.2H10" />
+    </svg>
+  );
+}
+
+export function AmplifyIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M13 3 6 13h6l-1 8 7-10h-6l1-8Z" />
+    </svg>
+  );
+}
+
+export function HireIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="8" r="3" />
+      <path d="M5.5 19v-1.2A5.5 5.5 0 0 1 12 12.5 5.5 5.5 0 0 1 18.5 17.8V19" />
+      <path d="M19 8.5v4M17 10.5h4" />
+    </svg>
+  );
+}
+
+export function IdeasIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M8 7h10M8 12h10M8 17h7" />
+      <path d="M5 7h.01M5 12h.01M5 17h.01" />
+    </svg>
+  );
+}
+
 export function MoonIcon(props: IconProps) {
   return (
     <svg {...base({ width: 20, height: 20, ...props })}>

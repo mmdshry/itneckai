@@ -47,7 +47,7 @@ export function Footer() {
             {footerNav.map((item) => (
               <li key={item.href}>
                 <Link
-                  href={item.href}
+                  href={item.href === "/EndYourBusywork" ? "/EndYourBusywork?from=footer" : item.href}
                   className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
                 >
                   {item.label}

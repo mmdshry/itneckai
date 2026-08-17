@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CheckIcon } from "@/components/icons";
 import { itneckSite } from "@/lib/itneck/site";
-import { subscribeTechTalk } from "@/app/itneck/actions";
+import { subscribeTechTalk } from "@/lib/api-client";
 
 export function TechTalk() {
   const [email, setEmail] = useState("");
@@ -16,16 +16,23 @@ export function TechTalk() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
-    const result = await subscribeTechTalk(email);
-    if (result.ok) {
-      setEmail("");
-      setStatus("success");
-      setMessage(
-        "Check your inbox or spam folder to confirm your subscription.",
-      );
-    } else {
+    try {
+      const result = await subscribeTechTalk(email);
+      if (result.ok) {
+        setEmail("");
+        setStatus("success");
+        setMessage(
+          "Check your inbox or spam folder to confirm your subscription.",
+        );
+      } else {
+        setStatus("error");
+        setMessage(result.error);
+      }
+    } catch {
       setStatus("error");
-      setMessage(result.error);
+      setMessage(
+        `We couldn't process your subscription. Please email us at ${itneckSite.email}.`,
+      );
     }
   }
 

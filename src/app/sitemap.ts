@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: { path: string; priority: number }[] = [
     { path: "/", priority: 1 },
+    { path: "/EndYourBusywork", priority: 0.8 },
     { path: "/solutions", priority: 0.9 },
     { path: "/solutions/microsoft-copilot-agents", priority: 0.9 },
     { path: "/industries", priority: 0.7 },

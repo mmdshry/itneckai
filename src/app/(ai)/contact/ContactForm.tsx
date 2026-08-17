@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form";
 import {CheckIcon} from "@/components/icons";
 import {type ContactInput, contactSchema, helpTopics,} from "@/lib/contact-schema";
 import {site} from "@/lib/site";
-import {submitContact} from "./actions";
+import {submitContact} from "@/lib/api-client";
 
 type Status = { state: "idle" | "sending" | "success" | "error"; message?: string };
 
@@ -15,8 +15,12 @@ const inputClasses =
 const labelClasses = "block text-sm font-medium text-navy";
 const errorClasses = "mt-1.5 text-sm text-red-600";
 
-export function ContactForm() {
+export function ContactForm({ defaultTopic }: { defaultTopic?: string }) {
   const [status, setStatus] = useState<Status>({ state: "idle" });
+  const topicDefault =
+    defaultTopic && (helpTopics as readonly string[]).includes(defaultTopic)
+      ? (defaultTopic as ContactInput["topic"])
+      : undefined;
   const {
     register,
     handleSubmit,
@@ -25,29 +29,39 @@ export function ContactForm() {
     formState: { errors },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { website: "" },
+    defaultValues: {
+      website: "",
+      topic: (topicDefault ?? "") as ContactInput["topic"],
+    },
   });
 
   async function onSubmit(values: ContactInput) {
     setStatus({ state: "sending" });
-    const result = await submitContact(values);
-    if (result.ok) {
-      reset();
-      setStatus({
-        state: "success",
-        message:
-          "Thanks — your message has been sent. We typically reply within one business day.",
-      });
-    } else {
-      if (result.fieldErrors) {
-        for (const [field, messages] of Object.entries(result.fieldErrors)) {
-          setError(field as keyof ContactInput, {
-            type: "server",
-            message: messages[0],
-          });
+    try {
+      const result = await submitContact(values);
+      if (result.ok) {
+        reset();
+        setStatus({
+          state: "success",
+          message:
+            "Thanks — your message has been sent. We typically reply within one business day.",
+        });
+      } else {
+        if (result.fieldErrors) {
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            setError(field as keyof ContactInput, {
+              type: "server",
+              message: messages[0],
+            });
+          }
         }
+        setStatus({ state: "error", message: result.error });
       }
-      setStatus({ state: "error", message: result.error });
+    } catch {
+      setStatus({
+        state: "error",
+        message: `We couldn't send your message right now. Please email us directly at ${site.email}.`,
+      });
     }
   }
 
@@ -143,7 +157,6 @@ export function ContactForm() {
             aria-invalid={!!errors.topic}
             aria-describedby={errors.topic ? "topic-error" : undefined}
             className={inputClasses}
-            defaultValue=""
             {...register("topic")}
           >
             <option value="" disabled>

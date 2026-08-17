@@ -19,7 +19,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ topic?: string; source?: string }>;
+}) {
+  const params = await searchParams;
+  const fromBusywork = params.source === "busywork";
+
   return (
     <>
       <Section className="pt-32 md:pt-40">
@@ -28,14 +35,15 @@ export default function ContactPage() {
           Tell us what&apos;s not working yet.
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-graphite">
-          The first conversation is a working session: your stack, your
-          workflows, and where an agent would earn its keep. No slide deck.
+          {fromBusywork
+            ? "Coming from End Your Busywork? Tell us which idea you want to turn into an AI agent — we’ll take it from the specification you already captured."
+            : "The first conversation is a working session: your stack, your workflows, and where an agent would earn its keep. No slide deck."}
         </p>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
           <div>
               <h2 className="sr-only">Working session request form</h2>
-            <ContactForm />
+            <ContactForm defaultTopic={params.topic} />
           </div>
 
           <aside

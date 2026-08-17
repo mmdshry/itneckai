@@ -236,10 +236,10 @@ export function Header() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
-            href="/contact"
+            href="/EndYourBusywork?from=header-cta"
             className="hidden min-h-11 items-center rounded-md bg-amber px-4 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:inline-flex"
           >
-            Book a working session
+            End Your Busywork
           </Link>
           <button
             ref={toggleRef}
@@ -337,10 +337,10 @@ export function Header() {
               })}
               <li className="pt-4">
                 <Link
-                  href="/contact"
+                  href="/EndYourBusywork?from=header-cta"
                   className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber px-4 text-sm font-semibold text-white"
                 >
-                  Book a working session
+                  End Your Busywork
                 </Link>
               </li>
             </ul>

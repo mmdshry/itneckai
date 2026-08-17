@@ -75,7 +75,7 @@ export function ogImage(title: string, eyebrow = "AI SOLUTIONS · MICROSOFT COPI
             color: "#5c6678",
           }}
         >
-          <div style={{ display: "flex" }}>www.itneck.com</div>
+          <div style={{ display: "flex" }}>itneck.ai</div>
           <div style={{ display: "flex", color: "#f9690e" }}>
             San Diego, California
           </div>
