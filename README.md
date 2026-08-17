@@ -43,7 +43,7 @@ npm start
 | `MAIL_TO` | Internal inbox (default `support@itneck.com`) |
 | `SITE_URL` | Optional production origin override (default `https://itneck.ai`). Local email links use the request Host instead. |
 | `BUSYWORK_SQLITE_PATH` | Optional. SQLite file for End Your Busywork (default `data/busywork.sqlite`) |
-| `BUSYWORK_SESSION_SECRET` | Secret used to sign the End Your Busywork session cookie |
+| `BUSYWORK_SESSION_SECRET` | Required in production. Signs the End Your Busywork session cookie |
 | `BUSYWORK_WEBHOOK_URL` | Optional. POST JSON payload on successful workshop submit (CRM) |
 
 ## Deployment
@@ -52,7 +52,7 @@ Deploy with `next start` behind Apache (or similar). Post-launch checklist:
 
 1. Connect the custom domain (`itneck.ai`).
 2. Set `SMTP_PASS` (and related SMTP env vars). Apache must proxy `POST /api/*` to the Node process — not static HTML.
-3. Set `BUSYWORK_SESSION_SECRET`. The SQLite file is created automatically at `data/busywork.sqlite` (or `BUSYWORK_SQLITE_PATH`).
+3. Set `BUSYWORK_SESSION_SECRET` (required). Magic-link redirects use `SITE_URL` (`https://itneck.ai`), not the Node bind address. The SQLite file is created automatically at `data/busywork.sqlite` (or `BUSYWORK_SQLITE_PATH`).
 4. Submit `https://itneck.ai/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
 5. Validate JSON-LD with Google's Rich Results Test.
 6. Before using official Microsoft logos anywhere, check Microsoft's Partner Brand Guidelines — the site currently uses neutral abstract line icons on purpose.

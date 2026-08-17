@@ -6,12 +6,13 @@ import {
   SESSION_COOKIE,
   signSessionId,
 } from "@/lib/busywork/session";
+import { originFromRequest } from "@/lib/request-origin";
 
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get("token")?.trim() ?? "";
-  const dest = `${request.nextUrl.origin}${BUSYWORK_PATH}`;
+  const dest = `${originFromRequest(request)}${BUSYWORK_PATH}`;
 
   if (!token) {
     return NextResponse.redirect(`${dest}?error=invalid-link`);
