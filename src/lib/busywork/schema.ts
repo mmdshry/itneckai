@@ -111,7 +111,7 @@ export const addRobotTaskSchema = z.object({
     .number()
     .min(0, "Hours cannot be negative.")
     .max(744, "Hours cannot exceed 744."),
-  frequency: frequencySchema,
+  frequency: frequencySchema.default("weekly"),
 });
 
 export const addSuperhumanSchema = z.object({

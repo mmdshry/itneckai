@@ -24,50 +24,6 @@ export const experience = {
     "See where AI can remove repetitive work, strengthen your best work, and help design the agents your business actually needs.",
 } as const;
 
-export const valueChips = [
-  "Customers",
-  "Sales",
-  "Strategy",
-  "Leadership",
-  "Creative Work",
-  "Growth",
-  "Email",
-  "Follow-ups",
-  "Data Entry",
-  "Reporting",
-  "Scheduling",
-  "Research",
-  "Documents",
-] as const;
-
-export const robotChips = [
-  "Data Entry",
-  "Follow-Ups",
-  "Reports",
-  "Scheduling",
-  "Document Processing",
-  "CRM Updates",
-  "Research",
-  "Email Sorting",
-] as const;
-
-export const kpiChips = [
-  "Hours Saved",
-  "Response Time",
-  "Leads Followed Up",
-  "Appointments Booked",
-  "Tickets Resolved",
-  "Reports Completed",
-  "Errors Reduced",
-  "Revenue Influenced",
-] as const;
-
-export const frequencies = [
-  { value: "daily", label: "Daily" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
-] as const;
-
 export const sections = {
   value: {
     nav: "Value",
@@ -108,9 +64,8 @@ export const sections = {
     lead: "What repetitive or routine work do you do over and over that doesn’t require much human judgment or creativity?",
     prompt: "What repetitive task would you gladly never do manually again?",
     placeholder: "A repetitive task AI could handle for me…",
-    hoursLabel: "Hours per",
+    hoursLabel: "Hours per week",
     hoursPlaceholder: "e.g. 8",
-    frequencyLabel: "Frequency",
     examples: [
       "Entering the same information into different systems",
       "Sending routine follow-ups or reminders",
@@ -123,8 +78,8 @@ export const sections = {
     lead: "What important work depends on your expertise, but takes too much time to research, prepare, or organize before you can do the part that really matters?",
     prompt: "Where are you the expert, but preparation consumes most of the time?",
     placeholder: "A task where AI could help me prepare, analyze, or perform better…",
-    prepLabel: "Preparation time",
-    performanceLabel: "Decision / performance time",
+    prepLabel: "Preparation time per week",
+    performanceLabel: "Decision / performance time per week",
     bottleneck:
       "Your expertise is not the bottleneck. Preparation is.",
     examples: [
@@ -152,7 +107,7 @@ export const sections = {
     title: "My ideas",
     lead: "Here’s everything you entered. Submit these ideas to our team — we’ll review them and get in touch. You can also email yourself a copy.",
     emailCta: "Submit my ideas",
-    emailHelper: "We’ll review what you entered and follow up. Nothing is generated automatically.",
+    emailHelper: "We’ll review what you entered and follow up.",
     copyLabel: "Email me a copy of the ideas I entered.",
   },
 } as const;

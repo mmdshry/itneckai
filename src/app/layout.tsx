@@ -89,11 +89,11 @@ export default function RootLayout({
       >
         <a
           href="#main"
-          className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-md bg-amber px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0"
+          className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-md bg-amber px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0 print:hidden"
         >
           Skip to main content
         </a>
-        <div className="spine hidden md:block" aria-hidden="true">
+        <div className="spine hidden md:block print:hidden" aria-hidden="true">
           <div className="spine-fill" />
         </div>
         {children}

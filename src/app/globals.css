@@ -210,3 +210,42 @@ body {
     opacity: 0.25;
   }
 }
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.6in;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #02376b !important;
+  }
+
+  a[href="#main"],
+  .spine,
+  header.fixed,
+  main ~ footer,
+  .estimate-no-print,
+  .estimate-screen,
+  nextjs-portal,
+  [data-next-badge-root],
+  [data-nextjs-toast] {
+    display: none !important;
+  }
+
+  .estimate-print {
+    display: block !important;
+    background: #ffffff !important;
+    color: #02376b !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .estimate-print * {
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

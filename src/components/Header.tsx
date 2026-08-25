@@ -120,7 +120,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 ${scrolled || open
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 print:hidden ${scrolled || open
           ? "site-header--scrolled border-line"
           : "border-transparent bg-transparent"
         }`}

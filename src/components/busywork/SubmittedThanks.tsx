@@ -14,7 +14,7 @@ export function SubmittedThanks() {
       </h1>
       <p className="mt-4 text-graphite">
         We received your ideas. Our team will review them and follow up with
-        you. Nothing was generated automatically.
+        you.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link href="/solutions" className={`${primaryButtonClass} w-full sm:w-auto`}>

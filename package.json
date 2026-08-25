@@ -13,11 +13,13 @@
     "@hookform/resolvers": "^5.4.0",
     "@libsql/client": "^0.17.4",
     "drizzle-orm": "^0.45.2",
+    "fflate": "^0.8.3",
     "next": "15.5.20",
     "nodemailer": "^9.0.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.81.0",
+    "xlsx": "^0.18.5",
     "zod": "^4.4.3"
   },
   "devDependencies": {

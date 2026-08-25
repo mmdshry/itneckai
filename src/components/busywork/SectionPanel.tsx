@@ -6,11 +6,11 @@ import {
   removeBusyworkIdea,
   type PublicSession,
 } from "@/lib/api-client";
-import { frequencies, kpiChips, robotChips, sections, valueChips } from "@/lib/busywork/copy";
+import { sections } from "@/lib/busywork/copy";
 import { hoursPeriodLabel, minutesToLabel } from "@/lib/busywork/map";
-import type { Frequency, IdeaKind } from "@/lib/busywork/schema";
+import type { IdeaKind } from "@/lib/busywork/schema";
 import { IdeaCard } from "./IdeaCard";
-import { ExampleChips, IdeaComposer } from "./IdeaComposer";
+import { IdeaComposer } from "./IdeaComposer";
 import { errorClass, inputClass, labelClass, secondaryButtonClass } from "./styles";
 
 function Heading({
@@ -165,8 +165,6 @@ function ValueSection({
             placeholder={copy.highValuePlaceholder}
             value={highValue}
             onChange={setHighValue}
-            chips={valueChips}
-            onChip={setHighValue}
             pending={pending === "highValue"}
             error={errorFor === "highValue" ? error : undefined}
             onSubmit={async () => {
@@ -197,8 +195,6 @@ function ValueSection({
             placeholder={copy.busyworkPlaceholder}
             value={busywork}
             onChange={setBusywork}
-            chips={valueChips}
-            onChip={setBusywork}
             pending={pending === "busywork"}
             error={errorFor === "busywork" ? error : undefined}
             onSubmit={async () => {
@@ -291,7 +287,6 @@ function AutomateSection({
   const copy = sections.automate;
   const [text, setText] = useState("");
   const [hours, setHours] = useState("4");
-  const [frequency, setFrequency] = useState<Frequency | "">("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string>();
 
@@ -321,22 +316,15 @@ function AutomateSection({
           placeholder={copy.placeholder}
           value={text}
           onChange={setText}
-          chips={robotChips}
-          onChip={setText}
           pending={pending}
           error={error}
           onSubmit={async () => {
-            if (!frequency) {
-              setError("Please choose how often these hours apply.");
-              return;
-            }
             const hoursPerWeek = Number(hours);
             const ok = await addKind(
               "robotTasks",
               {
                 text,
                 hoursPerWeek: Number.isFinite(hoursPerWeek) ? hoursPerWeek : -1,
-                frequency,
               },
               onSession,
               setError,
@@ -345,47 +333,25 @@ function AutomateSection({
             if (ok) {
               setText("");
               setHours("4");
-              setFrequency("");
             }
           }}
         >
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="robot-hours" className={labelClass}>
-                {copy.hoursLabel}
-              </label>
-              <input
-                id="robot-hours"
-                type="number"
-                min={0}
-                max={744}
-                step={0.5}
-                inputMode="decimal"
-                placeholder={copy.hoursPlaceholder}
-                value={hours}
-                onChange={(e) => setHours(e.target.value)}
-                className={`${inputClass} h-12`}
-              />
-            </div>
-            <div>
-              <label htmlFor="robot-frequency" className={labelClass}>
-                {copy.frequencyLabel}
-              </label>
-              <select
-                id="robot-frequency"
-                required
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value as Frequency | "")}
-                className={`${inputClass} h-12`}
-              >
-                <option value="">Choose</option>
-                {frequencies.map((item) => (
-                  <option key={item.value} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="mt-4 max-w-xs">
+            <label htmlFor="robot-hours" className={labelClass}>
+              {copy.hoursLabel}
+            </label>
+            <input
+              id="robot-hours"
+              type="number"
+              min={0}
+              max={744}
+              step={0.5}
+              inputMode="decimal"
+              placeholder={copy.hoursPlaceholder}
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              className={`${inputClass} h-12`}
+            />
           </div>
         </IdeaComposer>
       </div>
@@ -410,11 +376,11 @@ function DurationField({
   onUnit: (value: "minutes" | "hours") => void;
 }) {
   return (
-    <div>
-      <label htmlFor={id} className={labelClass}>
+    <div className="min-w-0">
+      <label htmlFor={id} className={`${labelClass} leading-snug`}>
         {label}
       </label>
-      <div className="mt-1.5 flex gap-2">
+      <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_auto] gap-2">
         <input
           id={id}
           type="number"
@@ -423,13 +389,13 @@ function DurationField({
           inputMode="decimal"
           value={amount}
           onChange={(e) => onAmount(e.target.value)}
-          className={`${inputClass} mt-0 h-12 min-w-[5.5rem] flex-1`}
+          className="h-12 min-w-0 w-full rounded-md border border-line bg-page px-3.5 py-3 text-sm text-navy"
         />
         <select
           aria-label={`${label} unit`}
           value={unit}
           onChange={(e) => onUnit(e.target.value as "minutes" | "hours")}
-          className={`${inputClass} mt-0 h-12 w-32 shrink-0`}
+          className="h-12 w-[7.5rem] rounded-md border border-line bg-page px-3.5 py-3 text-sm text-navy"
         >
           <option value="minutes">Minutes</option>
           <option value="hours">Hours</option>
@@ -506,7 +472,7 @@ function AmplifySection({
             if (ok) setText("");
           }}
         >
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-4">
             <DurationField
               id="prep-time"
               label={copy.prepLabel}
@@ -604,10 +570,6 @@ function AgentSection({
             placeholder={copy.kpiPlaceholder}
             onChange={(e) => setKpi(e.target.value)}
             className={inputClass}
-          />
-          <ExampleChips
-            items={kpiChips}
-            onPick={setKpi}
           />
           {error ? <p className={errorClass}>{error}</p> : null}
           <button

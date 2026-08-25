@@ -389,21 +389,6 @@ export async function submitBusywork(opts?: {
     origin,
   });
 
-  const visitorSend = opts?.emailCopy
-    ? await sendMail({
-        to: record.email,
-        subject: visitor.subject,
-        html: visitor.html,
-        text: visitor.text,
-      })
-    : { ok: true as const };
-  if (opts?.emailCopy && !visitorSend.ok && process.env.NODE_ENV !== "development") {
-    return {
-      ok: false,
-      error: `We couldn’t email your copy. Please try again, or write us at ${site.email}.`,
-    };
-  }
-
   const teamSend = await sendMail({
     to: mailToSupport(),
     subject: team.subject,
@@ -413,11 +398,21 @@ export async function submitBusywork(opts?: {
   });
   if (!teamSend.ok) {
     console.error("Busywork team copy failed:", teamSend.error);
-    if (process.env.NODE_ENV === "production") {
-      return {
-        ok: false,
-        error: `We couldn’t notify our team. Please try again, or write us at ${site.email}.`,
-      };
+    return {
+      ok: false,
+      error: `We couldn’t notify our team. Please try again, or write us at ${site.email}.`,
+    };
+  }
+
+  if (opts?.emailCopy) {
+    const visitorSend = await sendMail({
+      to: record.email,
+      subject: visitor.subject,
+      html: visitor.html,
+      text: visitor.text,
+    });
+    if (!visitorSend.ok) {
+      console.error("Busywork visitor copy failed:", visitorSend.error);
     }
   }
 

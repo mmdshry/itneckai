@@ -6,7 +6,7 @@ import {NapBlock} from "@/components/NapBlock";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-page">
+    <footer className="border-t border-line bg-page print:hidden">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
           <Link href="/" aria-label="ai.neck — home" className="inline-flex">

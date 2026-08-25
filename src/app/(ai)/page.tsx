@@ -98,9 +98,6 @@ export default function HomePage() {
               <GhostCta href="/EndYourBusywork?from=home">
                 End Your Busywork
               </GhostCta>
-              <GhostCta href="/solutions/microsoft-copilot-agents">
-                See Copilot Studio agents
-              </GhostCta>
             </div>
           </div>
           <div className="flex justify-center md:justify-end">
