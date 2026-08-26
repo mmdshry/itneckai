@@ -10,10 +10,40 @@ import {
   isLocalHost,
 } from "@/lib/hosts";
 
+function publicOrigin(request: NextRequest): string {
+  const host = request.headers.get("host")?.trim();
+  if (!host) return request.nextUrl.origin;
+  const forwarded = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const hostname = hostnameFromHostHeader(host);
+  const proto =
+    forwarded ||
+    (hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname.endsWith(".localhost")
+      ? "http"
+      : "https");
+  return `${proto}://${host}`;
+}
+
+function redirectTo(
+  request: NextRequest,
+  pathname: string,
+  status: 307 | 308 = 307,
+) {
+  const url = new URL(pathname, publicOrigin(request));
+  url.search = "";
+  return NextResponse.redirect(url, status);
+}
+
 function notFound(request: NextRequest) {
   const url = request.nextUrl.clone();
   url.pathname = "/_not-found";
   url.search = "";
+  // next start -H 127.0.0.1 builds nextUrl as localhost:3001. X-Forwarded-Proto
+  // https would rewrite to https://localhost:3001/_not-found (nothing listens).
+  if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+    url.protocol = "http:";
+  }
   return NextResponse.rewrite(url);
 }
 
@@ -26,10 +56,11 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (hostnameFromHostHeader(host) === "www.kelarpacific.itneck.ai") {
-    const url = request.nextUrl.clone();
-    url.hostname = "kelarpacific.itneck.ai";
-    url.protocol = "https:";
-    return NextResponse.redirect(url, 308);
+    const dest = new URL(
+      `${pathname}${request.nextUrl.search}`,
+      "https://kelarpacific.itneck.ai",
+    );
+    return NextResponse.redirect(dest, 308);
   }
 
   if (isEstimateHost(host)) {
@@ -40,36 +71,22 @@ export async function middleware(request: NextRequest) {
     const authed = await isAuthed(request);
 
     if (pathname === "/login") {
-      if (authed) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/";
-        url.search = "";
-        return NextResponse.redirect(url);
-      }
+      if (authed) return redirectTo(request, "/");
       return NextResponse.next();
     }
 
     if (pathname === "/estimate" || pathname.startsWith("/estimate/")) {
-      if (!authed) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/login";
-        url.search = "";
-        return NextResponse.redirect(url);
-      }
-      const url = request.nextUrl.clone();
-      url.pathname = "/";
-      return NextResponse.redirect(url);
+      if (!authed) return redirectTo(request, "/login");
+      return redirectTo(request, "/");
     }
 
     if (pathname === "/") {
-      if (!authed) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/login";
-        url.search = "";
-        return NextResponse.redirect(url);
-      }
+      if (!authed) return redirectTo(request, "/login");
       const url = request.nextUrl.clone();
       url.pathname = "/estimate";
+      if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+        url.protocol = "http:";
+      }
       return NextResponse.rewrite(url);
     }
 
@@ -92,25 +109,15 @@ export async function middleware(request: NextRequest) {
     const authed = await isAuthed(request);
 
     if (pathname === "/login") {
-      if (authed) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/estimate";
-        url.search = "";
-        return NextResponse.redirect(url);
-      }
+      if (authed) return redirectTo(request, "/estimate");
       return NextResponse.next();
     }
 
     if (pathname === "/estimate" || pathname.startsWith("/estimate/")) {
       if (!authed) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/login";
-        url.search = "";
-        url.searchParams.set(
-          "next",
-          `${pathname}${request.nextUrl.search}`,
-        );
-        return NextResponse.redirect(url);
+        const dest = new URL("/login", publicOrigin(request));
+        dest.searchParams.set("next", `${pathname}${request.nextUrl.search}`);
+        return NextResponse.redirect(dest);
       }
       return NextResponse.next();
     }
