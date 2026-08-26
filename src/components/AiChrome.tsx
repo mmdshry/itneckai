@@ -6,15 +6,21 @@ import { CopilotChatWidget } from "@/components/CopilotChatWidget";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
-export function AiChrome({ children }: { children: ReactNode }) {
+export function AiChrome({
+  children,
+  marketingOrigin,
+}: {
+  children: ReactNode;
+  marketingOrigin?: string;
+}) {
   const pathname = usePathname();
   const busywork = pathname.toLowerCase().startsWith("/endyourbusywork");
 
   return (
     <>
-      <Header />
+      <Header marketingOrigin={marketingOrigin} />
       <main id="main">{children}</main>
-      {!busywork && <Footer />}
+      {!busywork && <Footer marketingOrigin={marketingOrigin} />}
       {!busywork && <CopilotChatWidget />}
     </>
   );

@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { BusyworkEntryLink } from "@/components/busywork/BusyworkEntryLink";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { withOrigin } from "@/lib/hosts";
 import { industries } from "@/lib/industries";
 import { headerNav } from "@/lib/site";
 
-export function Header() {
+export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
@@ -21,8 +23,11 @@ export function Header() {
   const industriesPanelId = useId();
   const mobileIndustriesId = useId();
 
+  const hrefFor = (path: string) => withOrigin(path, marketingOrigin);
+
   const industriesActive =
-    pathname === "/industries" || pathname.startsWith("/industries/");
+    !marketingOrigin &&
+    (pathname === "/industries" || pathname.startsWith("/industries/"));
 
   useEffect(() => {
     const onScroll = () => {
@@ -184,8 +189,8 @@ export function Header() {
                         <div className="rounded-md border border-line bg-page py-2 shadow-sm">
                           <ul>
                             {industries.map((industry) => {
-                              const href = `/industries/${industry.slug}`;
-                              const active = pathname === href;
+                              const href = hrefFor(`/industries/${industry.slug}`);
+                              const active = !marketingOrigin && pathname === `/industries/${industry.slug}`;
                               return (
                                 <li key={industry.slug}>
                                   <Link
@@ -203,7 +208,7 @@ export function Header() {
                           </ul>
                           <div className="mt-1 border-t border-line px-4 py-2.5">
                             <Link
-                              href="/industries"
+                              href={hrefFor("/industries")}
                               className="text-sm font-medium text-navy hover:text-cyan"
                               onClick={() => setIndustriesOpen(false)}
                             >
@@ -220,10 +225,13 @@ export function Header() {
               return (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
-                    aria-current={pathname === item.href ? "page" : undefined}
-                    className={`text-sm transition-colors hover:text-cyan ${pathname === item.href ? "text-cyan" : "text-navy/80"
-                      }`}
+                    href={hrefFor(item.href)}
+                    aria-current={
+                      !marketingOrigin && pathname === item.href ? "page" : undefined
+                    }
+                    className={`text-sm transition-colors hover:text-cyan ${
+                      !marketingOrigin && pathname === item.href ? "text-cyan" : "text-navy/80"
+                    }`}
                   >
                     {item.label}
                   </Link>
@@ -235,12 +243,13 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Link
-            href="/EndYourBusywork?from=header-cta"
+          <BusyworkEntryLink
+            from="header-cta"
+            origin={marketingOrigin}
             className="hidden min-h-11 items-center rounded-md bg-amber px-4 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:inline-flex"
           >
             End Your Busywork
-          </Link>
+          </BusyworkEntryLink>
           <button
             ref={toggleRef}
             type="button"
@@ -288,21 +297,26 @@ export function Header() {
                         <ul id={mobileIndustriesId} className="pb-3 pl-3">
                           <li>
                             <Link
-                              href="/industries"
+                              href={hrefFor("/industries")}
                               aria-current={
-                                pathname === "/industries" ? "page" : undefined
+                                !marketingOrigin && pathname === "/industries"
+                                  ? "page"
+                                  : undefined
                               }
-                              className={`flex min-h-11 items-center text-sm ${pathname === "/industries"
+                              className={`flex min-h-11 items-center text-sm ${
+                                !marketingOrigin && pathname === "/industries"
                                   ? "text-cyan"
                                   : "text-navy/80"
-                                }`}
+                              }`}
                             >
                               All industries
                             </Link>
                           </li>
                           {industries.map((industry) => {
-                            const href = `/industries/${industry.slug}`;
-                            const active = pathname === href;
+                            const href = hrefFor(`/industries/${industry.slug}`);
+                            const active =
+                              !marketingOrigin &&
+                              pathname === `/industries/${industry.slug}`;
                             return (
                               <li key={industry.slug}>
                                 <Link
@@ -325,10 +339,13 @@ export function Header() {
                 return (
                   <li key={item.href}>
                     <Link
-                      href={item.href}
-                      aria-current={pathname === item.href ? "page" : undefined}
-                      className={`flex min-h-11 items-center border-b border-line/50 text-base ${pathname === item.href ? "text-cyan" : "text-navy"
-                        }`}
+                      href={hrefFor(item.href)}
+                      aria-current={
+                        !marketingOrigin && pathname === item.href ? "page" : undefined
+                      }
+                      className={`flex min-h-11 items-center border-b border-line/50 text-base ${
+                        !marketingOrigin && pathname === item.href ? "text-cyan" : "text-navy"
+                      }`}
                     >
                       {item.label}
                     </Link>
@@ -336,12 +353,13 @@ export function Header() {
                 );
               })}
               <li className="pt-4">
-                <Link
-                  href="/EndYourBusywork?from=header-cta"
+                <BusyworkEntryLink
+                  from="header-cta"
+                  origin={marketingOrigin}
                   className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber px-4 text-sm font-semibold text-white"
                 >
                   End Your Busywork
-                </Link>
+                </BusyworkEntryLink>
               </li>
             </ul>
           </nav>

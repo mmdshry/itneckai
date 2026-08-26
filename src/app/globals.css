@@ -125,6 +125,14 @@ body {
 }
 
 /* ---------- Agent Graph hero animation ---------- */
+.agent-graph.is-paused .graph-core,
+.agent-graph.is-paused .graph-ring,
+.agent-graph.is-paused .graph-packet,
+.busywork-scene.is-paused .busywork-task,
+.busywork-scene.is-paused .busywork-ring {
+  animation-play-state: paused;
+}
+
 .graph-link {
   stroke-dasharray: 260;
   stroke-dashoffset: 260;
@@ -146,6 +154,86 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   animation: graph-ring 4s ease-in-out 1.2s infinite;
+}
+
+.graph-packet {
+  offset-rotate: 0deg;
+  offset-anchor: 0 0;
+  animation: graph-pingpong 2.7s ease-in-out infinite both;
+}
+
+.graph-node-link {
+  outline: none;
+}
+
+.agent-graph:has(.graph-spoke:hover) .graph-spoke,
+.agent-graph:has(.graph-spoke:focus-within) .graph-spoke {
+  opacity: 0.38;
+  transition: opacity 0.25s ease;
+}
+
+.agent-graph .graph-spoke:hover,
+.agent-graph .graph-spoke:focus-within {
+  opacity: 1;
+}
+
+.graph-spoke:hover .graph-link,
+.graph-spoke:focus-within .graph-link {
+  stroke: var(--signal-cyan);
+  stroke-opacity: 0.55;
+}
+
+.graph-spoke:hover .graph-sat,
+.graph-spoke:focus-within .graph-sat {
+  stroke: var(--signal-cyan);
+  stroke-opacity: 0.7;
+}
+
+.graph-spoke:hover .graph-packet,
+.graph-spoke:focus-within .graph-packet {
+  animation-duration: 1.15s;
+}
+
+.graph-spoke:focus-within .graph-node-link {
+  outline: none;
+}
+
+/* ---------- Busywork scene (homepage band) ---------- */
+.busywork-link {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: graph-draw 0.4s ease-out forwards;
+}
+
+.busywork-task {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: busywork-pingpong 3s ease-in-out infinite;
+}
+
+.busywork-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: graph-ring 4s ease-in-out 0.8s infinite;
+}
+
+.busywork-orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.75s ease,
+    opacity 0.75s ease;
+}
+
+.busywork-cta:hover .busywork-orbit,
+.busywork-cta:focus-visible .busywork-orbit {
+  transform: scale(0.42);
+  opacity: 0.5;
+}
+
+.busywork-cta:hover .busywork-ring,
+.busywork-cta:focus-visible .busywork-ring {
+  opacity: 0.85;
 }
 
 @keyframes graph-draw {
@@ -187,6 +275,37 @@ body {
   }
 }
 
+@keyframes graph-pingpong {
+  0% {
+    offset-distance: 0%;
+    opacity: 0.15;
+  }
+  12% {
+    opacity: 1;
+  }
+  50% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 0%;
+    opacity: 0.15;
+  }
+}
+
+@keyframes busywork-pingpong {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(var(--bw-dx), var(--bw-dy));
+  }
+}
+
 /* Disable all decorative motion for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -196,13 +315,26 @@ body {
   .graph-node,
   .graph-core,
   .graph-ring,
+  .graph-packet,
+  .busywork-link,
+  .busywork-task,
+  .busywork-ring,
   .spine-fill {
     animation: none !important;
   }
-  .graph-link {
+  .graph-link,
+  .busywork-link {
     stroke-dashoffset: 0;
   }
   .graph-node {
+    opacity: 1;
+  }
+  .graph-packet {
+    opacity: 0;
+  }
+  .busywork-cta:hover .busywork-orbit,
+  .busywork-cta:focus-visible .busywork-orbit {
+    transform: none;
     opacity: 1;
   }
   .spine-fill {

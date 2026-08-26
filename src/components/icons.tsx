@@ -165,6 +165,26 @@ export function MailIcon(props: IconProps) {
   );
 }
 
+/** Folder — busywork paper stacks */
+export function FolderIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3.5 8h5.2l1.6 2H20.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3.5 18.5V8Z" />
+      <path d="M3.5 8V6.5A1.5 1.5 0 0 1 5 5h4.2l1.5 3" />
+    </svg>
+  );
+}
+
+/** Single document — busywork paperwork */
+export function FileIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M7 3.5h6.5L19 9v11a1.5 1.5 0 0 1-1.5 1.5h-10.5A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5Z" />
+      <path d="M13.5 3.5V9H19M8.5 13h7M8.5 16.5h5" />
+    </svg>
+  );
+}
+
 export function InstagramIcon(props: IconProps) {
   return (
     <svg {...base({ width: 20, height: 20, ...props })}>

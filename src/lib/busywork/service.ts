@@ -397,11 +397,14 @@ export async function submitBusywork(opts?: {
     replyTo: record.email,
   });
   if (!teamSend.ok) {
-    console.error("Busywork team copy failed:", teamSend.error);
+    console.error("Busywork team email failed:", teamSend.error);
     return {
       ok: false,
       error: `We couldn’t notify our team. Please try again, or write us at ${site.email}.`,
     };
+  }
+  if (teamSend.messageId) {
+    console.info("Busywork team email sent:", teamSend.messageId);
   }
 
   if (opts?.emailCopy) {
@@ -412,7 +415,9 @@ export async function submitBusywork(opts?: {
       text: visitor.text,
     });
     if (!visitorSend.ok) {
-      console.error("Busywork visitor copy failed:", visitorSend.error);
+      console.error("Busywork visitor email failed:", visitorSend.error);
+    } else if (visitorSend.messageId) {
+      console.info("Busywork visitor email sent:", visitorSend.messageId);
     }
   }
 

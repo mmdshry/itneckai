@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { AgentGraph } from "@/components/AgentGraph";
+import { BusyworkScene } from "@/components/BusyworkScene";
 import { ArrowRightIcon, CheckIcon, productIcons } from "@/components/icons";
 import { CtaBanner, Eyebrow, GhostCta, PrimaryCta, Section } from "@/components/ui";
 import { copilotProducts } from "@/lib/copilot-agents";
@@ -94,10 +95,10 @@ export default function HomePage() {
               Outlook, and Microsoft 365.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <PrimaryCta href="/contact">Book a working session</PrimaryCta>
-              <GhostCta href="/EndYourBusywork?from=home">
+              <PrimaryCta href="/EndYourBusywork?from=home">
                 End Your Busywork
-              </GhostCta>
+              </PrimaryCta>
+              <GhostCta href="/contact">Book a working session</GhostCta>
             </div>
           </div>
           <div className="flex justify-center md:justify-end">
@@ -109,10 +110,30 @@ export default function HomePage() {
         <div className="border-y border-line">
           <p className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-2 px-4 py-4 font-mono text-xs uppercase tracking-widest text-graphite sm:px-6">
             <span className="text-cyan">Built on</span>
-            <span>Microsoft 365</span>
-            <span>Copilot Studio</span>
-            <span>Power Platform</span>
-            <span>Microsoft Graph</span>
+            <Link
+              href="/#solutions-heading"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-cyan"
+            >
+              Microsoft 365
+            </Link>
+            <Link
+              href="/#copilot-heading"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-cyan"
+            >
+              Copilot Studio
+            </Link>
+            <Link
+              href="/#power-platform"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-cyan"
+            >
+              Power Platform
+            </Link>
+            <Link
+              href="/solutions/microsoft-copilot-agents/microsoft-365"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-cyan"
+            >
+              Microsoft Graph
+            </Link>
           </p>
         </div>
       </div>
@@ -137,9 +158,13 @@ export default function HomePage() {
               work, and help design the agents your business actually needs.
             </p>
           </div>
-          <PrimaryCta href="/EndYourBusywork?from=home-band">
-            End Your Busywork
-          </PrimaryCta>
+          <Link
+            href="/EndYourBusywork?from=home-band"
+            className="busywork-cta block w-full max-w-lg shrink-0"
+            aria-label="Start End Your Busywork — see where AI can create value"
+          >
+            <BusyworkScene />
+          </Link>
         </div>
       </section>
 
@@ -148,7 +173,7 @@ export default function HomePage() {
         <Eyebrow>What we do</Eyebrow>
         <h2
           id="solutions-heading"
-          className="mt-3 max-w-2xl font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
+          className="mt-3 max-w-2xl scroll-mt-24 font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
         >
           Microsoft 365 AI that ships — not another demo.
         </h2>
@@ -186,7 +211,7 @@ export default function HomePage() {
           <Eyebrow>Microsoft Copilot Studio Agents</Eyebrow>
           <h2
             id="copilot-heading"
-            className="mt-3 max-w-3xl font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
+            className="mt-3 max-w-3xl scroll-mt-24 font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl"
           >
             Agents built in Copilot Studio, deployed where your employees
             already work.
@@ -254,7 +279,11 @@ export default function HomePage() {
         </h2>
         <ol className="mt-12 grid gap-10 md:grid-cols-4">
           {processSteps.map((step, i) => (
-            <li key={step.name}>
+            <li
+              key={step.name}
+              id={i === 2 ? "power-platform" : undefined}
+              className={i === 2 ? "scroll-mt-24" : undefined}
+            >
               <p className="font-display text-3xl font-semibold text-cyan">
                 {i + 1}
               </p>

@@ -3,7 +3,7 @@ import { publicOrigin } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/", disallow: "/estimate" },
+    rules: { userAgent: "*", allow: "/", disallow: ["/estimate", "/login"] },
     sitemap: `${publicOrigin()}/sitemap.xml`,
   };
 }

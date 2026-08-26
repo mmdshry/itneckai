@@ -56,15 +56,28 @@ export function BusyworkExperience() {
     }
 
     const joined = searchParams.get("joined") === "1";
+    const startValue = searchParams.get("start") === "value";
+    const from = searchParams.get("from");
 
     void getBusyworkSession().then((result) => {
       if (result.ok && result.session) {
         setSession(result.session);
         setScreen("workshop");
-        if (joined) {
+        if (joined || startValue) {
           setStep("value");
-          router.replace(pathname);
         }
+        if (joined || startValue) {
+          const params = new URLSearchParams();
+          if (from) params.set("from", from);
+          const qs = params.toString();
+          router.replace(qs ? `${pathname}?${qs}` : pathname);
+        }
+      } else if (startValue) {
+        setScreen("welcome");
+        const params = new URLSearchParams();
+        if (from) params.set("from", from);
+        const qs = params.toString();
+        router.replace(qs ? `${pathname}?${qs}` : pathname);
       }
       setLoading(false);
     });

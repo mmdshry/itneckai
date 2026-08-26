@@ -18,7 +18,17 @@ import { estimatePrintTitle } from "@/lib/estimate/format";
 import type { EstimateMode, FormDocument } from "@/lib/estimate/schema";
 import { emptyDraft, loadDraft, saveDraft, type EstimateDraft } from "@/lib/estimate/storage";
 
-export function EstimateApp({ initialMode }: { initialMode: EstimateMode }) {
+export function EstimateApp({
+  initialMode,
+  standardHref = "/estimate",
+  advanceHref = "/estimate?mode=advance",
+  contactHref = "/contact",
+}: {
+  initialMode: EstimateMode;
+  standardHref?: string;
+  advanceHref?: string;
+  contactHref?: string;
+}) {
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [draft, setDraft] = useState<EstimateDraft>(() => emptyDraft(initialMode));
@@ -75,7 +85,7 @@ export function EstimateApp({ initialMode }: { initialMode: EstimateMode }) {
 
   function setModeAndUrl(next: EstimateMode) {
     setDraft((current) => ({ ...current, activeMode: next }));
-    const href = next === "advance" ? "/estimate?mode=advance" : "/estimate";
+    const href = next === "advance" ? advanceHref : standardHref;
     router.replace(href, { scroll: false });
   }
 
@@ -172,7 +182,7 @@ export function EstimateApp({ initialMode }: { initialMode: EstimateMode }) {
           <div className="lg:sticky lg:top-24">
             <ResultsPanel schema={doc.schema} values={doc.values} result={result} />
             <div className="estimate-no-print mt-4 hidden lg:block">
-              <GhostCta href="/contact" className="w-full">
+              <GhostCta href={contactHref} className="w-full">
                 Book a working session
               </GhostCta>
             </div>

@@ -51,7 +51,10 @@ export function serviceSchema(opts: {
   };
 }
 
-export function breadcrumbSchema(items: { name: string; path: string }[]) {
+export function breadcrumbSchema(
+  items: { name: string; path: string }[],
+  origin?: string,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -59,7 +62,7 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
       "@type": "ListItem",
       position: i + 1,
       name: item.name,
-      item: absoluteUrl(item.path),
+      item: absoluteUrl(item.path, origin),
     })),
   };
 }

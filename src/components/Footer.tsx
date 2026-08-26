@@ -1,15 +1,18 @@
 import Link from "next/link";
-import {footerNav, site} from "@/lib/site";
+import { BusyworkEntryLink } from "@/components/busywork/BusyworkEntryLink";
 import {InstagramIcon, LinkedInIcon} from "@/components/icons";
 import {Logo} from "@/components/Logo";
 import {NapBlock} from "@/components/NapBlock";
+import { withOrigin } from "@/lib/hosts";
+import {footerNav, site} from "@/lib/site";
 
-export function Footer() {
+export function Footer({ marketingOrigin }: { marketingOrigin?: string }) {
+  const homeHref = withOrigin("/", marketingOrigin);
   return (
     <footer className="border-t border-line bg-page print:hidden">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <Link href="/" aria-label="ai.neck — home" className="inline-flex">
+          <Link href={homeHref} aria-label="ai.neck — home" className="inline-flex">
             <Logo />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-graphite">{site.tagline}</p>
@@ -46,12 +49,22 @@ export function Footer() {
           <ul className="mt-4 space-y-1">
             {footerNav.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href === "/EndYourBusywork" ? "/EndYourBusywork?from=footer" : item.href}
-                  className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
-                >
-                  {item.label}
-                </Link>
+                {item.href === "/EndYourBusywork" ? (
+                  <BusyworkEntryLink
+                    from="footer"
+                    origin={marketingOrigin}
+                    className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
+                  >
+                    {item.label}
+                  </BusyworkEntryLink>
+                ) : (
+                  <Link
+                    href={withOrigin(item.href, marketingOrigin)}
+                    className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

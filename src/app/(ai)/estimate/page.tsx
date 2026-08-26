@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { CtaBanner, Eyebrow, Section } from "@/components/ui";
 import { parseEstimateMode } from "@/lib/estimate/format";
+import {
+  ESTIMATE_ORIGIN,
+  estimateModeHref,
+  isApexHost,
+  isEstimateHost,
+  marketingOriginForHost,
+} from "@/lib/hosts";
 import { breadcrumbSchema } from "@/lib/schema";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 const EstimateApp = dynamic(
   () =>
@@ -18,27 +27,44 @@ const EstimateApp = dynamic(
   },
 );
 
-export const metadata: Metadata = {
-  title: "BIM MEP Estimate",
-  description:
-    "Sales-budget BIM MEP estimator: Standard $/SF pricing and Advanced hours-based bids with LOD, complexity, offshore, and PM guardrails. Not a formal bid.",
-  robots: { index: false, follow: false },
-  alternates: { canonical: absoluteUrl("/estimate") },
-  openGraph: {
-    title: "BIM MEP Estimate | ai.neck",
-    description:
-      "Build a sales-budget BIM MEP number from square footage, trades, LOD, and complexity — Standard or Advanced.",
-    url: absoluteUrl("/estimate"),
-  },
-};
+const description =
+  "Sales-budget BIM MEP estimator: Standard $/SF pricing and Advanced hours-based bids with LOD, complexity, offshore, and PM guardrails. Not a formal bid.";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const host = (await headers()).get("host");
+  const canonical = isEstimateHost(host)
+    ? ESTIMATE_ORIGIN
+    : absoluteUrl("/estimate");
+  return {
+    title: "BIM MEP Estimate",
+    description,
+    robots: { index: false, follow: false },
+    alternates: { canonical },
+    openGraph: {
+      title: "BIM MEP Estimate | ai.neck",
+      description:
+        "Build a sales-budget BIM MEP number from square footage, trades, LOD, and complexity — Standard or Advanced.",
+      url: canonical,
+    },
+  };
+}
 
 export default async function EstimatePage({
   searchParams,
 }: {
   searchParams: Promise<{ mode?: string }>;
 }) {
+  const host = (await headers()).get("host");
+  if (isApexHost(host)) notFound();
+
   const params = await searchParams;
   const initialMode = parseEstimateMode(params.mode);
+  const origin = isEstimateHost(host) ? ESTIMATE_ORIGIN : undefined;
+  const contactHref = marketingOriginForHost(host)
+    ? `${site.url}/contact`
+    : "/contact";
+  const standardHref = estimateModeHref(host, "standard");
+  const advanceHref = estimateModeHref(host, "advance");
 
   return (
     <>
@@ -54,20 +80,22 @@ export default async function EstimatePage({
             takeoff.
           </p>
         </div>
-        <EstimateApp initialMode={initialMode} />
+        <EstimateApp
+          initialMode={initialMode}
+          standardHref={standardHref}
+          advanceHref={advanceHref}
+          contactHref={contactHref}
+        />
       </Section>
       <div className="estimate-no-print">
         <CtaBanner
           heading="Ready to turn this budget into a scoped BIM engagement?"
-          href="/contact"
+          href={contactHref}
           ctaLabel="Book a working session"
         />
       </div>
       <JsonLd
-        data={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Estimate", path: "/estimate" },
-        ])}
+        data={breadcrumbSchema([{ name: "Home", path: "/" }], origin)}
       />
     </>
   );

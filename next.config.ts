@@ -45,6 +45,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
     // Pin tracing to this app; a lockfile in the user home confuses Next's root detection.
     outputFileTracingRoot: path.join(__dirname),
+  allowedDevOrigins: ["kelarpacific.itneck.ai", "kelarpacific.localhost"],
   experimental: {
     // Site-wide CSS is ~7KB; inlining it removes a render-blocking request.
     inlineCss: true,
