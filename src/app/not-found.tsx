@@ -1,7 +1,13 @@
-import Link from "next/link";
+import { headers } from "next/headers";
+import { SiteLink } from "@/components/SiteLink";
 import { Eyebrow, GhostCta, Section } from "@/components/ui";
+import { marketingOriginForHost, withOrigin } from "@/lib/hosts";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const host = (await headers()).get("host");
+  const marketingOrigin = marketingOriginForHost(host);
+  const solutionsHref = withOrigin("/solutions", marketingOrigin);
+
   return (
     <Section className="pt-32 md:pt-40">
       <Eyebrow>404 · Signal lost</Eyebrow>
@@ -11,16 +17,16 @@ export default function NotFound() {
       <p className="mt-6 max-w-xl text-lg text-graphite">
         The page you&apos;re looking for doesn&apos;t exist or has moved. Try
         the{" "}
-        <Link
+        <SiteLink
           href="/"
           className="text-cyan underline decoration-line underline-offset-4 hover:decoration-cyan"
         >
           home page
-        </Link>{" "}
+        </SiteLink>{" "}
         or head straight to our solutions.
       </p>
       <div className="mt-8">
-        <GhostCta href="/solutions">Browse Solutions</GhostCta>
+        <GhostCta href={solutionsHref}>Browse Solutions</GhostCta>
       </div>
     </Section>
   );

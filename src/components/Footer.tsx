@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { BusyworkEntryLink } from "@/components/busywork/BusyworkEntryLink";
 import {InstagramIcon, LinkedInIcon} from "@/components/icons";
 import {Logo} from "@/components/Logo";
 import {NapBlock} from "@/components/NapBlock";
+import { SiteLink } from "@/components/SiteLink";
 import { withOrigin } from "@/lib/hosts";
 import {footerNav, site} from "@/lib/site";
 
@@ -12,9 +12,9 @@ export function Footer({ marketingOrigin }: { marketingOrigin?: string }) {
     <footer className="border-t border-line bg-page print:hidden">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <Link href={homeHref} aria-label="ai.neck — home" className="inline-flex">
+          <SiteLink href={homeHref} aria-label="ai.neck — home" className="inline-flex">
             <Logo />
-          </Link>
+          </SiteLink>
           <p className="mt-4 max-w-xs text-sm text-graphite">{site.tagline}</p>
           <ul className="mt-6 flex gap-3">
             <li>
@@ -58,12 +58,12 @@ export function Footer({ marketingOrigin }: { marketingOrigin?: string }) {
                     {item.label}
                   </BusyworkEntryLink>
                 ) : (
-                  <Link
+                  <SiteLink
                     href={withOrigin(item.href, marketingOrigin)}
                     className="inline-flex min-h-9 items-center text-sm text-graphite transition-colors hover:text-navy"
                   >
                     {item.label}
-                  </Link>
+                  </SiteLink>
                 )}
               </li>
             ))}

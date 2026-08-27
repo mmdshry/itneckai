@@ -27,9 +27,13 @@ export function isLocalHost(hostHeader: string | null): boolean {
   return host === "localhost" || host === "127.0.0.1" || host.endsWith(".localhost");
 }
 
+export function isAbsoluteHttpUrl(href: string): boolean {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
+
 export function withOrigin(path: string, origin?: string): string {
   if (!origin) return path;
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  if (isAbsoluteHttpUrl(path)) return path;
   const base = origin.replace(/\/$/, "");
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }

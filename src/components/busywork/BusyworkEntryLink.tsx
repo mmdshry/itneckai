@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+import { SiteLink } from "@/components/SiteLink";
 import { withOrigin } from "@/lib/hosts";
 
 export function BusyworkEntryLink({
@@ -21,7 +21,7 @@ export function BusyworkEntryLink({
   const href = withOrigin(`/EndYourBusywork?from=${from}`, origin);
 
   return (
-    <Link
+    <SiteLink
       href={href}
       className={className}
       onClick={(event) => {
@@ -34,6 +34,6 @@ export function BusyworkEntryLink({
       }}
     >
       {children}
-    </Link>
+    </SiteLink>
   );
 }

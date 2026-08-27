@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { BusyworkEntryLink } from "@/components/busywork/BusyworkEntryLink";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
+import { SiteLink } from "@/components/SiteLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { withOrigin } from "@/lib/hosts";
 import { industries } from "@/lib/industries";
@@ -140,13 +140,13 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
       }
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link
+        <SiteLink
           href="/"
           className="flex shrink-0 items-center gap-2"
           aria-label="ai.neck — home"
         >
           <Logo />
-        </Link>
+        </SiteLink>
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-6">
@@ -193,7 +193,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                               const active = !marketingOrigin && pathname === `/industries/${industry.slug}`;
                               return (
                                 <li key={industry.slug}>
-                                  <Link
+                                  <SiteLink
                                     href={href}
                                     aria-current={active ? "page" : undefined}
                                     className={`block px-4 py-2.5 text-sm transition-colors hover:bg-surface hover:text-cyan ${active ? "text-cyan" : "text-navy/90"
@@ -201,19 +201,19 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                                     onClick={() => setIndustriesOpen(false)}
                                   >
                                     {industry.name}
-                                  </Link>
+                                  </SiteLink>
                                 </li>
                               );
                             })}
                           </ul>
                           <div className="mt-1 border-t border-line px-4 py-2.5">
-                            <Link
+                            <SiteLink
                               href={hrefFor("/industries")}
                               className="text-sm font-medium text-navy hover:text-cyan"
                               onClick={() => setIndustriesOpen(false)}
                             >
                               View all industries
-                            </Link>
+                            </SiteLink>
                           </div>
                         </div>
                       </div>
@@ -224,7 +224,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
 
               return (
                 <li key={item.href}>
-                  <Link
+                  <SiteLink
                     href={hrefFor(item.href)}
                     aria-current={
                       !marketingOrigin && pathname === item.href ? "page" : undefined
@@ -234,7 +234,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                     }`}
                   >
                     {item.label}
-                  </Link>
+                  </SiteLink>
                 </li>
               );
             })}
@@ -296,7 +296,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                       {mobileIndustriesOpen && (
                         <ul id={mobileIndustriesId} className="pb-3 pl-3">
                           <li>
-                            <Link
+                            <SiteLink
                               href={hrefFor("/industries")}
                               aria-current={
                                 !marketingOrigin && pathname === "/industries"
@@ -310,7 +310,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                               }`}
                             >
                               All industries
-                            </Link>
+                            </SiteLink>
                           </li>
                           {industries.map((industry) => {
                             const href = hrefFor(`/industries/${industry.slug}`);
@@ -319,14 +319,14 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                               pathname === `/industries/${industry.slug}`;
                             return (
                               <li key={industry.slug}>
-                                <Link
+                                <SiteLink
                                   href={href}
                                   aria-current={active ? "page" : undefined}
                                   className={`flex min-h-11 items-center text-sm ${active ? "text-cyan" : "text-navy/80"
                                     }`}
                                 >
                                   {industry.name}
-                                </Link>
+                                </SiteLink>
                               </li>
                             );
                           })}
@@ -338,7 +338,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
 
                 return (
                   <li key={item.href}>
-                    <Link
+                    <SiteLink
                       href={hrefFor(item.href)}
                       aria-current={
                         !marketingOrigin && pathname === item.href ? "page" : undefined
@@ -348,7 +348,7 @@ export function Header({ marketingOrigin }: { marketingOrigin?: string }) {
                       }`}
                     >
                       {item.label}
-                    </Link>
+                    </SiteLink>
                   </li>
                 );
               })}

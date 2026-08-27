@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type {ReactNode} from "react";
 import {ArrowRightIcon} from "@/components/icons";
+import { SiteLink } from "@/components/SiteLink";
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
@@ -38,12 +38,12 @@ export function PrimaryCta({
   className?: string;
 }) {
   return (
-    <Link
+    <SiteLink
       href={href}
       className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 ${className}`}
     >
       {children}
-    </Link>
+    </SiteLink>
   );
 }
 
@@ -63,13 +63,13 @@ export function GhostCta({
       ? "border-white/30 text-white hover:border-white/60 hover:bg-white/10"
       : "border-navy/20 text-navy hover:border-navy/40 hover:bg-surface";
   return (
-    <Link
+    <SiteLink
       href={href}
       className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-6 text-base font-medium transition-colors ${styles} ${className}`}
     >
       {children}
       <ArrowRightIcon />
-    </Link>
+    </SiteLink>
   );
 }
 
