@@ -9,6 +9,11 @@ import {
   estimateAuthConfigured,
   estimateCredentialsMatch,
 } from "@/lib/estimate/credentials";
+import {
+  TURNSTILE_FAILED_MESSAGE,
+  turnstileRequired,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 import { isEstimateHost } from "@/lib/hosts";
 
 export const dynamic = "force-dynamic";
@@ -42,15 +47,33 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { username?: unknown; password?: unknown; next?: unknown };
+  let body: {
+    username?: unknown;
+    password?: unknown;
+    next?: unknown;
+    turnstileToken?: unknown;
+  };
   try {
     body = (await request.json()) as {
       username?: unknown;
       password?: unknown;
       next?: unknown;
+      turnstileToken?: unknown;
     };
   } catch {
     return jsonNoStore({ ok: false, error: "Invalid credentials" }, 400);
+  }
+
+  if (turnstileRequired()) {
+    const captcha =
+      typeof body.turnstileToken === "string" ? body.turnstileToken : "";
+    const human = await verifyTurnstileToken(captcha, ip);
+    if (!human) {
+      return jsonNoStore(
+        { ok: false, error: TURNSTILE_FAILED_MESSAGE },
+        403,
+      );
+    }
   }
 
   const username = typeof body.username === "string" ? body.username : "";

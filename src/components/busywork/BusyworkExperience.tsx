@@ -26,7 +26,11 @@ function nextStep(step: WorkshopStep): WorkshopStep {
   return workshopSteps[Math.min(index + 1, workshopSteps.length - 1)] ?? "ideas";
 }
 
-export function BusyworkExperience() {
+export function BusyworkExperience({
+  turnstileSiteKey,
+}: {
+  turnstileSiteKey: string;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -125,6 +129,7 @@ export function BusyworkExperience() {
   if (screen === "join") {
     return (
       <JoinForm
+        siteKey={turnstileSiteKey}
         onSent={(sentEmail, link) => {
           setEmail(sentEmail);
           setDevLink(link);
@@ -155,6 +160,7 @@ export function BusyworkExperience() {
     <WorkshopShell step={step} onStep={setStep} counts={counts}>
       {step === "ideas" ? (
         <MyIdeas
+          siteKey={turnstileSiteKey}
           session={session}
           onSubmitted={(next) => {
             setSession(next);

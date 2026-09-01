@@ -1,16 +1,30 @@
-import { jsonNoStore } from "@/lib/http";
+import { clientIp, jsonNoStore } from "@/lib/http";
 import { submitBusywork } from "@/lib/busywork/service";
+import {
+  TURNSTILE_FAILED_MESSAGE,
+  isHumanRequest,
+  turnstileTokenFromBody,
+} from "@/lib/turnstile";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  let emailCopy = false;
+  let body: unknown = {};
   try {
-    const body = (await request.json()) as { emailCopy?: unknown };
-    emailCopy = body.emailCopy === true;
+    body = await request.json();
   } catch {
-    emailCopy = false;
+    body = {};
   }
+
+  if (!(await isHumanRequest(turnstileTokenFromBody(body), clientIp(request)))) {
+    return jsonNoStore({ ok: false, error: TURNSTILE_FAILED_MESSAGE }, 403);
+  }
+
+  const emailCopy =
+    Boolean(body) &&
+    typeof body === "object" &&
+    !Array.isArray(body) &&
+    (body as { emailCopy?: unknown }).emailCopy === true;
 
   const result = await submitBusywork({ emailCopy });
   return jsonNoStore(result, result.ok ? 200 : 400);

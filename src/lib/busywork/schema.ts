@@ -180,4 +180,5 @@ export type PublicSession = {
   email: string;
   payload: BusyworkPayload;
   status: "draft" | "submitted";
+  unchangedSinceSubmit: boolean;
 };

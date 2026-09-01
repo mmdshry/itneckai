@@ -1,9 +1,11 @@
+import { createHash } from "node:crypto";
 import { headers } from "next/headers";
-import { BUSYWORK_PATH } from "@/lib/busywork/copy";
+import { BUSYWORK_PATH, sections } from "@/lib/busywork/copy";
 import { magicLinkEmailHtml, resultsEmailHtml, teamEmailHtml } from "@/lib/busywork/email";
 import { buildOpportunityMap, type OpportunityMap } from "@/lib/busywork/map";
 import { isRateLimited } from "@/lib/busywork/rate-limit";
 import {
+  getLastSubmitContentHash,
   getRecordBySessionId,
   markSubmitted,
   recordEvent,
@@ -39,6 +41,7 @@ function toPublic(record: BusyworkRecord): PublicSession {
     email: record.email,
     payload: record.payload,
     status: record.status,
+    unchangedSinceSubmit: isUnchangedByTimestamp(record),
   };
 }
 
@@ -347,6 +350,58 @@ export async function removeBusyworkIdea(
   }
 }
 
+function payloadContentHash(payload: BusyworkPayload): string {
+  const canon = {
+    highValue: payload.highValue.map((idea) => idea.text),
+    busywork: payload.busywork.map((idea) => idea.text),
+    alwaysHuman: payload.alwaysHuman.map((idea) => idea.text),
+    robotTasks: payload.robotTasks.map((idea) => [
+      idea.text,
+      idea.hoursPerWeek,
+      idea.frequency ?? "",
+    ]),
+    superhuman: payload.superhuman.map((idea) => [
+      idea.text,
+      idea.prepMinutes,
+      idea.performanceMinutes,
+    ]),
+    hire: payload.hire.map((idea) => [idea.responsibilities, idea.kpi]),
+  };
+  return createHash("sha256").update(JSON.stringify(canon)).digest("hex").slice(0, 16);
+}
+
+function timestampMs(value: Date | number | string | null | undefined): number | null {
+  if (value == null) return null;
+  if (value instanceof Date) return value.getTime();
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const asNumber = Number(value);
+    if (Number.isFinite(asNumber)) return asNumber;
+    const parsed = Date.parse(value);
+    return Number.isNaN(parsed) ? null : parsed;
+  }
+  return null;
+}
+
+function isUnchangedByTimestamp(record: BusyworkRecord): boolean {
+  if (record.status !== "submitted") return false;
+  const submittedAtMs = timestampMs(record.submittedAt);
+  const updatedAtMs = timestampMs(record.updatedAt);
+  if (submittedAtMs == null) return false;
+  if (updatedAtMs == null) return true;
+  return updatedAtMs <= submittedAtMs + 5;
+}
+
+async function isDuplicateUnchangedSubmit(
+  record: BusyworkRecord,
+  contentHash: string,
+): Promise<boolean> {
+  if (record.status !== "submitted") return false;
+  const lastHash = await getLastSubmitContentHash(record.sessionId);
+  if (lastHash && lastHash === contentHash) return true;
+  return isUnchangedByTimestamp(record);
+}
+
 export async function submitBusywork(opts?: {
   emailCopy?: boolean;
 }): Promise<{ ok: true; session: PublicSession } | ActionFailure> {
@@ -358,6 +413,13 @@ export async function submitBusywork(opts?: {
     return {
       ok: false,
       error: "Add at least one idea before submitting.",
+    };
+  }
+
+  if (await isDuplicateUnchangedSubmit(record, payloadContentHash(record.payload))) {
+    return {
+      ok: false,
+      error: sections.ideas.alreadySubmitted,
     };
   }
 
@@ -426,6 +488,7 @@ export async function submitBusywork(opts?: {
     await recordEvent({
       sessionId: record.sessionId,
       name: "successful_submit",
+      meta: { contentHash: payloadContentHash(record.payload) },
     });
     await postWebhook(saved ?? record, map);
     return {

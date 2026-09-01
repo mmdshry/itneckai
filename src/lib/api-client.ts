@@ -47,7 +47,7 @@ export async function getBusyworkSession(): Promise<
 }
 
 export async function joinBusywork(
-  input: JoinInput,
+  input: JoinInput & { turnstileToken?: string },
 ): Promise<{ ok: true; email: string; devLink?: string } | ActionFailure> {
   return postJson("/api/busywork/join", input);
 }
@@ -68,6 +68,7 @@ export async function removeBusyworkIdea(
 
 export async function submitBusywork(opts?: {
   emailCopy?: boolean;
+  turnstileToken?: string;
 }): Promise<{ ok: true; session: PublicSession } | ActionFailure> {
   return postJson("/api/busywork/submit", opts ?? {});
 }

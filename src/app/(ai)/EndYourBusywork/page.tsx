@@ -7,6 +7,8 @@ import { BUSYWORK_PATH, experience } from "@/lib/busywork/copy";
 import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "End Your Busywork",
   description: experience.supporting,
@@ -19,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default function EndYourBusyworkPage() {
+  const siteKey = process.env.TURNSTILE_SITE_KEY?.trim() ?? "";
   return (
     <>
       <Section className="pt-28 md:pt-32">
@@ -29,7 +32,7 @@ export default function EndYourBusyworkPage() {
             </p>
           }
         >
-          <BusyworkExperience />
+          <BusyworkExperience turnstileSiteKey={siteKey} />
         </Suspense>
       </Section>
       <JsonLd

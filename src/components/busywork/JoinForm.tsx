@@ -2,8 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  TurnstileField,
+  type TurnstileFieldHandle,
+} from "@/components/TurnstileField";
 import { joinBusywork } from "@/lib/api-client";
 import { joinCopy } from "@/lib/busywork/copy";
 import { joinSchema, type JoinInput } from "@/lib/busywork/schema";
@@ -11,10 +15,14 @@ import { errorClass, inputClass, labelClass, primaryButtonClass } from "./styles
 
 export function JoinForm({
   onSent,
+  siteKey,
 }: {
   onSent: (email: string, devLink?: string) => void;
+  siteKey: string;
 }) {
   const [formError, setFormError] = useState<string>();
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<TurnstileFieldHandle>(null);
   const {
     register,
     handleSubmit,
@@ -27,7 +35,7 @@ export function JoinForm({
 
   async function onSubmit(values: JoinInput) {
     setFormError(undefined);
-    const result = await joinBusywork(values);
+    const result = await joinBusywork({ ...values, turnstileToken });
     if (!result.ok) {
       if (result.fieldErrors) {
         for (const [field, messages] of Object.entries(result.fieldErrors)) {
@@ -38,10 +46,13 @@ export function JoinForm({
         }
       }
       setFormError(result.error);
+      turnstileRef.current?.reset();
       return;
     }
     onSent(result.email, result.devLink);
   }
+
+  const captchaBlocking = Boolean(siteKey) && !turnstileToken;
 
   return (
     <div className="max-w-lg">
@@ -114,7 +125,22 @@ export function JoinForm({
           />
         </div>
 
-        <button type="submit" disabled={isSubmitting} className={primaryButtonClass}>
+        {siteKey ? (
+          <TurnstileField
+            ref={turnstileRef}
+            siteKey={siteKey}
+            onToken={setTurnstileToken}
+            onLoadError={() =>
+              setFormError("Could not load verification. Refresh and try again.")
+            }
+          />
+        ) : null}
+
+        <button
+          type="submit"
+          disabled={isSubmitting || captchaBlocking}
+          className={primaryButtonClass}
+        >
           {isSubmitting ? "Sending link…" : "Join"}
         </button>
 

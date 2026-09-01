@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { getDb } from "./db";
 import {
   emptyPayload,
@@ -21,6 +21,8 @@ export type BusyworkRecord = {
   email: string;
   status: "draft" | "submitted";
   payload: BusyworkPayload;
+  submittedAt: Date | number | string | null;
+  updatedAt: Date | number | string | null;
 };
 
 async function loadRecord(sessionId: string): Promise<BusyworkRecord | null> {
@@ -33,6 +35,8 @@ async function loadRecord(sessionId: string): Promise<BusyworkRecord | null> {
       email: busyworkContacts.email,
       status: busyworkSessions.status,
       payload: busyworkSessions.payload,
+      submittedAt: busyworkSessions.submittedAt,
+      updatedAt: busyworkSessions.updatedAt,
     })
     .from(busyworkSessions)
     .innerJoin(
@@ -51,6 +55,8 @@ async function loadRecord(sessionId: string): Promise<BusyworkRecord | null> {
     email: row.email,
     status: row.status === "submitted" ? "submitted" : "draft",
     payload: parsePayload(row.payload),
+    submittedAt: row.submittedAt ?? null,
+    updatedAt: row.updatedAt ?? null,
   };
 }
 
@@ -189,6 +195,25 @@ export async function markSubmitted(
     })
     .where(eq(busyworkSessions.id, sessionId));
   return loadRecord(sessionId);
+}
+
+export async function getLastSubmitContentHash(
+  sessionId: string,
+): Promise<string | null> {
+  const db = await getDb();
+  const rows = await db
+    .select({ meta: busyworkEvents.meta })
+    .from(busyworkEvents)
+    .where(
+      and(
+        eq(busyworkEvents.sessionId, sessionId),
+        eq(busyworkEvents.name, "successful_submit"),
+      ),
+    )
+    .orderBy(desc(busyworkEvents.createdAt))
+    .limit(1);
+  const hash = rows[0]?.meta?.contentHash;
+  return typeof hash === "string" && hash.length > 0 ? hash : null;
 }
 
 export async function recordEvent(opts: {

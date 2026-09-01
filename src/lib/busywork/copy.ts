@@ -109,6 +109,8 @@ export const sections = {
     emailCta: "Submit my ideas",
     emailHelper: "We’ll review what you entered and follow up.",
     copyLabel: "Email me a copy of the ideas I entered.",
+    alreadySubmitted:
+      "You already submitted these ideas. Change an idea if you want to send an update.",
   },
 } as const;
 

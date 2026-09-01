@@ -26,16 +26,16 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       isDev
-        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-        : "script-src 'self' 'unsafe-inline'",
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com"
+        : "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self'",
-      "connect-src 'self'",
+      "connect-src 'self' https://challenges.cloudflare.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-        "frame-src 'self' https://copilotstudio.microsoft.com https://*.powerplatform.com",
+        "frame-src 'self' https://challenges.cloudflare.com https://copilotstudio.microsoft.com https://*.powerplatform.com",
       "frame-ancestors 'self'",
       "upgrade-insecure-requests",
     ].join("; "),
