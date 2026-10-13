@@ -59,7 +59,10 @@ function loadTurnstile(): Promise<TurnstileApi> {
     }
     const script = document.createElement("script");
     script.src = TURNSTILE_SRC;
-    script.async = true;
+    // Dynamic scripts default to async. Turnstile throws if turnstile.ready()
+    // is used with async/defer, so this tag stays synchronous and we render
+    // from onload instead of calling ready().
+    script.async = false;
     script.onload = onReady;
     script.onerror = () => reject(new Error("turnstile"));
     document.head.appendChild(script);
@@ -148,8 +151,7 @@ export const TurnstileField = forwardRef<
               window.clearInterval(poll);
             }, 400);
           };
-          if (typeof api.ready === "function") api.ready(render);
-          else render();
+          render();
         })
         .catch(() => {
           if (!cancelled) onLoadErrorRef.current?.();
