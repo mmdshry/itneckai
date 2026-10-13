@@ -84,7 +84,7 @@ function spokePath(x: number, y: number) {
 }
 
 /**
- * Hero Agent Graph: a central ai.neck Agent node connected to five
+ * Hero Agent Graph: a central Ai.neck Agent node connected to five
  * Microsoft product nodes. CSS ping-pong packets travel each spoke;
  * hover/focus highlights that conversation. Respects prefers-reduced-motion.
  */
@@ -100,7 +100,7 @@ export function AgentGraph() {
       <svg
         viewBox="0 0 480 400"
         role="group"
-        aria-label="Diagram of an ai.neck agent at the center, connected to SharePoint, Teams, Outlook, Microsoft 365, and OneDrive. Each app is a link to that Copilot agent page."
+        aria-label="Diagram of an Ai.neck agent at the center, connected to SharePoint, Teams, Outlook, Microsoft 365, and OneDrive. Each app is a link to that Copilot agent page."
         className="h-auto w-full"
       >
         {satellites.map((s, i) => {
@@ -215,7 +215,7 @@ export function AgentGraph() {
               fontWeight="600"
               fontFamily="var(--font-inter), sans-serif"
             >
-              ai.neck
+              Ai.neck
             </text>
             <text
               x={CX}

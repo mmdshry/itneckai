@@ -29,7 +29,7 @@ export function BusyworkEntryLink({
         if (pathname.toLowerCase() !== "/endyourbusywork") return;
         event.preventDefault();
         router.replace(
-          `/EndYourBusywork?from=${from}&start=value&t=${Date.now()}`,
+          `/EndYourBusywork?from=${from}&start=observe&t=${Date.now()}`,
         );
       }}
     >

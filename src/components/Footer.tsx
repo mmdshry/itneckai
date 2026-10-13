@@ -1,6 +1,7 @@
 import { BusyworkEntryLink } from "@/components/busywork/BusyworkEntryLink";
 import {InstagramIcon, LinkedInIcon} from "@/components/icons";
-import {Logo} from "@/components/Logo";
+import { Logo } from "@/components/Logo";
+import { Mascot } from "@/components/Mascot";
 import {NapBlock} from "@/components/NapBlock";
 import { SiteLink } from "@/components/SiteLink";
 import { withOrigin } from "@/lib/hosts";
@@ -12,17 +13,21 @@ export function Footer({ marketingOrigin }: { marketingOrigin?: string }) {
     <footer className="border-t border-line bg-page print:hidden">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <SiteLink href={homeHref} aria-label="ai.neck — home" className="inline-flex">
+          <SiteLink href={homeHref} aria-label="Ai.neck — home" className="inline-flex items-center gap-2">
+            <Mascot />
             <Logo />
           </SiteLink>
           <p className="mt-4 max-w-xs text-sm text-graphite">{site.tagline}</p>
+          <p className="mt-3 max-w-xs text-sm leading-relaxed text-graphite">
+            Do not ask, “Where can we use AI?” Ask, “Where are your people losing time?”
+          </p>
           <ul className="mt-6 flex gap-3">
             <li>
               <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ai.neck on Instagram (opens in a new tab)"
+                aria-label="Ai.neck on Instagram (opens in a new tab)"
                 className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-navy/30 hover:text-navy"
               >
                 <InstagramIcon />
@@ -33,7 +38,7 @@ export function Footer({ marketingOrigin }: { marketingOrigin?: string }) {
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ai.neck on LinkedIn (opens in a new tab)"
+                aria-label="Ai.neck on LinkedIn (opens in a new tab)"
                 className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-graphite transition-colors hover:border-navy/30 hover:text-navy"
               >
                 <LinkedInIcon />

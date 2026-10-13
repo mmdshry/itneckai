@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 export function mailFrom(): string {
-  return process.env.MAIL_FROM ?? "ai.neck <noreply@itneck.ai>";
+  return process.env.MAIL_FROM ?? "Ai.neck <noreply@itneck.ai>";
 }
 
 export function mailToSupport(): string {

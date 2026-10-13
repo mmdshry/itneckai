@@ -6,7 +6,7 @@ import { marketingOriginForHost, withOrigin } from "@/lib/hosts";
 export default async function NotFound() {
   const host = (await headers()).get("host");
   const marketingOrigin = marketingOriginForHost(host);
-  const solutionsHref = withOrigin("/solutions", marketingOrigin);
+  const howHref = withOrigin("/how-it-works", marketingOrigin);
 
   return (
     <Section className="pt-32 md:pt-40">
@@ -23,10 +23,10 @@ export default async function NotFound() {
         >
           home page
         </SiteLink>{" "}
-        or head straight to our solutions.
+        or see how the work gets done.
       </p>
       <div className="mt-8">
-        <GhostCta href={solutionsHref}>Browse Solutions</GhostCta>
+        <GhostCta href={howHref}>See How It Works</GhostCta>
       </div>
     </Section>
   );

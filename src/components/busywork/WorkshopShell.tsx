@@ -1,26 +1,17 @@
 "use client";
 
 import type { ComponentType, ReactNode, SVGProps } from "react";
-import {
-  AmplifyIcon,
-  AutomateIcon,
-  BoundaryIcon,
-  HireIcon,
-  IdeasIcon,
-  ValueIcon,
-} from "@/components/icons";
-import { persistLine, workshopSteps, type WorkshopStep } from "@/lib/busywork/copy";
+import { BoundaryIcon, IdeasIcon, ValueIcon, AmplifyIcon } from "@/components/icons";
+import { persistLine, sections, workshopSteps, type WorkshopStep } from "@/lib/busywork/copy";
 
 const stepMeta: Record<
   WorkshopStep,
   { label: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }
 > = {
-  value: { label: "Value", Icon: ValueIcon },
-  boundary: { label: "Boundary", Icon: BoundaryIcon },
-  automate: { label: "Automate", Icon: AutomateIcon },
-  amplify: { label: "Amplify", Icon: AmplifyIcon },
-  agent: { label: "Agent", Icon: HireIcon },
-  ideas: { label: "My Ideas", Icon: IdeasIcon },
+  observe: { label: sections.observe.nav, Icon: ValueIcon },
+  protect: { label: sections.protect.nav, Icon: BoundaryIcon },
+  capacity: { label: sections.capacity.nav, Icon: AmplifyIcon },
+  map: { label: sections.map.nav, Icon: IdeasIcon },
 };
 
 export function WorkshopShell({
@@ -36,12 +27,12 @@ export function WorkshopShell({
 }) {
   const index = workshopSteps.indexOf(step);
   const progressLabel =
-    step === "ideas" ? "Review" : `${index + 1} of 5`;
+    step === "map" ? "Review" : `${index + 1} of 3`;
 
   return (
     <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
       <nav
-        aria-label="Workshop sections"
+        aria-label="Assessment sections"
         className="lg:sticky lg:top-24 lg:w-56 lg:shrink-0"
       >
         <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-cyan">
@@ -66,7 +57,7 @@ export function WorkshopShell({
                 >
                   <Icon className={active ? "text-cyan" : filled ? "text-navy" : "text-ink-muted"} />
                   <span>{label}</span>
-                  {filled && item !== "ideas" ? (
+                  {filled && item !== "map" ? (
                     <span className="ml-auto font-mono text-xs text-ink-muted">
                       {counts[item]}
                     </span>

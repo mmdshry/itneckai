@@ -2,12 +2,13 @@ import {rm, writeFile} from "node:fs/promises";
 import sharp from "sharp";
 import pngToIco from "png-to-ico";
 
-/** Source mark: uploaded ai. logo (same as public/brand/favicon.png). */
-const SOURCE = "public/brand/favicon.png";
+/** White elephant mark. A white canvas hides it, so icons sit on brand navy. */
+const SOURCE = "public/brand/mascot.png";
+const NAVY = { r: 2, g: 55, b: 107, alpha: 1 };
 
 /**
  * Square-canvas padding (contain, never crop/stretch).
- * Tiny favicons need less inset so "ai." stays readable;
+ * Tiny favicons need less inset so the face stays readable;
  * larger icons get more breathing room.
  */
 function padRatio(size) {
@@ -46,16 +47,13 @@ async function squarePng(size, file, background = {r: 0, g: 0, b: 0, alpha: 0}) 
     console.log("wrote", file, `(pad ${Math.round(padRatio(size) * 100)}%)`);
 }
 
-const white = {r: 255, g: 255, b: 255, alpha: 1};
+await squarePng(192, "public/icon-192.png", NAVY);
+await squarePng(512, "public/icon-512.png", NAVY);
+await squarePng(180, "public/apple-touch-icon.png", NAVY);
 
-await squarePng(192, "public/icon-192.png");
-await squarePng(512, "public/icon-512.png");
-// Apple touch icons look better on an opaque white canvas.
-await squarePng(180, "public/apple-touch-icon.png", white);
-
-// Favicon: white canvas + size-tuned padding keeps "ai." legible at 16×16.
-const png32 = await squareBuffer(32, white);
-const png16 = await squareBuffer(16, white);
+// Navy canvas keeps the white elephant visible at 16×16.
+const png32 = await squareBuffer(32, NAVY);
+const png16 = await squareBuffer(16, NAVY);
 await writeFile("public/favicon.ico", await pngToIco([png16, png32]));
 console.log("wrote public/favicon.ico");
 

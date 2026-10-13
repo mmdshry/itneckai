@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: { index: false, follow: false },
     alternates: { canonical },
     openGraph: {
-      title: "BIM MEP Estimate | ai.neck",
+      title: "BIM MEP Estimate | Ai.neck",
       description:
         "Build a sales-budget BIM MEP number from square footage, trades, LOD, and complexity — Standard or Advanced.",
       url: canonical,

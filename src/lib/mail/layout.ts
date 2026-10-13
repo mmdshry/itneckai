@@ -47,13 +47,13 @@ export function mailLayout(opts: {
   origin?: string;
 }): string {
   const origin = opts.origin?.replace(/\/$/, "");
-  const footer = opts.footer ?? "ai.neck · San Diego, CA";
+  const footer = opts.footer ?? "Ai.neck · San Diego, CA";
   const logoHref = origin ?? site.url;
   const logoSrc = `${site.url}/brand/ai-neck-logo.png`;
   const header =
     opts.eyebrow == null
       ? `<a href="${escapeHtml(logoHref)}" style="text-decoration:none;">
-              <img src="${escapeHtml(logoSrc)}" alt="ai.neck" width="196" height="44" style="display:block;height:44px;width:auto;border:0;" />
+              <img src="${escapeHtml(logoSrc)}" alt="Ai.neck" width="196" height="44" style="display:block;height:44px;width:auto;border:0;" />
             </a>`
       : `<p style="margin:0;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:${MAIL.orange};">${escapeHtml(opts.eyebrow)}</p>`;
   const originLine = origin

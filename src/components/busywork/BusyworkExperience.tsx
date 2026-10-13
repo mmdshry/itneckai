@@ -23,7 +23,7 @@ const INVALID_LINK =
 
 function nextStep(step: WorkshopStep): WorkshopStep {
   const index = workshopSteps.indexOf(step);
-  return workshopSteps[Math.min(index + 1, workshopSteps.length - 1)] ?? "ideas";
+  return workshopSteps[Math.min(index + 1, workshopSteps.length - 1)] ?? "map";
 }
 
 export function BusyworkExperience({
@@ -37,7 +37,7 @@ export function BusyworkExperience({
   const [screen, setScreen] = useState<Screen>("welcome");
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<PublicSession | null>(null);
-  const [step, setStep] = useState<WorkshopStep>("value");
+  const [step, setStep] = useState<WorkshopStep>("observe");
   const [email, setEmail] = useState("");
   const [devLink, setDevLink] = useState<string>();
   const [welcomeError, setWelcomeError] = useState<string>();
@@ -60,23 +60,22 @@ export function BusyworkExperience({
     }
 
     const joined = searchParams.get("joined") === "1";
-    const startValue = searchParams.get("start") === "value";
+    const startObserve =
+      searchParams.get("start") === "observe" || searchParams.get("start") === "value";
     const from = searchParams.get("from");
 
     void getBusyworkSession().then((result) => {
       if (result.ok && result.session) {
         setSession(result.session);
         setScreen("workshop");
-        if (joined || startValue) {
-          setStep("value");
-        }
-        if (joined || startValue) {
+        if (joined || startObserve) {
+          setStep("observe");
           const params = new URLSearchParams();
           if (from) params.set("from", from);
           const qs = params.toString();
           router.replace(qs ? `${pathname}?${qs}` : pathname);
         }
-      } else if (startValue) {
+      } else if (startObserve) {
         setScreen("welcome");
         const params = new URLSearchParams();
         if (from) params.set("from", from);
@@ -89,27 +88,21 @@ export function BusyworkExperience({
 
   const counts = useMemo(() => {
     const payload = session?.payload;
+    const observe = payload?.workflows.length ?? 0;
+    const protect = payload?.alwaysHuman.length ?? 0;
+    const capacity = payload?.capacity.length ?? 0;
     return {
-      value: (payload?.highValue.length ?? 0) + (payload?.busywork.length ?? 0),
-      boundary: payload?.alwaysHuman.length ?? 0,
-      automate: payload?.robotTasks.length ?? 0,
-      amplify: payload?.superhuman.length ?? 0,
-      agent: payload?.hire.length ?? 0,
-      ideas: payload
-        ? payload.highValue.length +
-          payload.busywork.length +
-          payload.alwaysHuman.length +
-          payload.robotTasks.length +
-          payload.superhuman.length +
-          payload.hire.length
-        : 0,
+      observe,
+      protect,
+      capacity,
+      map: observe + protect + capacity,
     } satisfies Record<WorkshopStep, number>;
   }, [session]);
 
   if (loading) {
     return (
       <p className="text-sm text-graphite" aria-live="polite">
-        Loading your workshop…
+        Loading your assessment…
       </p>
     );
   }
@@ -158,7 +151,7 @@ export function BusyworkExperience({
 
   return (
     <WorkshopShell step={step} onStep={setStep} counts={counts}>
-      {step === "ideas" ? (
+      {step === "map" ? (
         <MyIdeas
           siteKey={turnstileSiteKey}
           session={session}

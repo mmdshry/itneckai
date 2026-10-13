@@ -66,6 +66,13 @@ export async function removeBusyworkIdea(
   return postJson("/api/busywork/ideas", { action: "remove", kind, id });
 }
 
+export async function saveBusyworkContext(input: {
+  teamSize: number | null;
+  hourlyCost: number | null;
+}): Promise<{ ok: true; session: PublicSession } | ActionFailure> {
+  return postJson("/api/busywork/context", input);
+}
+
 export async function submitBusywork(opts?: {
   emailCopy?: boolean;
   turnstileToken?: string;

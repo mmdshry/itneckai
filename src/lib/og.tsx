@@ -37,7 +37,7 @@ export function ogImage(title: string, eyebrow = "AI SOLUTIONS · MICROSOFT COPI
             <circle cx="32" cy="10" r="4.5" fill="#ffffff" />
           </svg>
           <div style={{ display: "flex", fontSize: 40, fontWeight: 700 }}>
-            ai.neck
+            Ai.neck
           </div>
         </div>
 

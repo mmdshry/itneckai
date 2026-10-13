@@ -27,9 +27,9 @@ export const industries: Industry[] = [
     short: "HEALTHCARE",
     buyer: "Ops, compliance, and IT leaders",
     hook: "For ops and compliance leaders: policy and admin knowledge that stays inside your Microsoft 365 permissions — HIPAA-aware tenants.",
-    title: "Healthcare Copilot Studio Agents | ai.neck",
+    title: "Healthcare Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for healthcare administration: policy Q&A, credentialing docs, and HIPAA-aware Microsoft 365 knowledge assistants. By ai.neck.",
+      "Copilot Studio agents for healthcare administration: policy Q&A, credentialing docs, and HIPAA-aware Microsoft 365 knowledge assistants. By Ai.neck.",
     headline:
       "Agents that answer from your current policies — without leaving your Microsoft 365 security boundary.",
     intro:
@@ -75,9 +75,9 @@ export const industries: Industry[] = [
     short: "PRO SERVICES",
     buyer: "Managing partners and firm IT",
     hook: "For managing partners: billable hours back when Copilot Studio agents prep from Outlook, SharePoint, and engagement archives.",
-    title: "Professional Services Copilot Studio Agents | ai.neck",
+    title: "Professional Services Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for law firms, CPA firms, and consultants: engagement briefings, matter Q&A, and Outlook triage grounded in Microsoft 365. By ai.neck.",
+      "Copilot Studio agents for law firms, CPA firms, and consultants: engagement briefings, matter Q&A, and Outlook triage grounded in Microsoft 365. By Ai.neck.",
     headline:
       "Client work runs on documents and deadlines. Agents that read yours give billable staff their time back.",
     intro:
@@ -139,9 +139,9 @@ export const industries: Industry[] = [
     short: "MANUFACTURING",
     buyer: "Plant ops and quality leaders",
     hook: "For plant ops: SOPs and quality docs answered in Teams — grounded in the controlled document, not tribal knowledge.",
-    title: "Manufacturing Copilot Studio Agents | ai.neck",
+    title: "Manufacturing Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for manufacturing: SOP Q&A in Teams, warehouse and supply-chain document search, and CMMC-aware Microsoft 365 planning. By ai.neck.",
+      "Copilot Studio agents for manufacturing: SOP Q&A in Teams, warehouse and supply-chain document search, and CMMC-aware Microsoft 365 planning. By Ai.neck.",
     headline:
       "The controlled SOP is in SharePoint. The question is on the floor. Agents close that gap.",
     intro:
@@ -207,9 +207,9 @@ export const industries: Industry[] = [
     short: "CONSTRUCTION",
     buyer: "PMs and field operations leads",
     hook: "For PMs and field leads: RFIs and project files become answerable across the project’s Microsoft 365 footprint.",
-    title: "Construction & AEC Copilot Studio Agents | ai.neck",
+    title: "Construction & AEC Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for construction and AEC: project document Q&A, Teams field connectivity, and Microsoft 365 project knowledge. By ai.neck.",
+      "Copilot Studio agents for construction and AEC: project document Q&A, Teams field connectivity, and Microsoft 365 project knowledge. By Ai.neck.",
     headline:
       "Project documentation is scattered across mail and SharePoint. Agents make it answerable on site.",
     intro:
@@ -270,9 +270,9 @@ export const industries: Industry[] = [
     short: "GOVCON",
     buyer: "Compliance and security leads",
     hook: "For compliance leads: CMMC, NIST 800-171, FAR/DFARS, and Microsoft GCC planning — agents only where your tenant boundary allows.",
-    title: "Government Contractor Copilot Studio Agents | ai.neck",
+    title: "Government Contractor Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio for government contractors: GCC planning, CMMC-aware Microsoft 365 boundaries, and permission-grounded knowledge agents. By ai.neck.",
+      "Copilot Studio for government contractors: GCC planning, CMMC-aware Microsoft 365 boundaries, and permission-grounded knowledge agents. By Ai.neck.",
     headline:
       "Compliance drives your cloud boundary. Agents have to respect that boundary — or they don’t ship.",
     intro:
@@ -333,9 +333,9 @@ export const industries: Industry[] = [
     short: "NONPROFITS",
     buyer: "Executive directors and lean IT",
     hook: "For lean nonprofit IT: Microsoft nonprofit licensing and program knowledge — agents that reuse the stack you already get funded for.",
-    title: "Nonprofit Copilot Studio Agents | ai.neck",
+    title: "Nonprofit Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for nonprofits: Microsoft 365 nonprofit licensing, SharePoint knowledge assistants, and budget-conscious Teams workflows. By ai.neck.",
+      "Copilot Studio agents for nonprofits: Microsoft 365 nonprofit licensing, SharePoint knowledge assistants, and budget-conscious Teams workflows. By Ai.neck.",
     headline:
       "Your grant and program knowledge is already in Microsoft 365. Agents make it usable without a new platform.",
     intro:
@@ -391,9 +391,9 @@ export const industries: Industry[] = [
     short: "SMB",
     buyer: "Owners and lean IT leads",
     hook: "For lean Microsoft 365 teams without a big IT staff: Copilot Studio agents on the stack you already pay for.",
-    title: "SMB Copilot Studio Agents | ai.neck",
+    title: "SMB Copilot Studio Agents | Ai.neck",
     metaDescription:
-      "Copilot Studio agents for small and mid-sized businesses: help-desk bots in Teams, SharePoint knowledge assistants, and Microsoft 365 workflows. By ai.neck.",
+      "Copilot Studio agents for small and mid-sized businesses: help-desk bots in Teams, SharePoint knowledge assistants, and Microsoft 365 workflows. By Ai.neck.",
     headline:
       "You already run the business on Microsoft 365. Agents turn that stack into answers and intake — not another login.",
     intro:

@@ -37,8 +37,8 @@ const clash = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(publicOrigin()),
   title: {
-    default: "ai.neck | Microsoft Copilot Agents & AI Solutions",
-    template: "%s | ai.neck",
+    default: "Ai.neck | End Your Busy Work",
+    template: "%s | Ai.neck",
   },
   description: site.description,
   openGraph: {

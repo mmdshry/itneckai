@@ -51,6 +51,51 @@ export function serviceSchema(opts: {
   };
 }
 
+export function itemListSchema(opts: {
+  name: string;
+  path: string;
+  items: { name: string; path: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: opts.name,
+    url: absoluteUrl(opts.path),
+    itemListElement: opts.items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function articleSchema(opts: {
+  title: string;
+  description: string;
+  path: string;
+  date: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: opts.title,
+    description: opts.description,
+    datePublished: opts.date,
+    url: absoluteUrl(opts.path),
+    author: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+    },
+  };
+}
+
 export function breadcrumbSchema(
   items: { name: string; path: string }[],
   origin?: string,

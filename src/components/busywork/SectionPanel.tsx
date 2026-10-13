@@ -4,14 +4,20 @@ import { useState } from "react";
 import {
   addBusyworkIdea,
   removeBusyworkIdea,
+  saveBusyworkContext,
   type PublicSession,
 } from "@/lib/api-client";
-import { sections } from "@/lib/busywork/copy";
-import { hoursPeriodLabel, minutesToLabel } from "@/lib/busywork/map";
-import type { IdeaKind } from "@/lib/busywork/schema";
+import { discoveryQuestions, frictionLabels, sections } from "@/lib/busywork/copy";
+import { effortLabel } from "@/lib/busywork/map";
+import {
+  frictionTypes,
+  type Frequency,
+  type Friction,
+  type IdeaKind,
+} from "@/lib/busywork/schema";
 import { IdeaCard } from "./IdeaCard";
 import { IdeaComposer } from "./IdeaComposer";
-import { errorClass, inputClass, labelClass, secondaryButtonClass } from "./styles";
+import { inputClass, labelClass, secondaryButtonClass } from "./styles";
 
 function Heading({
   number,
@@ -27,7 +33,7 @@ function Heading({
   return (
     <header className="mb-8">
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-cyan">
-        {number} / 05
+        {number} / 03
       </p>
       <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl">
         {title}
@@ -44,33 +50,131 @@ export function SectionPanel({
   onSession,
   onContinue,
 }: {
-  step: "value" | "boundary" | "automate" | "amplify" | "agent";
+  step: "observe" | "protect" | "capacity";
   session: PublicSession;
   onSession: (session: PublicSession) => void;
   onContinue: () => void;
 }) {
-  if (step === "value") {
-    return <ValueSection session={session} onSession={onSession} onContinue={onContinue} />;
+  if (step === "observe") {
+    return (
+      <ObserveSection session={session} onSession={onSession} onContinue={onContinue} />
+    );
   }
-  if (step === "boundary") {
+  if (step === "protect") {
     return (
       <TextSection
-        copy={sections.boundary}
+        copy={sections.protect}
         kind="alwaysHuman"
         ideas={session.payload.alwaysHuman}
-        session={session}
         onSession={onSession}
         onContinue={onContinue}
       />
     );
   }
-  if (step === "automate") {
-    return <AutomateSection session={session} onSession={onSession} onContinue={onContinue} />;
+  return (
+    <div>
+      <TeamContext session={session} onSession={onSession} />
+      <TextSection
+        copy={sections.capacity}
+        kind="capacity"
+        ideas={session.payload.capacity}
+        onSession={onSession}
+        onContinue={onContinue}
+      />
+    </div>
+  );
+}
+
+function TeamContext({
+  session,
+  onSession,
+}: {
+  session: PublicSession;
+  onSession: (session: PublicSession) => void;
+}) {
+  const copy = sections.capacity;
+  const [teamSize, setTeamSize] = useState(
+    session.payload.context.teamSize?.toString() ?? "",
+  );
+  const [hourly, setHourly] = useState(
+    session.payload.context.hourlyCost?.toString() ?? "",
+  );
+  const [error, setError] = useState<string>();
+  const [pending, setPending] = useState(false);
+
+  async function save(nextTeam: string, nextHourly: string) {
+    const team = nextTeam.trim() === "" ? null : Number(nextTeam);
+    const cost = nextHourly.trim() === "" ? null : Number(nextHourly);
+    if (team !== null && (!Number.isInteger(team) || team < 1 || team > 100000)) {
+      setError("Enter a whole number of people, or leave it blank.");
+      return;
+    }
+    if (cost !== null && (!Number.isFinite(cost) || cost < 1 || cost > 10000)) {
+      setError("Enter an hourly cost between 1 and 10,000, or leave it blank.");
+      return;
+    }
+    const current = session.payload.context;
+    if ((current.teamSize ?? null) === team && (current.hourlyCost ?? null) === cost) {
+      setError(undefined);
+      return;
+    }
+    setPending(true);
+    setError(undefined);
+    const result = await saveBusyworkContext({ teamSize: team, hourlyCost: cost });
+    setPending(false);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    onSession(result.session);
   }
-  if (step === "amplify") {
-    return <AmplifySection session={session} onSession={onSession} onContinue={onContinue} />;
-  }
-  return <AgentSection session={session} onSession={onSession} onContinue={onContinue} />;
+
+  return (
+    <section className="mb-8 rounded-md border border-line p-5">
+      <h3 className="font-display text-xl font-semibold text-navy">{copy.contextTitle}</h3>
+      <p className="mt-2 text-sm text-graphite">{copy.contextLead}</p>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="team-size" className={labelClass}>
+            {copy.teamSizeLabel}
+          </label>
+          <input
+            id="team-size"
+            type="number"
+            min={1}
+            max={100000}
+            inputMode="numeric"
+            value={teamSize}
+            disabled={pending}
+            onChange={(e) => setTeamSize(e.target.value)}
+            onBlur={() => void save(teamSize, hourly)}
+            className={`${inputClass} h-12`}
+          />
+        </div>
+        <div>
+          <label htmlFor="hourly-cost" className={labelClass}>
+            {copy.hourlyLabel}
+          </label>
+          <input
+            id="hourly-cost"
+            type="number"
+            min={1}
+            max={10000}
+            step={1}
+            inputMode="decimal"
+            placeholder="50"
+            value={hourly}
+            disabled={pending}
+            onChange={(e) => setHourly(e.target.value)}
+            onBlur={() => void save(teamSize, hourly)}
+            className={`${inputClass} h-12`}
+          />
+          <p className="mt-1.5 text-xs text-graphite">{copy.hourlyHint}</p>
+        </div>
+      </div>
+      {error ? <p className="mt-3 text-sm text-red-600">{error}</p> : null}
+    </section>
+  );
 }
 
 async function addKind(
@@ -101,20 +205,13 @@ async function removeKind(
   if (result.ok) onSession(result.session);
 }
 
-function ContinueRow({
-  onContinue,
-  disabled,
-}: {
-  onContinue: () => void;
-  disabled?: boolean;
-}) {
+function ContinueRow({ onContinue }: { onContinue: () => void }) {
   return (
     <div className="mt-6 flex flex-wrap gap-3">
       <button
         type="button"
         className={`${secondaryButtonClass} w-full sm:w-auto`}
         onClick={onContinue}
-        disabled={disabled}
       >
         Continue
       </button>
@@ -122,7 +219,7 @@ function ContinueRow({
   );
 }
 
-function ValueSection({
+function ObserveSection({
   session,
   onSession,
   onContinue,
@@ -131,12 +228,17 @@ function ValueSection({
   onSession: (session: PublicSession) => void;
   onContinue: () => void;
 }) {
-  const copy = sections.value;
-  const [highValue, setHighValue] = useState("");
-  const [busywork, setBusywork] = useState("");
-  const [pending, setPending] = useState<"highValue" | "busywork">();
+  const copy = sections.observe;
+  const [text, setText] = useState("");
+  const [prompt, setPrompt] = useState<string>();
+  const [hours, setHours] = useState("4");
+  const [frequency, setFrequency] = useState<Frequency>("weekly");
+  const [friction, setFriction] = useState<Friction>("repetitive");
+  const [people, setPeople] = useState("1");
+  const [frustration, setFrustration] = useState(3);
+  const [judgment, setJudgment] = useState(false);
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string>();
-  const [errorFor, setErrorFor] = useState<"highValue" | "busywork">();
 
   return (
     <div>
@@ -146,70 +248,171 @@ function ValueSection({
         lead={copy.lead}
         prompt={copy.prompt}
       />
-      <p className="mb-6 text-sm text-graphite">
-        For example: {copy.examples.join(" · ")}
-      </p>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-3">
-          {session.payload.highValue.map((idea) => (
-            <IdeaCard
-              key={idea.id}
-              title={idea.text}
-              onRemove={() => removeKind("highValue", idea.id, onSession)}
-            />
-          ))}
-          <IdeaComposer
-            id="high-value"
-            label={copy.highValueLabel}
-            helper={copy.highValueHelper}
-            placeholder={copy.highValuePlaceholder}
-            value={highValue}
-            onChange={setHighValue}
-            pending={pending === "highValue"}
-            error={errorFor === "highValue" ? error : undefined}
-            onSubmit={async () => {
-              setErrorFor("highValue");
-              const ok = await addKind(
-                "highValue",
-                { text: highValue },
-                onSession,
-                setError,
-                (value) => setPending(value ? "highValue" : undefined),
-              );
-              if (ok) setHighValue("");
-            }}
+      <p className="text-sm font-medium text-navy">{copy.questionsLabel}</p>
+      <ul className="mt-3 flex flex-wrap gap-2">
+        {discoveryQuestions.map((question) => {
+          const selected = prompt === question;
+          return (
+            <li key={question}>
+              <button
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setPrompt(selected ? undefined : question)}
+                className={`rounded-full border px-3 py-1.5 text-left text-xs transition-colors ${
+                  selected
+                    ? "border-cyan bg-cyan/10 text-navy"
+                    : "border-line text-graphite hover:border-navy/30 hover:text-navy"
+                }`}
+              >
+                {question}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-6 space-y-3">
+        {session.payload.workflows.map((idea) => (
+          <IdeaCard
+            key={idea.id}
+            title={idea.text}
+            meta={`${effortLabel(idea)}${
+              idea.people > 1 ? ` · ${idea.people} people` : ""
+            } · ${frictionLabels[idea.friction]}`}
+            onRemove={() => removeKind("workflows", idea.id, onSession)}
           />
-        </div>
-        <div className="space-y-3">
-          {session.payload.busywork.map((idea) => (
-            <IdeaCard
-              key={idea.id}
-              title={idea.text}
-              onRemove={() => removeKind("busywork", idea.id, onSession)}
-            />
-          ))}
-          <IdeaComposer
-            id="busywork"
-            label={copy.busyworkLabel}
-            helper={copy.busyworkHelper}
-            placeholder={copy.busyworkPlaceholder}
-            value={busywork}
-            onChange={setBusywork}
-            pending={pending === "busywork"}
-            error={errorFor === "busywork" ? error : undefined}
-            onSubmit={async () => {
-              setErrorFor("busywork");
-              const ok = await addKind(
-                "busywork",
-                { text: busywork },
-                onSession,
-                setError,
-                (value) => setPending(value ? "busywork" : undefined),
-              );
-              if (ok) setBusywork("");
-            }}
-          />
-        </div>
+        ))}
+        <IdeaComposer
+          id="workflow"
+          label={copy.workflowLabel}
+          helper={prompt ? `Answering: ${prompt}` : undefined}
+          placeholder={copy.workflowPlaceholder}
+          value={text}
+          onChange={setText}
+          pending={pending}
+          error={error}
+          submitLabel="Add this workflow"
+          onSubmit={async () => {
+            const hoursValue = Number(hours);
+            const peopleValue = Number(people);
+            const ok = await addKind(
+              "workflows",
+              {
+                text,
+                prompt,
+                hours: Number.isFinite(hoursValue) ? hoursValue : -1,
+                frequency,
+                friction,
+                people: Number.isInteger(peopleValue) ? peopleValue : 0,
+                frustration,
+                judgment,
+              },
+              onSession,
+              setError,
+              setPending,
+            );
+            if (ok) {
+              setText("");
+              setJudgment(false);
+            }
+          }}
+        >
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="workflow-hours" className={labelClass}>
+                {copy.hoursLabel}
+              </label>
+              <input
+                id="workflow-hours"
+                type="number"
+                min={0}
+                max={744}
+                step={0.5}
+                inputMode="decimal"
+                value={hours}
+                onChange={(e) => setHours(e.target.value)}
+                className={`${inputClass} h-12`}
+              />
+            </div>
+            <div>
+              <label htmlFor="workflow-frequency" className={labelClass}>
+                {copy.frequencyLabel}
+              </label>
+              <select
+                id="workflow-frequency"
+                value={frequency}
+                onChange={(e) => setFrequency(e.target.value as Frequency)}
+                className={`${inputClass} h-12`}
+              >
+                <option value="daily">Each day</option>
+                <option value="weekly">Each week</option>
+                <option value="monthly">Each month</option>
+              </select>
+            </div>
+            <div className="sm:col-span-2">
+              <label htmlFor="workflow-friction" className={labelClass}>
+                {copy.frictionLabel}
+              </label>
+              <select
+                id="workflow-friction"
+                value={friction}
+                onChange={(e) => setFriction(e.target.value as Friction)}
+                className={inputClass}
+              >
+                {frictionTypes.map((item) => (
+                  <option key={item} value={item}>
+                    {frictionLabels[item]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="workflow-people" className={labelClass}>
+                {copy.peopleLabel}
+              </label>
+              <input
+                id="workflow-people"
+                type="number"
+                min={1}
+                max={500}
+                step={1}
+                inputMode="numeric"
+                value={people}
+                onChange={(e) => setPeople(e.target.value)}
+                className={`${inputClass} h-12`}
+              />
+            </div>
+            <div>
+              <p className={labelClass}>{copy.frustrationLabel}</p>
+              <p className="mt-1 text-xs text-graphite">{copy.frustrationHint}</p>
+              <div className="mt-2 flex gap-2" role="group" aria-label={copy.frustrationLabel}>
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={frustration === value}
+                    onClick={() => setFrustration(value)}
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-md border text-sm ${
+                      frustration === value
+                        ? "border-cyan bg-cyan/10 text-navy"
+                        : "border-line text-graphite hover:border-navy/30"
+                    }`}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <label className="flex items-start gap-3 text-sm text-navy sm:col-span-2">
+              <input
+                type="checkbox"
+                checked={judgment}
+                onChange={(e) => setJudgment(e.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 rounded border-line"
+              />
+              <span>{copy.judgmentLabel}</span>
+            </label>
+          </div>
+        </IdeaComposer>
       </div>
       <ContinueRow onContinue={onContinue} />
     </div>
@@ -220,21 +423,18 @@ function TextSection({
   copy,
   kind,
   ideas,
-  session,
   onSession,
   onContinue,
 }: {
-  copy: typeof sections.boundary;
-  kind: "alwaysHuman";
+  copy: typeof sections.protect | typeof sections.capacity;
+  kind: "alwaysHuman" | "capacity";
   ideas: PublicSession["payload"]["alwaysHuman"];
-  session: PublicSession;
   onSession: (session: PublicSession) => void;
   onContinue: () => void;
 }) {
   const [text, setText] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string>();
-  void session;
 
   return (
     <div>
@@ -257,8 +457,8 @@ function TextSection({
         ))}
         <IdeaComposer
           id={kind}
-          label="Always stay human"
-          helper={copy.helper}
+          label={kind === "alwaysHuman" ? "Keep with a person" : "The time back"}
+          helper={"helper" in copy ? copy.helper : undefined}
           placeholder={copy.placeholder}
           value={text}
           onChange={setText}
@@ -269,317 +469,6 @@ function TextSection({
             if (ok) setText("");
           }}
         />
-      </div>
-      <ContinueRow onContinue={onContinue} />
-    </div>
-  );
-}
-
-function AutomateSection({
-  session,
-  onSession,
-  onContinue,
-}: {
-  session: PublicSession;
-  onSession: (session: PublicSession) => void;
-  onContinue: () => void;
-}) {
-  const copy = sections.automate;
-  const [text, setText] = useState("");
-  const [hours, setHours] = useState("4");
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState<string>();
-
-  return (
-    <div>
-      <Heading
-        number={copy.number}
-        title={copy.title}
-        lead={copy.lead}
-        prompt={copy.prompt}
-      />
-      <p className="mb-6 text-sm text-graphite">
-        For example: {copy.examples.join(" · ")}
-      </p>
-      <div className="space-y-3">
-        {session.payload.robotTasks.map((idea) => (
-          <IdeaCard
-            key={idea.id}
-            title={idea.text}
-            meta={hoursPeriodLabel(idea.hoursPerWeek, idea.frequency)}
-            onRemove={() => removeKind("robotTasks", idea.id, onSession)}
-          />
-        ))}
-        <IdeaComposer
-          id="robot-task"
-          label="The task"
-          placeholder={copy.placeholder}
-          value={text}
-          onChange={setText}
-          pending={pending}
-          error={error}
-          onSubmit={async () => {
-            const hoursPerWeek = Number(hours);
-            const ok = await addKind(
-              "robotTasks",
-              {
-                text,
-                hoursPerWeek: Number.isFinite(hoursPerWeek) ? hoursPerWeek : -1,
-              },
-              onSession,
-              setError,
-              setPending,
-            );
-            if (ok) {
-              setText("");
-              setHours("4");
-            }
-          }}
-        >
-          <div className="mt-4 max-w-xs">
-            <label htmlFor="robot-hours" className={labelClass}>
-              {copy.hoursLabel}
-            </label>
-            <input
-              id="robot-hours"
-              type="number"
-              min={0}
-              max={744}
-              step={0.5}
-              inputMode="decimal"
-              placeholder={copy.hoursPlaceholder}
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
-              className={`${inputClass} h-12`}
-            />
-          </div>
-        </IdeaComposer>
-      </div>
-      <ContinueRow onContinue={onContinue} />
-    </div>
-  );
-}
-
-function DurationField({
-  id,
-  label,
-  amount,
-  unit,
-  onAmount,
-  onUnit,
-}: {
-  id: string;
-  label: string;
-  amount: string;
-  unit: "minutes" | "hours";
-  onAmount: (value: string) => void;
-  onUnit: (value: "minutes" | "hours") => void;
-}) {
-  return (
-    <div className="min-w-0">
-      <label htmlFor={id} className={`${labelClass} leading-snug`}>
-        {label}
-      </label>
-      <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_auto] gap-2">
-        <input
-          id={id}
-          type="number"
-          min={0}
-          step={0.5}
-          inputMode="decimal"
-          value={amount}
-          onChange={(e) => onAmount(e.target.value)}
-          className="h-12 min-w-0 w-full rounded-md border border-line bg-page px-3.5 py-3 text-sm text-navy"
-        />
-        <select
-          aria-label={`${label} unit`}
-          value={unit}
-          onChange={(e) => onUnit(e.target.value as "minutes" | "hours")}
-          className="h-12 w-[7.5rem] rounded-md border border-line bg-page px-3.5 py-3 text-sm text-navy"
-        >
-          <option value="minutes">Minutes</option>
-          <option value="hours">Hours</option>
-        </select>
-      </div>
-    </div>
-  );
-}
-
-function toMinutes(amount: string, unit: "minutes" | "hours"): number {
-  const value = Number(amount);
-  if (!Number.isFinite(value)) return Number.NaN;
-  return unit === "hours" ? value * 60 : value;
-}
-
-function AmplifySection({
-  session,
-  onSession,
-  onContinue,
-}: {
-  session: PublicSession;
-  onSession: (session: PublicSession) => void;
-  onContinue: () => void;
-}) {
-  const copy = sections.amplify;
-  const [text, setText] = useState("");
-  const [prep, setPrep] = useState("4");
-  const [prepUnit, setPrepUnit] = useState<"minutes" | "hours">("hours");
-  const [perf, setPerf] = useState("15");
-  const [perfUnit, setPerfUnit] = useState<"minutes" | "hours">("minutes");
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState<string>();
-
-  return (
-    <div>
-      <Heading
-        number={copy.number}
-        title={copy.title}
-        lead={copy.lead}
-        prompt={copy.prompt}
-      />
-      <p className="mb-6 text-sm text-graphite">
-        For example: {copy.examples.join(" · ")}
-      </p>
-      <div className="space-y-3">
-        {session.payload.superhuman.map((idea) => (
-          <IdeaCard
-            key={idea.id}
-            title={idea.text}
-            meta={`Prep ${minutesToLabel(idea.prepMinutes)} · Performance ${minutesToLabel(idea.performanceMinutes)}`}
-            onRemove={() => removeKind("superhuman", idea.id, onSession)}
-          />
-        ))}
-        <IdeaComposer
-          id="superhuman"
-          label="The task"
-          placeholder={copy.placeholder}
-          value={text}
-          onChange={setText}
-          pending={pending}
-          error={error}
-          onSubmit={async () => {
-            const ok = await addKind(
-              "superhuman",
-              {
-                text,
-                prepMinutes: toMinutes(prep, prepUnit),
-                performanceMinutes: toMinutes(perf, perfUnit),
-              },
-              onSession,
-              setError,
-              setPending,
-            );
-            if (ok) setText("");
-          }}
-        >
-          <div className="mt-4 grid gap-4">
-            <DurationField
-              id="prep-time"
-              label={copy.prepLabel}
-              amount={prep}
-              unit={prepUnit}
-              onAmount={setPrep}
-              onUnit={setPrepUnit}
-            />
-            <DurationField
-              id="perf-time"
-              label={copy.performanceLabel}
-              amount={perf}
-              unit={perfUnit}
-              onAmount={setPerf}
-              onUnit={setPerfUnit}
-            />
-          </div>
-        </IdeaComposer>
-      </div>
-      <ContinueRow onContinue={onContinue} />
-    </div>
-  );
-}
-
-function AgentSection({
-  session,
-  onSession,
-  onContinue,
-}: {
-  session: PublicSession;
-  onSession: (session: PublicSession) => void;
-  onContinue: () => void;
-}) {
-  const copy = sections.agent;
-  const [responsibilities, setResponsibilities] = useState("");
-  const [kpi, setKpi] = useState("");
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState<string>();
-
-  return (
-    <div>
-      <Heading
-        number={copy.number}
-        title={copy.title}
-        lead={copy.lead}
-        prompt={copy.prompt}
-      />
-      <p className="mb-6 text-sm text-graphite">
-        For example: {copy.examples.join(" · ")}
-      </p>
-      <div className="space-y-3">
-        {session.payload.hire.map((idea) => (
-          <IdeaCard
-            key={idea.id}
-            title={idea.responsibilities}
-            meta={`Measure: ${idea.kpi}`}
-            onRemove={() => removeKind("hire", idea.id, onSession)}
-          />
-        ))}
-        <form
-          className="rounded-md border border-line p-4 sm:p-5"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const ok = await addKind(
-              "hire",
-              { responsibilities, kpi },
-              onSession,
-              setError,
-              setPending,
-            );
-            if (ok) {
-              setResponsibilities("");
-              setKpi("");
-            }
-          }}
-        >
-          <label htmlFor="hire-do" className={labelClass}>
-            {copy.responsibilitiesLabel}
-          </label>
-          <textarea
-            id="hire-do"
-            rows={3}
-            value={responsibilities}
-            placeholder={copy.responsibilitiesPlaceholder}
-            onChange={(e) => setResponsibilities(e.target.value)}
-            className={inputClass}
-          />
-          <label htmlFor="hire-kpi" className={`${labelClass} mt-4`}>
-            {copy.kpiLabel}
-          </label>
-          <textarea
-            id="hire-kpi"
-            rows={2}
-            value={kpi}
-            placeholder={copy.kpiPlaceholder}
-            onChange={(e) => setKpi(e.target.value)}
-            className={inputClass}
-          />
-          {error ? <p className={errorClass}>{error}</p> : null}
-          <button
-            type="submit"
-            disabled={pending}
-            className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-amber px-6 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-          >
-            {pending ? "Saving…" : "Add this idea"}
-          </button>
-        </form>
       </div>
       <ContinueRow onContinue={onContinue} />
     </div>

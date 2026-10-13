@@ -2,7 +2,7 @@ import { ogImage, ogSize } from "@/lib/og";
 
 export const size = ogSize;
 export const contentType = "image/png";
-export const alt = "BIM MEP Estimate — ai.neck sales estimator";
+export const alt = "BIM MEP Estimate — Ai.neck sales estimator";
 
 export default function Image() {
   return ogImage(

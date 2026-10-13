@@ -5,7 +5,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Privacy Policy",
     description:
-    "How ai.neck handles the information you share with us: what we collect through the contact form and End Your Busywork, how we use it, and how to reach us about it.",
+    "How Ai.neck handles the information you share with us: what we collect through the contact form and End Your Busy Work, how we use it, and how to reach us about it.",
   alternates: { canonical: absoluteUrl("/privacy") },
   robots: { index: true, follow: true },
 };
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         Privacy Policy
       </h1>
       <div className="mt-8 max-w-3xl space-y-8 leading-relaxed text-graphite">
-        <p className="text-sm">Last updated: August 2026</p>
+        <p className="text-sm">Last updated: October 2026</p>
 
         <section>
           <h2 className="font-display text-xl font-semibold text-cloud">
@@ -27,9 +27,9 @@ export default function PrivacyPage() {
           <p className="mt-3">
             When you submit our contact form, we collect the information you
             provide: your name, work email, company, optional phone number,
-            and your message. When you join End Your Busywork, we collect your
-            full name, email, consent, and the work ideas you enter in the
-            workshop. We do not collect this information from any other
+            and your message. When you join End Your Busy Work, we collect your
+            full name, email, consent, and the workflows, effort, and notes you
+            enter in the assessment. We do not collect this information from any other
             source, and we do not buy or sell contact data.
           </p>
         </section>
@@ -41,8 +41,8 @@ export default function PrivacyPage() {
           <p className="mt-3">
             Contact form submissions are emailed to our team and used solely
             to respond to your inquiry and, if you engage us, to deliver our
-            services. End Your Busywork uses your email to send a private
-            sign-in link and, if you ask us to, a copy of the ideas you entered.
+            services. End Your Busy Work uses your email to send a private
+            sign-in link and, if you ask us to, a copy of the map you entered.
             We also keep a copy so we can follow up. We do not add you to marketing lists without your
             explicit consent, and we do not share your information with third
             parties except the email delivery provider that transmits your
@@ -56,9 +56,9 @@ export default function PrivacyPage() {
           </h2>
           <p className="mt-3">
             This site does not set advertising or tracking cookies. End Your
-            Busywork sets a first-party session cookie after you open the
-            email link so we can restore your workshop ideas on this browser.
-            Workshop events (start, section completed, submit) are stored on
+            Busy Work sets a first-party session cookie after you open the
+            email link so we can restore your assessment on this browser.
+            Assessment events (start, section completed, submit) are stored on
             our servers without cross-site tracking. If we adopt additional
             analytics, we use privacy-first tooling configured without
             cross-site tracking.

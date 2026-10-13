@@ -2,9 +2,8 @@
 
 export const size = ogSize;
 export const contentType = "image/png";
-export const alt =
-  "ai.neck — AI That Works Inside the Tools You Already Use.";
+export const alt = "Ai.neck — End Your Busy Work";
 
 export default function Image() {
-  return ogImage("AI That Works Inside the Tools You Already Use.");
+  return ogImage("End Your Busy Work.", "END YOUR BUSY WORK");
 }

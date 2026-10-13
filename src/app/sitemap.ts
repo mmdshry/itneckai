@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
-import { copilotProducts } from "@/lib/copilot-agents";
-import { industries } from "@/lib/industries";
+import { topics } from "@/lib/education";
+import { articles } from "@/lib/university/articles";
+import { categories } from "@/lib/university/categories";
+import { chapters } from "@/lib/method";
 import { absoluteUrl } from "@/lib/site";
 import { blogPosts } from "@/lib/itneck/blog";
 import { allSolutionPaths } from "@/lib/itneck/solutions";
@@ -12,26 +14,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: { path: string; priority: number }[] = [
     { path: "/", priority: 1 },
     { path: "/EndYourBusywork", priority: 0.8 },
-    { path: "/solutions", priority: 0.9 },
-    { path: "/solutions/microsoft-copilot-agents", priority: 0.9 },
-    { path: "/industries", priority: 0.7 },
-    { path: "/case-studies", priority: 0.6 },
-    { path: "/about", priority: 0.7 },
-    { path: "/contact", priority: 0.8 },
+    { path: "/how-it-works", priority: 0.9 },
+    { path: "/team", priority: 0.6 },
+    { path: "/university", priority: 0.8 },
+    { path: "/contact", priority: 0.5 },
     { path: "/privacy", priority: 0.2 },
   ];
 
-  const productRoutes = copilotProducts.map((p) => ({
-    path: `/solutions/microsoft-copilot-agents/${p.slug}`,
+  const chapterRoutes = chapters.map((chapter) => ({
+    path: `/how-it-works/${chapter.slug}`,
     priority: 0.8,
   }));
 
-  const industryRoutes = industries.map((i) => ({
-    path: `/industries/${i.slug}`,
-    priority: 0.7,
-  }));
+  const universityRoutes = [
+    ...topics.map((topic) => ({
+      path: `/university/${topic.slug}`,
+      priority: 0.7,
+    })),
+    ...articles.map((article) => ({
+      path: `/university/articles/${article.slug}`,
+      priority: 0.6,
+    })),
+    ...categories.map((category) => ({
+      path: `/university/category/${category.slug}`,
+      priority: 0.5,
+    })),
+  ];
 
-  const aiEntries = [...staticRoutes, ...productRoutes, ...industryRoutes].map(
+  const aiEntries = [...staticRoutes, ...chapterRoutes, ...universityRoutes].map(
     (route) => ({
       url: absoluteUrl(route.path),
       lastModified,

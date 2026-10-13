@@ -21,7 +21,15 @@ export function Welcome({
       </h1>
       <p className="mt-6 text-lg text-graphite">{experience.supporting}</p>
       <p className="mt-4 text-base font-medium text-navy">{experience.promise}</p>
-      <p className="mt-3 text-sm text-graphite">{experience.effort}</p>
+      <ul className="mt-6 space-y-2 text-sm text-graphite">
+        {experience.principles.map((principle) => (
+          <li key={principle} className="flex gap-3">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" aria-hidden />
+            <span>{principle}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-4 text-sm text-graphite">{experience.effort}</p>
       {error ? (
         <p className="mt-6 rounded-md border border-red-500/40 bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300">
           {error}

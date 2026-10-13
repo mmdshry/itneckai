@@ -10,11 +10,11 @@ import { absoluteUrl } from "@/lib/site";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "End Your Busywork",
+  title: "End Your Busy Work",
   description: experience.supporting,
   alternates: { canonical: absoluteUrl(BUSYWORK_PATH) },
   openGraph: {
-    title: "End Your Busywork | ai.neck",
+    title: "End Your Busy Work | Ai.neck",
     description: experience.supporting,
     url: absoluteUrl(BUSYWORK_PATH),
   },
@@ -28,7 +28,7 @@ export default function EndYourBusyworkPage() {
         <Suspense
           fallback={
             <p className="text-sm text-graphite" aria-live="polite">
-              Loading your workshop…
+              Loading your assessment…
             </p>
           }
         >
@@ -38,7 +38,7 @@ export default function EndYourBusyworkPage() {
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
-          { name: "End Your Busywork", path: BUSYWORK_PATH },
+          { name: "End Your Busy Work", path: BUSYWORK_PATH },
         ])}
       />
     </>

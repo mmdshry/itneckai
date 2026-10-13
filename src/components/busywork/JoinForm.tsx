@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   TurnstileField,
@@ -22,7 +22,9 @@ export function JoinForm({
 }) {
   const [formError, setFormError] = useState<string>();
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [captchaDown, setCaptchaDown] = useState(false);
   const turnstileRef = useRef<TurnstileFieldHandle>(null);
+  const devBypass = process.env.NODE_ENV === "development" && captchaDown;
   const {
     register,
     handleSubmit,
@@ -33,9 +35,43 @@ export function JoinForm({
     defaultValues: { firstName: "", email: "", consent: false, website: "" },
   });
 
+  function onCaptchaToken(token: string) {
+    if (token) {
+      setCaptchaDown(false);
+      setFormError((current) =>
+        current?.startsWith("Verification could not") ? undefined : current,
+      );
+    }
+    setTurnstileToken(token);
+  }
+
+  useEffect(() => {
+    if (!siteKey || process.env.NODE_ENV !== "development" || turnstileToken) return;
+    const timer = window.setTimeout(() => {
+      setCaptchaDown(true);
+      setFormError(
+        (current) =>
+          current ??
+          "Verification could not reach Cloudflare. You can still join on this local site.",
+      );
+    }, 12000);
+    return () => window.clearTimeout(timer);
+  }, [siteKey, turnstileToken]);
+
+  function onCaptchaUnavailable() {
+    setCaptchaDown(true);
+    setTurnstileToken("");
+    setFormError(
+      process.env.NODE_ENV === "development"
+        ? "Verification could not reach Cloudflare. You can still join on this local site."
+        : "Verification could not connect. Refresh the page and try again.",
+    );
+  }
+
   async function onSubmit(values: JoinInput) {
     setFormError(undefined);
-    const result = await joinBusywork({ ...values, turnstileToken });
+    const token = turnstileToken || turnstileRef.current?.getToken() || "";
+    const result = await joinBusywork({ ...values, turnstileToken: token });
     if (!result.ok) {
       if (result.fieldErrors) {
         for (const [field, messages] of Object.entries(result.fieldErrors)) {
@@ -52,7 +88,7 @@ export function JoinForm({
     onSent(result.email, result.devLink);
   }
 
-  const captchaBlocking = Boolean(siteKey) && !turnstileToken;
+  const captchaBlocking = Boolean(siteKey) && !turnstileToken && !devBypass;
 
   return (
     <div className="max-w-lg">
@@ -129,10 +165,9 @@ export function JoinForm({
           <TurnstileField
             ref={turnstileRef}
             siteKey={siteKey}
-            onToken={setTurnstileToken}
-            onLoadError={() =>
-              setFormError("Could not load verification. Refresh and try again.")
-            }
+            onToken={onCaptchaToken}
+            onError={onCaptchaUnavailable}
+            onLoadError={onCaptchaUnavailable}
           />
         ) : null}
 

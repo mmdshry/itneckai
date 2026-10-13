@@ -20,9 +20,9 @@ export const copilotProducts: CopilotProduct[] = [
     name: "SharePoint",
     short: "SHAREPOINT",
     icon: "sharepoint",
-      title: "Copilot Studio Agents for SharePoint | ai.neck",
+      title: "Copilot Studio Agents for SharePoint | Ai.neck",
     metaDescription:
-        "Custom Copilot Studio agents for SharePoint: document Q&A, intranet knowledge assistants, and permission-aware search. Built by ai.neck in Copilot Studio.",
+        "Custom Copilot Studio agents for SharePoint: document Q&A, intranet knowledge assistants, and permission-aware search. Built by Ai.neck in Copilot Studio.",
       headline: "Copilot Studio agents that turn SharePoint into answers, not archives.",
       painHook:
           "Before: the same policy question hits IT and HR every week. After: staff ask in plain language and get a cited answer from the current library — permissions intact.",
@@ -56,9 +56,9 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Teams",
     short: "TEAMS",
     icon: "teams",
-      title: "Copilot Studio Agents for Microsoft Teams | ai.neck",
+      title: "Copilot Studio Agents for Microsoft Teams | Ai.neck",
     metaDescription:
-        "Custom Copilot Studio agents for Microsoft Teams: meeting-embedded assistants, approval workflow bots, and Adaptive Card request forms. Built by ai.neck in Copilot Studio.",
+        "Custom Copilot Studio agents for Microsoft Teams: meeting-embedded assistants, approval workflow bots, and Adaptive Card request forms. Built by Ai.neck in Copilot Studio.",
       headline: "Copilot Studio agents that work where your team already talks.",
       painHook:
           "Before: approvals die in chat and inboxes. After: requests land as Adaptive Cards in the channel, routed with Power Automate and a full audit trail.",
@@ -92,9 +92,9 @@ export const copilotProducts: CopilotProduct[] = [
     name: "OneDrive",
     short: "ONEDRIVE",
     icon: "onedrive",
-      title: "Copilot Studio Agents for OneDrive | ai.neck",
+      title: "Copilot Studio Agents for OneDrive | Ai.neck",
     metaDescription:
-        "Custom Copilot Studio agents for OneDrive: file summarization, smart organization and retention, and content classification. Built by ai.neck in Copilot Studio.",
+        "Custom Copilot Studio agents for OneDrive: file summarization, smart organization and retention, and content classification. Built by Ai.neck in Copilot Studio.",
       headline: "Copilot Studio agents that keep personal file storage from becoming a liability.",
       painHook:
           "Before: work-in-progress files vanish into personal drives. After: summaries, labels, and moves to the right SharePoint library happen with an agent — not a cleanup weekend.",
@@ -128,9 +128,9 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Microsoft 365",
     short: "M365",
     icon: "m365",
-      title: "Copilot Studio Agents for Microsoft 365 | ai.neck",
+      title: "Copilot Studio Agents for Microsoft 365 | Ai.neck",
     metaDescription:
-        "Cross-app Copilot Studio agents for Microsoft 365 that read and write across the Graph: orchestration across Teams, SharePoint, Outlook, and OneDrive. Built by ai.neck in Copilot Studio.",
+        "Cross-app Copilot Studio agents for Microsoft 365 that read and write across the Graph: orchestration across Teams, SharePoint, Outlook, and OneDrive. Built by Ai.neck in Copilot Studio.",
       headline: "One Copilot Studio agent, every app: orchestration across the Microsoft Graph.",
       painHook:
           "Before: onboarding or status checks bounce between apps by hand. After: one agent coordinates SharePoint, Teams, Outlook, and OneDrive end to end — still inside your Graph permissions.",
@@ -164,9 +164,9 @@ export const copilotProducts: CopilotProduct[] = [
     name: "Outlook",
     short: "OUTLOOK",
     icon: "outlook",
-      title: "Copilot Studio Agents for Outlook | ai.neck",
+      title: "Copilot Studio Agents for Outlook | Ai.neck",
     metaDescription:
-        "Custom Copilot Studio agents for Outlook: inbox triage, meeting-prep briefings, and auto-drafted replies grounded in company data. Built by ai.neck in Copilot Studio.",
+        "Custom Copilot Studio agents for Outlook: inbox triage, meeting-prep briefings, and auto-drafted replies grounded in company data. Built by Ai.neck in Copilot Studio.",
       headline: "Copilot Studio agents that give your team their inbox back.",
       painHook:
           "Before: meeting prep is a late-night scramble across mail and files. After: a Graph-grounded brief lands before you walk in — drafted by a Copilot Studio agent, reviewed by you.",

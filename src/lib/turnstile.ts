@@ -22,8 +22,12 @@ export async function isHumanRequest(
   token: unknown,
   ip: string,
 ): Promise<boolean> {
+  const value = typeof token === "string" ? token.trim() : "";
   if (!turnstileRequired()) return true;
-  return verifyTurnstileToken(typeof token === "string" ? token : "", ip);
+  // The widget often cannot reach Cloudflare from a local browser. A missing
+  // token must not block development. A token that is present is still checked.
+  if (process.env.NODE_ENV !== "production" && !value) return true;
+  return verifyTurnstileToken(value, ip);
 }
 
 export async function verifyTurnstileToken(

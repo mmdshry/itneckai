@@ -15,7 +15,7 @@ export function CheckEmail({
         Check your email
       </p>
       <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-navy">
-        Your workshop link is on the way.
+        Your assessment link is on the way.
       </h1>
       <p className="mt-4 flex items-start gap-2 text-graphite">
         <MailIcon className="mt-0.5 shrink-0 text-cyan" />

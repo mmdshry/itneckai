@@ -128,8 +128,10 @@ body {
 .agent-graph.is-paused .graph-core,
 .agent-graph.is-paused .graph-ring,
 .agent-graph.is-paused .graph-packet,
-.busywork-scene.is-paused .busywork-task,
-.busywork-scene.is-paused .busywork-ring {
+.workflow-scene.is-paused .workflow-chip,
+.workflow-scene.is-paused .workflow-output,
+.workflow-scene.is-paused .workflow-bar,
+.workflow-scene.is-paused .workflow-ring {
   animation-play-state: paused;
 }
 
@@ -198,42 +200,22 @@ body {
   outline: none;
 }
 
-/* ---------- Busywork scene (homepage band) ---------- */
-.busywork-link {
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  animation: graph-draw 0.4s ease-out forwards;
+/* ---------- Homepage workflow scene ---------- */
+.workflow-chip {
+  animation: workflow-drift 4.6s ease-in-out infinite;
 }
 
-.busywork-task {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: busywork-pingpong 3s ease-in-out infinite;
+.workflow-output {
+  animation: workflow-arrive 4.6s ease-in-out infinite;
 }
 
-.busywork-ring {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: graph-ring 4s ease-in-out 0.8s infinite;
+.workflow-bar {
+  transform-origin: left center;
+  animation: workflow-fill 3.4s ease-in-out infinite;
 }
 
-.busywork-orbit {
-  transform-box: fill-box;
-  transform-origin: center;
-  transition:
-    transform 0.75s ease,
-    opacity 0.75s ease;
-}
-
-.busywork-cta:hover .busywork-orbit,
-.busywork-cta:focus-visible .busywork-orbit {
-  transform: scale(0.42);
-  opacity: 0.5;
-}
-
-.busywork-cta:hover .busywork-ring,
-.busywork-cta:focus-visible .busywork-ring {
-  opacity: 0.85;
+.workflow-ring {
+  animation: graph-ring 4s ease-in-out infinite;
 }
 
 @keyframes graph-draw {
@@ -296,13 +278,173 @@ body {
   }
 }
 
-@keyframes busywork-pingpong {
+@keyframes workflow-drift {
   0%,
   100% {
-    transform: translate(0, 0);
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  40% {
+    opacity: 1;
+  }
+  72% {
+    transform: translateX(12px);
+    opacity: 0.85;
+  }
+}
+
+@keyframes workflow-arrive {
+  0% {
+    transform: translateX(-8px);
+    opacity: 0.25;
+  }
+  55%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes workflow-fill {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+  55% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes chat-cloud-float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
   }
   50% {
-    transform: translate(var(--bw-dx), var(--bw-dy));
+    transform: translate(-50%, -7px);
+  }
+}
+
+.chat-cloud {
+  animation: chat-cloud-float 2.4s ease-in-out infinite;
+}
+
+.chat-launcher {
+  transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+
+.chat-launcher:hover {
+  transform: translateY(-8px);
+}
+
+.chat-launcher:hover .chat-cloud {
+  animation-duration: 1.15s;
+}
+
+.chat-launcher:active {
+  transform: translateY(-2px) scale(0.96);
+}
+
+.mood-stage {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.mood-star {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #f9690e;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: mood-star 1.7s ease-in-out infinite;
+}
+
+.mood-stage > [data-layer] {
+  display: none;
+}
+
+.mood-stage[data-mood="playful"] > [data-layer="playful"],
+.mood-stage[data-mood="happy"] > [data-layer="happy"],
+.mood-stage[data-mood="play"] > [data-layer="play"] {
+  display: block;
+}
+
+.mood-stage[data-mood="happy"] {
+  background: radial-gradient(circle, rgba(249, 105, 14, 0.28), transparent 68%);
+}
+
+.mood-rise {
+  position: absolute;
+  bottom: 18%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f9690e;
+  animation: mood-rise 2.6s linear infinite;
+}
+
+.gaze-lid {
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.mood-ball {
+  position: absolute;
+  bottom: 22%;
+  border-radius: 999px;
+  animation: mood-bounce 0.9s ease-in-out infinite;
+}
+
+@keyframes mood-star {
+  0%,
+  100% {
+    transform: translateY(10px) scale(0.35);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-22px) scale(1);
+    opacity: 0.2;
+  }
+}
+
+@keyframes mood-rise {
+  0% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
+}
+
+@keyframes mood-bounce {
+  0%,
+  100% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-26px);
   }
 }
 
@@ -316,15 +458,27 @@ body {
   .graph-core,
   .graph-ring,
   .graph-packet,
-  .busywork-link,
-  .busywork-task,
-  .busywork-ring,
-  .spine-fill {
+  .workflow-chip,
+  .workflow-output,
+  .workflow-bar,
+  .workflow-ring,
+  .spine-fill,
+  .chat-cloud,
+  .mood-star,
+  .mood-rise,
+  .mood-ball {
     animation: none !important;
   }
-  .graph-link,
-  .busywork-link {
+  .graph-link {
     stroke-dashoffset: 0;
+  }
+  .workflow-chip,
+  .workflow-output {
+    opacity: 1;
+    transform: none;
+  }
+  .workflow-bar {
+    transform: none;
   }
   .graph-node {
     opacity: 1;
@@ -332,14 +486,17 @@ body {
   .graph-packet {
     opacity: 0;
   }
-  .busywork-cta:hover .busywork-orbit,
-  .busywork-cta:focus-visible .busywork-orbit {
-    transform: none;
-    opacity: 1;
-  }
   .spine-fill {
     transform: scaleY(1);
     opacity: 0.25;
+  }
+  .chat-launcher,
+  .chat-launcher:hover,
+  .chat-launcher:active {
+    transform: none;
+  }
+  .mood-stage {
+    display: none;
   }
 }
 

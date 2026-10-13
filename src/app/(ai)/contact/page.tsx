@@ -9,10 +9,10 @@ import {ContactForm} from "./ContactForm";
 export const metadata: Metadata = {
     title: "Contact Us — Book a working session",
   description:
-      "Book a working session with ai.neck. Tell us about your Microsoft 365 stack and where a Copilot Studio agent would earn its keep — we typically reply within one business day. San Diego, CA.",
+      "Book a working session with Ai.neck. Tell us about your Microsoft 365 stack and where a Copilot Studio agent would earn its keep — we typically reply within one business day. San Diego, CA.",
   alternates: { canonical: absoluteUrl("/contact") },
   openGraph: {
-      title: "Contact Us — Book a working session | ai.neck",
+      title: "Contact Us — Book a working session | Ai.neck",
     description:
         "Tell us about your Microsoft 365 stack and where a Copilot Studio agent would earn its keep. We typically reply within one business day.",
     url: absoluteUrl("/contact"),
@@ -36,7 +36,7 @@ export default async function ContactPage({
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-graphite">
           {fromBusywork
-            ? "Coming from End Your Busywork? Tell us which idea you want to turn into an AI agent — we’ll take it from the specification you already captured."
+            ? "Coming from End Your Busy Work? Tell us which workflow is costing the most time — we’ll start from the map you already captured."
             : "The first conversation is a working session: your stack, your workflows, and where an agent would earn its keep. No slide deck."}
         </p>
 

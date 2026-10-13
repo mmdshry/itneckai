@@ -1,38 +1,16 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   TurnstileField,
   type TurnstileFieldHandle,
 } from "@/components/TurnstileField";
 import { submitBusywork, type PublicSession } from "@/lib/api-client";
 import { sections } from "@/lib/busywork/copy";
-import { hoursPeriodLabel, minutesToLabel } from "@/lib/busywork/map";
+import { buildBusyWorkMap } from "@/lib/busywork/map";
 import { ideaCount } from "@/lib/busywork/schema";
+import { BusyWorkMapView } from "./OpportunityMap";
 import { primaryButtonClass } from "./styles";
-
-function Block({
-  title,
-  empty,
-  children,
-}: {
-  title: string;
-  empty: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <section className="rounded-md border border-line p-5">
-      <h3 className="font-display text-lg font-semibold text-navy">{title}</h3>
-      {empty ? (
-        <p className="mt-2 text-sm text-ink-muted">
-          Nothing here yet — you can jump back and add an idea.
-        </p>
-      ) : (
-        <div className="mt-3 space-y-2 text-sm text-graphite">{children}</div>
-      )}
-    </section>
-  );
-}
 
 export function MyIdeas({
   session,
@@ -43,77 +21,27 @@ export function MyIdeas({
   onSubmitted: (session: PublicSession) => void;
   siteKey: string;
 }) {
-  const copy = sections.ideas;
-  const { payload } = session;
+  const copy = sections.map;
+  const map = useMemo(() => buildBusyWorkMap(session.payload), [session.payload]);
   const [error, setError] = useState<string>();
   const [pending, setPending] = useState(false);
   const [emailCopy, setEmailCopy] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const turnstileRef = useRef<TurnstileFieldHandle>(null);
-  const empty = ideaCount(payload) === 0;
+  const empty = ideaCount(session.payload) === 0;
   const unchanged = session.unchangedSinceSubmit === true;
   const captchaBlocking = Boolean(siteKey) && !turnstileToken;
 
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-cyan">
-        Review
-      </p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-cyan">Review</p>
       <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-navy md:text-4xl">
         {copy.title}
       </h2>
       <p className="mt-4 max-w-2xl text-graphite">{copy.lead}</p>
 
-      <div className="mt-8 grid gap-4">
-        <Block title="High-value work" empty={payload.highValue.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.highValue.map((idea) => (
-              <li key={idea.id}>{idea.text}</li>
-            ))}
-          </ul>
-        </Block>
-        <Block title="Busywork" empty={payload.busywork.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.busywork.map((idea) => (
-              <li key={idea.id}>{idea.text}</li>
-            ))}
-          </ul>
-        </Block>
-        <Block title="Always human" empty={payload.alwaysHuman.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.alwaysHuman.map((idea) => (
-              <li key={idea.id}>{idea.text}</li>
-            ))}
-          </ul>
-        </Block>
-        <Block title="AI automation opportunity" empty={payload.robotTasks.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.robotTasks.map((idea) => (
-              <li key={idea.id}>
-                {idea.text} — {hoursPeriodLabel(idea.hoursPerWeek, idea.frequency)}
-              </li>
-            ))}
-          </ul>
-        </Block>
-        <Block title="AI superhuman opportunity" empty={payload.superhuman.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.superhuman.map((idea) => (
-              <li key={idea.id}>
-                {idea.text} — Prep {minutesToLabel(idea.prepMinutes)}, performance{" "}
-                {minutesToLabel(idea.performanceMinutes)}
-              </li>
-            ))}
-          </ul>
-        </Block>
-        <Block title="What you’d hire someone to handle" empty={payload.hire.length === 0}>
-          <ul className="list-disc space-y-1 pl-5">
-            {payload.hire.map((idea) => (
-              <li key={idea.id}>
-                {idea.responsibilities} — Measure: {idea.kpi}
-              </li>
-            ))}
-          </ul>
-        </Block>
+      <div className="mt-8">
+        <BusyWorkMapView map={map} />
       </div>
 
       {unchanged ? (
@@ -167,7 +95,7 @@ export function MyIdeas({
             }
             onSubmitted(result.session);
           } catch {
-            setError("We couldn’t submit your ideas. Please try again.");
+            setError("We couldn’t submit your map. Please try again.");
             turnstileRef.current?.reset();
           } finally {
             setPending(false);

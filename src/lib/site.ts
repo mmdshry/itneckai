@@ -1,9 +1,9 @@
 ﻿export const site = {
-  name: "ai.neck",
+  name: "Ai.neck",
   url: "https://itneck.ai",
-  tagline: "AI That Works Inside the Tools You Already Use.",
+  tagline: "End Your Busy Work.",
   description:
-      "ai.neck builds custom agents in Microsoft Copilot Studio — grounded in your Microsoft 365, delivered inside SharePoint, Teams, OneDrive, Outlook, and Microsoft 365. AI without a new tool to learn.",
+    "Ai.neck finds where a business is losing time, then uses AI and automation to give that time back.",
   email: "support@itneck.com",
   phone: "858-740-8878",
   phoneIntl: "+1-858-740-8878",
@@ -17,20 +17,19 @@
 } as const;
 
 export const headerNav = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Microsoft Copilot Agents", href: "/solutions/microsoft-copilot-agents" },
-  { label: "Industries", href: "/industries" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "Team", href: "/team" },
+  { label: "Ai.neck University", href: "/university" },
 ] as const;
 
 export const footerNav = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Microsoft Copilot Agents", href: "/solutions/microsoft-copilot-agents" },
-  { label: "End Your Busywork", href: "/EndYourBusywork" },
-  { label: "Industries", href: "/industries" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "About", href: "/about" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "Discover", href: "/how-it-works/discover" },
+  { label: "Build", href: "/how-it-works/build" },
+  { label: "Optimize", href: "/how-it-works/optimize" },
+  { label: "Team", href: "/team" },
+  { label: "Ai.neck University", href: "/university" },
+  { label: "End Your Busy Work", href: "/EndYourBusywork" },
   { label: "Contact", href: "/contact" },
   { label: "Privacy Policy", href: "/privacy" },
 ] as const;

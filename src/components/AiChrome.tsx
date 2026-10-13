@@ -15,12 +15,13 @@ export function AiChrome({
 }) {
   const pathname = usePathname();
   const busywork = pathname.toLowerCase().startsWith("/endyourbusywork");
+  const home = pathname === "/";
 
   return (
     <>
       <Header marketingOrigin={marketingOrigin} />
       <main id="main">{children}</main>
-      {!busywork && <Footer marketingOrigin={marketingOrigin} />}
+      {!busywork && !home && <Footer marketingOrigin={marketingOrigin} />}
       {!busywork && <CopilotChatWidget />}
     </>
   );

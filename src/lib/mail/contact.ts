@@ -22,14 +22,14 @@ export function contactConfirmationEmail(opts: {
 }): { subject: string; html: string; text: string } {
   const first = escapeHtml(opts.fullName.trim().split(/\s+/)[0] || opts.fullName);
   return {
-    subject: "We received your message — ai.neck",
+    subject: "We received your message — Ai.neck",
     html: mailLayout({
       title: "Thanks — we have your note.",
       body: `<p style="margin:0 0 12px;">Hi ${first},</p>
-        <p style="margin:0 0 12px;">We received your working-session request. A person on the ai.neck team typically replies within one business day.</p>
+        <p style="margin:0 0 12px;">We received your working-session request. A person on the Ai.neck team typically replies within one business day.</p>
         <p style="margin:0;">If anything is urgent, you can also call us at 858-740-8878.</p>`,
     }),
-    text: `Hi ${opts.fullName.trim().split(/\s+/)[0] || opts.fullName},\n\nWe received your working-session request. We typically reply within one business day.\n\nai.neck · San Diego, CA`,
+    text: `Hi ${opts.fullName.trim().split(/\s+/)[0] || opts.fullName},\n\nWe received your working-session request. We typically reply within one business day.\n\nAi.neck · San Diego, CA`,
   };
 }
 
@@ -49,7 +49,7 @@ export function contactTeamEmail(opts: {
     ["Topic", opts.topic],
   ];
   return {
-    subject: `[ai.neck] ${opts.topic} — ${opts.fullName} (${opts.company})`,
+    subject: `[Ai.neck] ${opts.topic} — ${opts.fullName} (${opts.company})`,
     html: mailLayout({
       title: "New working session request",
       body: detailsTable(rows, opts.message),

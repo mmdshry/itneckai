@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { AgentIcon, CloseIcon } from "@/components/icons";
+import { GazeMascot } from "@/components/GazeMascot";
+import { CloseIcon } from "@/components/icons";
 
 const COPILOT_SRC =
     "https://copilotstudio.microsoft.com/environments/Default-c4e3e0c2-a607-4731-853e-f406ad3fc598/bots/cr2cd_ITNeckAssistant/webchat?__version__=2";
@@ -134,19 +135,20 @@ export function CopilotChatWidget() {
                 onClick={open ? closeChat : openChat}
                 aria-expanded={open}
                 aria-controls={panelId}
-                className="inline-flex min-h-12 items-center gap-2 rounded-md bg-amber px-4 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
+                aria-label="Chat with us"
+                className="chat-launcher relative flex flex-col items-center bg-transparent"
             >
-                {open ? (
-                    <>
-                        <CloseIcon width={18} height={18} />
-                        <span>Close</span>
-                    </>
-                ) : (
-                    <>
-                        <AgentIcon width={18} height={18} />
-                        <span>Chat with us</span>
-                    </>
-                )}
+                <span
+                    aria-hidden="true"
+                    className={`chat-cloud absolute bottom-[calc(100%-4px)] left-1/2 z-10 whitespace-nowrap rounded-[1.35rem] border border-line bg-page px-3.5 py-2 text-xs font-semibold text-navy shadow-[0_10px_28px_rgba(2,55,107,0.16)] ${open ? "invisible" : ""}`}
+                >
+                    Chat with us
+                    <span
+                        aria-hidden="true"
+                        className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-line bg-page"
+                    />
+                </span>
+                <GazeMascot track={false} className="w-[132px]" />
             </button>
         </div>
     );

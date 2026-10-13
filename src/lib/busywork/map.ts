@@ -1,74 +1,94 @@
-import type { BusyworkPayload, Frequency, HireIdea, SuperhumanIdea } from "./schema";
+import { frictionLabels } from "./copy";
+import {
+  scoreWorkflow,
+  summarizeCapacity,
+  type CapacitySummary,
+  type OpportunityCategory,
+  type ScoreBreakdown,
+} from "./score";
+import type { BusyworkPayload, Frequency, WorkflowIdea } from "./schema";
 
-export type OpportunityMap = {
-  protect: string[];
-  automate: string[];
-  amplify: Array<{
-    text: string;
-    prepMinutes: number;
-    performanceMinutes: number;
-    ratio: number | null;
-    bottleneck: boolean;
-  }>;
-  build: HireIdea[];
-  robotHoursPerWeek: number;
-  highValue: string[];
-  busywork: string[];
+export type BusyWorkRow = {
+  id: string;
+  workflow: string;
+  effort: string;
+  problem: string;
+  solution: string;
+  impact: string;
+  category: OpportunityCategory;
+  score: number;
+  scores: ScoreBreakdown;
+  hoursPerMonth: number | null;
 };
 
-export function hoursPeriodLabel(
-  hours: number,
-  frequency?: Frequency,
-): string {
+export type BusyWorkMap = {
+  rows: BusyWorkRow[];
+  hoursPerMonth: number;
+  alwaysHuman: string[];
+  capacity: string[];
+  roi: CapacitySummary;
+};
+
+export function effortLabel(idea: {
+  hours?: number;
+  frequency: Frequency;
+}): string {
+  if (idea.hours == null) return "Not measured";
   const period =
-    frequency === "daily" ? "day" : frequency === "monthly" ? "month" : "week";
-  return `${hours} hrs / ${period}`;
+    idea.frequency === "daily"
+      ? "day"
+      : idea.frequency === "monthly"
+        ? "month"
+        : "week";
+  return `${idea.hours} hrs / ${period}`;
 }
 
-export function minutesToLabel(minutes: number): string {
-  if (minutes < 60) return `${minutes} min`;
-  const hours = minutes / 60;
-  const rounded = Number.isInteger(hours) ? hours : Number(hours.toFixed(1));
-  return `${rounded} hour${rounded === 1 ? "" : "s"}`;
+/** Rough month so daily, weekly, and monthly answers can sit on one map. */
+export function toMonthlyHours(hours: number, frequency: Frequency): number {
+  if (frequency === "daily") return hours * 20;
+  if (frequency === "weekly") return hours * 4;
+  return hours;
 }
 
-export function prepRatio(idea: SuperhumanIdea): number | null {
-  if (idea.performanceMinutes <= 0) return null;
-  return idea.prepMinutes / idea.performanceMinutes;
-}
-
-export function buildOpportunityMap(payload: BusyworkPayload): OpportunityMap {
-  const robotHoursPerWeek = payload.robotTasks.reduce(
-    (sum, idea) => sum + idea.hoursPerWeek,
+export function buildBusyWorkMap(payload: BusyworkPayload): BusyWorkMap {
+  const scored = payload.workflows.map((idea) => ({
+    idea,
+    scored: scoreWorkflow(idea, payload.context),
+  }));
+  const rows = scored.map(({ idea, scored: result }) => rowFromWorkflow(idea, result));
+  const hoursPerMonth = rows.reduce(
+    (sum, row) => sum + (row.hoursPerMonth ?? 0),
     0,
   );
 
-  const automate = payload.robotTasks.map((idea) => idea.text);
-  if (automate.length === 0) {
-    automate.push(...payload.busywork.map((idea) => idea.text));
-  }
-
   return {
-    protect: payload.alwaysHuman.map((idea) => idea.text),
-    automate,
-    amplify: payload.superhuman.map((idea) => {
-      const ratio = prepRatio(idea);
-      return {
-        text: idea.text,
-        prepMinutes: idea.prepMinutes,
-        performanceMinutes: idea.performanceMinutes,
-        ratio,
-        bottleneck: ratio !== null && ratio >= 3,
-      };
-    }),
-    build: payload.hire,
-    robotHoursPerWeek: Math.round(robotHoursPerWeek * 10) / 10,
-    highValue: payload.highValue.map((idea) => idea.text),
-    busywork: payload.busywork.map((idea) => idea.text),
+    rows,
+    hoursPerMonth: Math.round(hoursPerMonth * 10) / 10,
+    alwaysHuman: payload.alwaysHuman.map((idea) => idea.text),
+    capacity: payload.capacity.map((idea) => idea.text),
+    roi: summarizeCapacity(
+      scored.map(({ scored: result }) => result),
+      payload.context,
+    ),
   };
 }
 
-export function formatRatio(ratio: number): string {
-  const rounded = Number.isInteger(ratio) ? String(ratio) : ratio.toFixed(1);
-  return `${rounded}:1`;
+function rowFromWorkflow(
+  idea: WorkflowIdea,
+  scored: ReturnType<typeof scoreWorkflow>,
+): BusyWorkRow {
+  const people =
+    idea.people > 1 ? ` · ${idea.people} people` : "";
+  return {
+    id: idea.id,
+    workflow: idea.text,
+    effort: `${effortLabel(idea)}${people}`,
+    problem: frictionLabels[idea.friction],
+    solution: scored.solution,
+    impact: scored.impact,
+    category: scored.category,
+    score: scored.score,
+    scores: scored.scores,
+    hoursPerMonth: scored.monthlyPersonHours,
+  };
 }

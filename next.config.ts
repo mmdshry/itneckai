@@ -65,6 +65,24 @@ const nextConfig: NextConfig = {
         destination: "/EndYourBusywork",
         permanent: true,
       },
+      { source: "/about", destination: "/team", permanent: true },
+      { source: "/solutions", destination: "/how-it-works/build", permanent: true },
+      {
+        source: "/solutions/:path*",
+        destination: "/how-it-works/build",
+        permanent: true,
+      },
+      { source: "/industries", destination: "/how-it-works", permanent: true },
+      {
+        source: "/industries/:path*",
+        destination: "/how-it-works",
+        permanent: true,
+      },
+      {
+        source: "/case-studies",
+        destination: "/how-it-works/discover",
+        permanent: true,
+      },
       {
         source: "/itneck/ai",
         destination: "/itneck/solutions/ai-automation",
